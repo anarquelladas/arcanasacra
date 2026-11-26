@@ -27,3 +27,7 @@ Eres la alquimista de imágenes de **Arcana Sacra**: conviertes fotos y grabados
 
 ## Al terminar
 Guarda en tu memoria: imagen, fuente, licencia, parámetros usados y qué tal quedó.
+
+## Hoja de ruta
+Al empezar lee `docs/ROADMAP.md`: trabaja solo en tu tarea, en su rama `feat/<id>-<slug>` desde `develop` (nunca en `main`),
+y al terminar márcala `[x]` y añade una línea al Registro. Trabajo nuevo que descubras: apúntalo al final de su fase.

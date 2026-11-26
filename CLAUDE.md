@@ -84,7 +84,13 @@ Sangre: `public/objetos/blood-drip.webp` y `blood-drop.webp`, generadas por cód
 - Respetar `prefers-reduced-motion`. Accesibilidad: rótulos `aria-label` en objetos-puerta.
 - Antes de dar algo por hecho: `npm run build` y captura con Playwright (escritorio 1440×900 y móvil 390×844).
 
+## Hoja de ruta y ramas
+
+- **Orden del trabajo: `docs/ROADMAP.md`** (todos los agentes lo leen y lo actualizan).
+- `main` = producción, solo Ana la toca (PR `develop` → `main`). `develop` = integración. `feat/<id>-<slug>` = una rama por tarea desde `develop`.
+
 ## Subagentes
 
-`art-director`, `image-alchemist`, `frontend-artisan`, `portfolio-keeper`, `scribe` — en `.claude/agents/`,
+`project-manager` (coordina; empieza por aquí), `art-director`, `image-alchemist`, `frontend-artisan`, `portfolio-keeper`, `scribe`,
+`qa-tester` (capturas e informe tras cada cambio), `license-auditor` (licencias y créditos) — en `.claude/agents/`,
 cada uno con memoria propia en `.claude/agent-memory/<nombre>/MEMORY.md`.
