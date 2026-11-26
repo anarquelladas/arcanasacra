@@ -72,10 +72,18 @@
   z-index: 2;
 }
 .eye { display: block; width: 100%; transform-origin: 50% 50%; transition: transform .12s; }
-.tracking-eye { position: relative; display: block; }
+.tracking-eye { position: relative; display: block; aspect-ratio: 946 / 1383; /* caja fija: el marco apaisado no mueve el titulo */ --ws: 1.3; /* ancho del marco apaisado respecto a la caja */ }
 .tracking-eye .frame-img { position: relative; display: block; width: 100%; height: auto; pointer-events: none; }
 .tracking-eye .portrait { position: absolute; left: 11.2%; top: 17.6%; width: 77.6%; height: 68.4%; }
 .tracking-eye .portrait .face { display: block; width: 100%; height: 100%; animation: gaze-in .5s ease both; }
+/* marco apaisado (1500x1317, hueco en 16.26/38.34/68.42/47.12 %): centrado en la caja y mas ancho que ella; cifras en % de la caja (alto = 1.4619 x ancho) */
+.tracking-eye.wide .frame-img { position: absolute; left: calc((1 - var(--ws)) * 50%); top: calc(50% - var(--ws) * 30.03%); width: calc(var(--ws) * 100%); animation: gaze-in .5s ease both; }
+.tracking-eye .portrait.wide {
+  left: calc((1 - var(--ws)) * 50% + var(--ws) * 16.26%);
+  top: calc(50% - var(--ws) * 30.03% + var(--ws) * 60.06% * .3834);
+  width: calc(var(--ws) * 68.42%);
+  height: auto; aspect-ratio: 1200 / 727;
+}
 .tracking-eye .iris-clip { position: absolute; inset: 0; transition: transform .1s; transform-origin: 50% 37%; }
 .tracking-eye .iris { position: absolute; transition: transform .22s ease-out; }
 @keyframes gaze-in { from { opacity: 0; filter: blur(6px); } }
