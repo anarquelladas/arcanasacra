@@ -16,11 +16,28 @@ interface Thing {
 }
 
 // Retratos de Elvira para el medallón: posición de cada ojo (%), tamaño del iris y del hueco del ojo.
+// tilt: inclinación (grados) del hueco de cada ojo; el recorte sigue su forma para que el iris no asome por los párpados.
 const GAZES = [
-  { file: 'elvira-a', eyes: [[26.18, 38.13], [73.82, 37.95]], iris: 11.4, rx: 10.8, ry: 4.4 },
-  { file: 'elvira-b', eyes: [[26.27, 43.0], [73.73, 37.02]], iris: 11.2, rx: 10.7, ry: 4.3 },
-  { file: 'elvira-c', eyes: [[40.07, 35.73], [60.0, 36.29]], iris: 4.6, rx: 4.4, ry: 1.8 },
+  { file: 'elvira-a', eyes: [[26.18, 38.13, 10], [73.82, 37.95, -10]], iris: 11.4, rx: 9.6, ry: 3.6 },
+  { file: 'elvira-b', eyes: [[26.27, 43.0, 10], [73.73, 37.02, -24]], iris: 11.2, rx: 9.4, ry: 3.2 },
+  { file: 'elvira-c', eyes: [[40.07, 35.73, 0], [60.0, 36.29, 0]], iris: 4.6, rx: 4.2, ry: 1.6 },
 ] as const;
+
+// Relación alto/ancho del retrato (.portrait): permite dibujar una elipse inclinada en porcentajes.
+const AR = 1.289;
+/** Elipse inclinada como polygon() en % del retrato. */
+function eyeClip(x: number, y: number, rx: number, ry: number, tilt: number) {
+  const t = (tilt * Math.PI) / 180;
+  const pts: string[] = [];
+  for (let i = 0; i < 28; i++) {
+    const a = (i / 28) * Math.PI * 2;
+    const ex = rx * Math.cos(a), ey = ry * AR * Math.sin(a); // unidades de ancho
+    const px = ex * Math.cos(t) - ey * Math.sin(t);
+    const py = ex * Math.sin(t) + ey * Math.cos(t);
+    pts.push(`${(x + px).toFixed(2)}% ${(y + py / AR).toFixed(2)}%`);
+  }
+  return `polygon(${pts.join(',')})`;
+}
 
 const THINGS: Thing[] = [
   { id: 'moth', href: '/art/', label: 'Art', hint: 'tattoos & drawings', depth: 8, rot: -6, node: <MothStamp /> },
@@ -65,17 +82,7 @@ export default function Altar() {
       });
     };
     addEventListener('pointermove', onMove);
-    // parpadeo ocasional
-    let t: ReturnType<typeof setTimeout>;
-    const loop = () => {
-      t = setTimeout(() => {
-        setBlink(true);
-        setTimeout(() => setBlink(false), 140);
-        loop();
-      }, 2500 + Math.random() * 4500);
-    };
-    loop();
-    return () => { removeEventListener('pointermove', onMove); clearTimeout(t); };
+    return () => removeEventListener('pointermove', onMove);
   }, []);
 
   const down = (id: string) => (e: React.PointerEvent) => {
@@ -120,18 +127,18 @@ export default function Altar() {
           onClick={() => { setBlink(true); setTimeout(() => { setGaze((g) => (g + 1) % GAZES.length); setBlink(false); }, 180); }}
           aria-label="Elvira, Mistress of the Dark: click to change her gaze"
         >
-          <span className={`tracking-eye eye ${blink ? 'blink' : ''}`}>
-            <span className="portrait">
+          <span className="tracking-eye eye">
+            <span className={`portrait ${blink ? 'blink' : ''}`}>
               <Dual file={`${GAZES[gaze].file}.webp`} className="face" lazy={false} alt="Elvira, Mistress of the Dark" />
-              {GAZES[gaze].eyes.map(([x, y], i) => (
-                <span key={i} className="iris-clip" style={{ clipPath: `ellipse(${GAZES[gaze].rx}% ${GAZES[gaze].ry}% at ${x}% ${y}%)` }}>
+              {GAZES[gaze].eyes.map(([x, y, tilt], i) => (
+                <span key={i} className="iris-clip" style={{ clipPath: eyeClip(x, y, GAZES[gaze].rx, GAZES[gaze].ry, tilt) }}>
                   <Dual
                     file={i ? 'elvira-iris-r.webp' : 'elvira-iris-l.webp'}
                     className="iris"
                     lazy={false}
                     style={{
                       left: `${x}%`, top: `${y}%`, width: `${GAZES[gaze].iris}%`,
-                      transform: `translate(calc(-50% + ${look[0] * 34}%), calc(-50% + ${look[1] * 12}%))`,
+                      transform: `translate(calc(-50% + ${look[0] * 34}%), calc(-50% + ${look[1] * 8}%))`,
                     }}
                   />
                 </span>

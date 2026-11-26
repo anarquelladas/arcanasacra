@@ -79,7 +79,9 @@
 .tracking-eye .iris-clip { position: absolute; inset: 0; transition: transform .1s; transform-origin: 50% 37%; }
 .tracking-eye .iris { position: absolute; transition: transform .22s ease-out; }
 @keyframes gaze-in { from { opacity: 0; filter: blur(6px); } }
-.eye.blink { transform: scaleY(.08); }
+/* solo el retrato se cierra al pulsar; el marco no se mueve nunca */
+.portrait { transition: transform .12s; transform-origin: 50% 40%; }
+.portrait.blink { transform: scaleY(.08); }
 
 @keyframes ink-in { from { filter: blur(10px); opacity: 0; } }
 @keyframes fade { from { opacity: 0; } }
