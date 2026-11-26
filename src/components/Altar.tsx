@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { playSound } from '../lib/sound';
 import { CandelabrumStamp, DaggerStamp, Dual, MothStamp, Stamp } from './Stamp';
 import './altar.css';
 
@@ -73,9 +74,12 @@ const THINGS: Thing[] = [
   { id: 'deck', href: '/code/', label: 'Code', hint: 'projects & agents', depth: 6, rot: 5, node: <Stamp name="tarot" /> },
   { id: 'mirror', href: '/about/', label: 'About', hint: 'who is behind it', depth: 5, rot: -8, node: <Stamp name="mirror" /> },
   { id: 'ball', href: '/contact/', label: 'Contact', hint: 'ask the crystal ball', depth: 7, rot: 2, node: <Stamp name="ball" /> },
-  { id: 'candle', depth: 3, rot: 0, node: <CandelabrumStamp /> },
+  { id: 'candle', depth: 3, rot: 0, node: null }, // el candelabro se pinta aparte: depende del estado de la luz
   { id: 'dagger', depth: 12, rot: 24, node: <DaggerStamp /> },
 ];
+
+type Theme = 'dark' | 'light';
+const currentTheme = (): Theme => (document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
 
 export default function Altar() {
   const stage = useRef<HTMLDivElement>(null);
@@ -83,11 +87,53 @@ export default function Altar() {
   const [look, setLook] = useState<[number, number]>([0, 0]);
   const [gaze, setGaze] = useState(0);
   const [drips, setDrips] = useState<Drip[]>([]);
-  const [lit, setLit] = useState(true);
+  // intro: la mesa empieza a oscuras hasta que se enciende el candelabro (el atributo data-intro lo pone el script del <head>)
+  const [intro, setIntro] = useState(false);
+  const [hint, setHint] = useState(false);
+  const [theme, setTheme] = useState<Theme>('dark');
+  // llamas: encendido = modo dia; la excepcion es el instante de la intro, que prende la llama sin cambiar de tema
+  const [flames, setFlames] = useState(false);
   const [moved, setMoved] = useState<Record<string, [number, number]>>({});
   const [top, setTop] = useState<string>('');
   const drag = useRef<{ id: string; sx: number; sy: number; ox: number; oy: number; dist: number } | null>(null);
   const wasDrag = useRef(false);
+  const candleOff = useRef<[number, number]>([0, 0]); // posicion del candelabro, la lee el humo
+  candleOff.current = moved.candle ?? [0, 0];
+
+  // estado inicial de intro y tema; el tema tambien se vigila porque el boton de la cabecera lo cambia
+  useEffect(() => {
+    const root = document.documentElement;
+    setIntro(root.dataset.intro === 'dark');
+    const sync = () => { const t = currentTheme(); setTheme(t); setFlames(t === 'light'); };
+    sync();
+    const mo = new MutationObserver(sync);
+    mo.observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => mo.disconnect();
+  }, []);
+
+  // pista sutil si tras unos segundos nadie ha encontrado el candelabro
+  useEffect(() => {
+    if (!intro) { setHint(false); return; }
+    const id = setTimeout(() => setHint(true), 6000);
+    return () => clearTimeout(id);
+  }, [intro]);
+
+  /** La primera vez que se enciende: se revela la mesa y se recuerda durante la sesion. */
+  const ignite = () => {
+    delete document.documentElement.dataset.intro;
+    try { sessionStorage.setItem('as-lit', '1'); } catch { /* sin almacenamiento: la intro se repetira */ }
+    setIntro(false);
+    setFlames(true);
+    playSound('flame-on');
+  };
+
+  /** Despues de la intro el candelabro es el interruptor de tema: encendido = dia, apagado = noche. */
+  const toggleTheme = () => {
+    const next: Theme = theme === 'light' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem('as-theme', next); } catch { /* el tema vale solo para esta visita */ }
+    playSound(next === 'light' ? 'flame-on' : 'flame-off');
+  };
 
   // parallax + mirada del ojo
   useEffect(() => {
@@ -144,6 +190,7 @@ export default function Altar() {
     drag.current = { id, sx: e.clientX, sy: e.clientY, ox, oy, dist: 0 };
     wasDrag.current = false;
     setTop(id);
+    playSound('pick');
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   };
   const move = (e: React.PointerEvent) => {
@@ -157,12 +204,17 @@ export default function Altar() {
     }
   };
   const up = (e: React.PointerEvent) => {
-    if (drag.current) (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    const d = drag.current;
+    if (d) (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
     drag.current = null;
+    if (d && d.dist > 6) {
+      // arrastrar el candelabro a oscuras tambien lo enciende (el clic posterior se ignora por wasDrag)
+      if (d.id === 'candle' && intro) ignite(); else playSound('drop');
+    }
   };
   const click = (t: Thing) => (e: React.MouseEvent) => {
     if (wasDrag.current) { e.preventDefault(); wasDrag.current = false; return; }
-    if (t.id === 'candle') setLit((l) => !l);
+    if (t.id === 'candle') { if (intro) ignite(); else toggleTheme(); }
     if (t.id === 'key') e.currentTarget.classList.toggle('turned');
   };
 
@@ -174,14 +226,14 @@ export default function Altar() {
           <span key={i} className="drip" style={{ left: d.x, width: d.w, height: d.h, ['--bx' as string]: d.bx }} />
         ))}
       </div>
-      <div ref={stage} className={`altar ${lit ? '' : 'dark'}`}>
+      <div ref={stage} className="altar">
       <div className="light" aria-hidden="true" />
       <span className="bat-flight" aria-hidden="true"><Dual file="bat.webp" className="bat-img" lazy={false} /></span>
 
       <header className="crest">
         <button
           className="eye-btn"
-          onClick={() => { setBlink(true); setTimeout(() => { setGaze((g) => (g + 1) % GAZES.length); setBlink(false); }, 180); }}
+          onClick={() => { playSound('eye'); setBlink(true); setTimeout(() => { setGaze((g) => (g + 1) % GAZES.length); setBlink(false); }, 180); }}
           aria-label="Elvira, Mistress of the Dark: click to change her gaze"
         >
           <span className="tracking-eye eye">
@@ -210,6 +262,8 @@ export default function Altar() {
         <p className="whisper caps">move the objects · some open doors · her gaze changes if you touch it</p>
       </header>
 
+      {intro && hint && <p className="intro-hint caps" role="status">somewhere in the dark, a candelabrum waits</p>}
+
       {THINGS.map((t) => {
         const off = moved[t.id] ?? [0, 0];
         const style = {
@@ -221,7 +275,7 @@ export default function Altar() {
         };
         const inner = (
           <>
-            <span className="lift">{t.node}</span>
+            <span className="lift">{t.id === 'candle' ? <CandelabrumStamp lit={flames} smoke={candleOff} /> : t.node}</span>
             {t.label && (
               <span className="tag" aria-hidden="true">
                 {t.label}
@@ -237,12 +291,13 @@ export default function Altar() {
           onPointerMove: move,
           onPointerUp: up,
           onClick: click(t),
+          onPointerEnter: t.label ? (e: React.PointerEvent) => { if (e.pointerType === 'mouse') playSound('hover'); } : undefined,
           draggable: false,
         };
         return t.href ? (
           <a key={t.id} href={t.href} aria-label={`${t.label}: ${t.hint}`} {...common}>{inner}</a>
         ) : (
-          <button key={t.id} type="button" aria-label={t.id === 'candle' ? (lit ? 'Blow out the candles' : 'Light the candles') : t.id === 'key' ? 'Turn the key' : `Move the ${t.id}`} {...common}>{inner}</button>
+          <button key={t.id} type="button" aria-label={t.id === 'candle' ? (intro ? 'Light the candelabrum to reveal the table' : 'Candelabrum: light it for day mode, blow it out for night mode') : t.id === 'key' ? 'Turn the key' : `Move the ${t.id}`} aria-pressed={t.id === 'candle' && !intro ? theme === 'light' : undefined} {...common}>{inner}</button>
         );
       })}
     </div>

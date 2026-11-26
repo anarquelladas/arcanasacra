@@ -186,7 +186,6 @@ body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6
 .obj-deck .tag { transform: translateX(8px); }
 .obj-ball .tag { transform: translateX(8px); }
 
-.altar.dark .flame, .altar.dark .halo { opacity: 0; transform: scale(.2, .1); }
 .altar::after {
   content: '';
   position: absolute;
@@ -194,14 +193,23 @@ body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6
   z-index: 6;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 1.2s;
+  transition: opacity 2s;
   background: radial-gradient(
     circle 210px at calc((var(--px) + .5) * 100%) calc((var(--py) + .5) * 100%),
     transparent 0, rgba(5, 4, 3, .55) 55%, rgba(3, 2, 2, .93) 100%
   );
 }
-.altar.dark::after { opacity: 1; }
-.altar.dark .obj-candle { z-index: 7; }
+/* intro: la mesa esta a oscuras (salvo la luz del cursor) hasta que se enciende el candelabro; el script del <head> pone data-intro */
+:root[data-intro='dark'] .altar::after { opacity: 1; }
+:root[data-intro='dark'] .obj-candle { z-index: 7; }
+:root[data-intro='dark'] .obj-candle .lift { opacity: .45; }
+:root[data-intro='dark'] .obj-candle:hover .lift, :root[data-intro='dark'] .obj-candle:focus-visible .lift { opacity: 1; }
+.obj-candle .lift { transition: transform .5s var(--ease), filter .5s, opacity 1.2s; }
+.intro-hint {
+  position: absolute; left: 0; right: 0; bottom: 5%; z-index: 7; margin: 0; text-align: center;
+  font-size: .8rem; letter-spacing: .32em; color: var(--ink-dim); pointer-events: none;
+  animation: fade 3s ease both;
+}
 
 /* llave */
 .obj-key .lift { transition: transform .8s cubic-bezier(.3, 1.6, .4, 1), filter .5s; }
@@ -244,7 +252,10 @@ body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6
   .obj .tag::before { display: none; }
   .obj .lift { opacity: 1; }
   .obj { display: flex; flex-direction: column; align-items: center; }
-  .altar .obj-candle, .altar .obj-key, .altar .obj-dagger, .altar .obj-poison { display: none; }
+  .altar .obj-key, .altar .obj-dagger, .altar .obj-poison { display: none; }
+  /* el candelabro se queda en movil: es la intro y el interruptor de tema */
+  .obj-candle { grid-column: 1 / -1; max-width: 150px; margin-top: 2.6rem; }
+  .intro-hint { position: fixed; bottom: 1.2rem; font-size: .7rem; padding: 0 1rem; }
   .blood { --s: .375; height: 90px; background-size: 600px 90px; }
   .bat-flight { display: none; }
 }

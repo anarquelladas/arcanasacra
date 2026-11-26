@@ -10,17 +10,33 @@ const current = (href: string) => (href === '/' ? path === '/' : path.startsWith
       <li><a class="plaque" href={n.href} aria-current={current(n.href) ? 'page' : undefined}>{n.label}</a></li>
     ))}
     <li><button class="plaque theme" type="button" aria-label="Switch between day and night"><span class="to-day">☼ Day</span><span class="to-night">☾ Night</span></button></li>
+      <li><button class="plaque sound" type="button" aria-label="Sound" aria-pressed="true"><span class="s-on">♪ Sound</span><span class="s-off">♪ Muted</span></button></li>
   </ul>
 </nav>
 
 <script>
+  import { isMuted, playSound, toggleMuted } from '../lib/sound';
+
   const btn = document.querySelector('.theme');
   btn?.addEventListener('click', () => {
     const root = document.documentElement;
     const next = root.dataset.theme === 'light' ? 'dark' : 'light';
     root.dataset.theme = next;
     try { localStorage.setItem('as-theme', next); } catch (e) {}
+    playSound(next === 'light' ? 'flame-on' : 'flame-off');
   });
+
+  // interruptor de sonido: recordado en localStorage; no suena nada hasta el primer gesto
+  const snd = document.querySelector<HTMLButtonElement>('.sound');
+  const paint = () => {
+    const muted = isMuted();
+    snd?.setAttribute('aria-pressed', String(!muted));
+    snd?.setAttribute('aria-label', muted ? 'Sound is off: turn it on' : 'Sound is on: turn it off');
+    snd?.classList.toggle('muted', muted);
+  };
+  paint();
+  snd?.addEventListener('click', () => { if (!toggleMuted()) playSound('paper'); });
+  addEventListener('as-sound-change', paint);
 </script>
 
 <style>
@@ -35,6 +51,9 @@ const current = (href: string) => (href === '/' ? path === '/' : path.startsWith
   }
   ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .2rem 2.2rem; }
   .theme { margin-left: .6rem; }
+  .sound .s-off { display: none; }
+  .sound.muted .s-on { display: none; }
+  .sound.muted .s-off { display: inline; opacity: .6; }
   .theme .to-night { display: none; }
   :global(:root[data-theme='light']) .theme .to-day { display: none; }
   :global(:root[data-theme='light']) .theme .to-night { display: inline; }

@@ -64,6 +64,14 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 - [ ] 2.2.9 Integrar en `Altar.tsx` los retratos apaisados `elvira-d/e/f` y el marco `frame-wide` (datos en `docs/elvira-gazes.md`). · *Dueño*: `frontend-artisan` · dep.: assets hechos (ver Registro).
 - [ ] 2.2.10 Créditos pendientes: añadir al pie (`Base.astro`) y al README las fotos *Elvira with monsters, mid-1980s* y *Elvira at Knott's Berry Farm, 1997* (Orange County Archives, CC BY 2.0) y el marco `frame-wide` (*Frame with Rocaille Volutes and Wings*, F. de Cuvilliés / C. A. von Lespilliez, Cooper Hewitt CH 18238167, dominio público). · *Dueño*: `license-auditor`.
 
+- [x] 2.7.1 Portada: intro a oscuras; hay que encender el candelabro (clic, arrastre o teclado). Se recuerda en `sessionStorage['as-lit']`; pista de texto a los 6 s; con `prefers-reduced-motion` no hay oscuridad. · *Dueño*: `frontend-artisan` · `Altar.tsx`, `altar.css`, script del `<head>` en `Base.astro` (atributo `data-intro`).
+- [x] 2.7.2 Portada: tras la intro el candelabro es el interruptor de tema (encendido = día, apagado = noche), sincronizado con el botón de la cabecera y `localStorage['as-theme']`. Visible también en móvil. · `Altar.tsx`.
+- [x] 2.7.3 Llamas en tinta del tema (sin naranjas) y humo en canvas que ondea en sentido contrario al arrastre, con inercia. · `Smoke.tsx`, `Stamp.tsx`, `global.css`.
+- [x] 2.7.4 Sonido: módulo `src/lib/sound.ts` (WebAudio sintetizado, silencio recordado, nada suena antes del primer gesto), interruptor "Sound" en la cabecera y sonidos en la portada. Definidos `paper`, `seal-break`, `envelope-open` para la carta de About. · `sound.ts`, `Nav.astro`, `Altar.tsx`.
+- [ ] 2.7.5 `art-director`: valorar el interruptor de sonido (hoy texto "♪ Sound" como la pestaña de tema); sustituirlo por un objeto (campana, reloj de arena…) con `image-alchemist`. Ajustar a oído el timbre y volumen de los sonidos.
+- [ ] 2.7.6 `qa-tester`: probar la intro en móvil táctil real (el candelabro queda al final de la página; la pista es fija abajo) y teclado (Tab hasta el candelabro).
+- [ ] 2.7.7 Usar `playSound('paper' | 'seal-break' | 'envelope-open')` en la carta de About/Contact (`Letter.tsx`).
+
 ## Fase 3 — Contenido real
 - [ ] 3.1 Revisar y ajustar textos de About y títulos del gabinete (Ana aprueba). · *Dueño*: `scribe`.
 - [ ] 3.2 Instagram y LinkedIn en `src/data/site.ts` (Ana da los enlaces). · *Dueño*: `scribe`.
@@ -98,3 +106,4 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 | 2026-11-26 | 2.2.6 | frontend-artisan | Sangre de la portada fuera de `.altar` y anclada al borde superior del documento en móvil (90 px, tras la cabecera); escritorio sin cambios. |
 | 2026-11-26 | 2.2.9-2.2.11 | frontend-artisan | Iris con recorte inclinado por ojo; eliminado el parpadeo periódico que aplastaba el marco; sangre anclada a body en todos los anchos, con gotas sueltas (trozos de blood-drip.webp, máscara de fundido) calculadas desde los huecos de título y nav. |
 | 2026-11-26 | 2.2.9, 2.2.10 | image-alchemist | Nuevos retratos apaisados `elvira-d/e/f` (noche y día), marco apaisado `frame-wide` (grabado PD de Cuvilliés) y datos de ojos en `docs/elvira-gazes.md`; scripts `portrait.mjs` y `frame-wide.mjs`. |
+| 2026-11-26 | 2.7.1-2.7.4 | frontend-artisan | Intro a oscuras con candelabro, candelabro como interruptor de tema, llamas en tinta con humo por inercia, módulo de sonido WebAudio e interruptor de sonido en la cabecera. |
