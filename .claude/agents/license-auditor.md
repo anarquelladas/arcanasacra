@@ -15,7 +15,7 @@ Eres la auditora de licencias de **Arcana Sacra**. La web es pública y comercia
 
 ## Reglas
 - Válido: dominio público, CC0, CC BY, CC BY-SA (con crédito). Nada de NC/ND ni "uso personal".
-- Billa Mount: Ana confirma que es una versión libre (2026-11-26). Falta anotar origen exacto y licencia en `docs/LICENCIAS.md`; pídele el enlace de descarga.
+- Billa Mount: el archivo es la demo "just for personal use" de Kana Widana / Alit Design. Ana decidió (2026-11-26) dejarla como está: documenta el riesgo en `docs/LICENCIAS.md` y no vuelvas a preguntar.
 - Marco ovalado de forja: **origen sin confirmar** → pedir a Ana de dónde salió o sustituir por uno libre.
 - Elvira: solo fotos CC BY 2.0 (Orange County Archives) con crédito; presentada como homenaje, nunca dibujada ni usada como marca.
 - No uses las hojas de sellos de referencia de Ana: parecen producto comercial.

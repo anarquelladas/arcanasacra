@@ -26,12 +26,23 @@ const full = title ? `${title} · ${site.name}` : `${site.name} · ${site.taglin
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script is:inline>
       // tema guardado (día / noche) antes de pintar, para que no parpadee
-      try { const t = localStorage.getItem('as-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+      // sin eleccion guardada, se sigue el tema del sistema (oscuro / claro)
+      try {
+        let t = null;
+        try { t = localStorage.getItem('as-theme'); } catch (e) {}
+        if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      // intro de la portada: a oscuras hasta encender el candelabro (una vez por sesion; sin movimiento reducido no hay oscuridad)
+      try {
+        if (location.pathname === '/' && !sessionStorage.getItem('as-lit') && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.dataset.intro = 'dark';
+      } catch (e) {}
     </script>
   </head>
   <body>
     <Defs />
-    <a class="sr-only" href="#contenido">Skip to content</a>
+    <a class="sr-only skip skip-candle" href="#candle">Skip to the candelabrum</a>
+    <a class="sr-only skip" href="#contenido">Skip to content</a>
     {nav && <Nav />}
     <main id="contenido">
       <slot />

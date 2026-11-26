@@ -1,3 +1,1 @@
-# Memoria · qa-tester
-
-(vacía: se rellena al trabajar)
+- [Pasos Playwright y fallos recurrentes](pasos_playwright.md) — cómo lanzar el QA en esta máquina

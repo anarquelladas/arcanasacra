@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { WaxSeal } from './engravings/Objects';
+import { playSound } from '../lib/sound';
 import './letter.css';
 
 // Un sobre lacrado: al romper el lacre se abre la solapa y sale la carta con los datos de contacto.
@@ -18,11 +19,23 @@ export default function Letter({ email, github, instagram, linkedin }: Props) {
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(email);
+      playSound('tick');
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
     } catch {
       location.href = `mailto:${email}`;
     }
+  };
+
+  const openLetter = () => {
+    playSound('seal-break');
+    setOpen(true);
+    setTimeout(() => playSound('envelope-open'), 150);
+    setTimeout(() => playSound('paper'), 1200);
+  };
+  const closeLetter = () => {
+    playSound('paper');
+    setOpen(false);
   };
 
   return (
@@ -55,13 +68,13 @@ export default function Letter({ email, github, instagram, linkedin }: Props) {
           <path d="M0,0L130,112 260,0Z" fill="url(#paper)" stroke="var(--ink-dark)" strokeWidth=".8" />
           <path d="M0,0L130,112 260,0 248,0 130,102 12,0Z" fill="url(#hh-k)" opacity=".18" />
         </svg>
-        <button className="seal-btn" onClick={() => setOpen(true)} disabled={open} aria-label="Break the seal and open the letter">
+        <button className="seal-btn" onClick={openLetter} disabled={open} aria-label="Break the seal and open the letter">
           <svg className="half l" viewBox="0 0 60 60"><WaxSeal cx={30} cy={30} r={26} /></svg>
           <svg className="half r" viewBox="0 0 60 60"><WaxSeal cx={30} cy={30} r={26} /></svg>
         </button>
       </div>
       {open && (
-        <button className="reseal" onClick={() => setOpen(false)}>seal it again</button>
+        <button className="reseal" onClick={closeLetter}>seal it again</button>
       )}
     </div>
   );

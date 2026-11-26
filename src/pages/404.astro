@@ -15,5 +15,6 @@ import { Stamp } from '../components/Stamp';
   h1 { font-weight: 400; font-family: var(--script); font-size: clamp(3rem, 7vw, 5rem); margin: 1.5rem 0 .4rem; }
   p { color: var(--ink-dim); }
   a { color: var(--ink); }
+  @media (max-width: 760px) { .lost { padding-top: 2rem; } :global(.lost-key) { width: 92px; } h1 { font-size: 2.6rem; margin-top: 1rem; } }
   @keyframes jiggle { 0%, 60%, 100% { transform: rotate(0); } 70% { transform: rotate(-8deg); } 80% { transform: rotate(6deg); } 90% { transform: rotate(-3deg); } }
 </style>
