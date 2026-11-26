@@ -23,3 +23,7 @@ Eres la guardiana del portfolio técnico de Ana (`github.com/anarquelladas`).
 
 ## Al terminar
 Registra en tu memoria qué proyectos hay, su estado y qué falta para que estén "listos para enseñar".
+
+## Hoja de ruta
+Al empezar lee `docs/ROADMAP.md`: trabaja solo en tu tarea, en su rama `feat/<id>-<slug>` desde `develop` (nunca en `main`),
+y al terminar márcala `[x]` y añade una línea al Registro. Trabajo nuevo que descubras: apúntalo al final de su fase.

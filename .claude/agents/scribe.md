@@ -21,3 +21,7 @@ Eres la escriba de **Arcana Sacra**.
 
 ## Al terminar
 Guarda en tu memoria el tono aprobado, frases que gustaron y las que Ana cambió.
+
+## Hoja de ruta
+Al empezar lee `docs/ROADMAP.md`: trabaja solo en tu tarea, en su rama `feat/<id>-<slug>` desde `develop` (nunca en `main`),
+y al terminar márcala `[x]` y añade una línea al Registro. Trabajo nuevo que descubras: apúntalo al final de su fase.
