@@ -49,14 +49,15 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 - [ ] 2.5 Resolver el marco: confirmar derechos o sustituirlo por uno libre. · *Dueño*: `image-alchemist` + Ana · dep.: 2.4.
 - [!] 2.6 Fuente Billa Mount: **decisión de Ana (2026-11-26): dejarla como está.** Queda anotado que el archivo es la demo "just for personal use" de Kana Widana / Alit Design (© 2020); `license-auditor` lo documenta en `docs/LICENCIAS.md` como riesgo aceptado y no vuelve a preguntar. Reabrir si Ana compra la licencia (~17 $, Fontspring) o decide pasar a Ballet.
 
-- [ ] 2.2.1 Visor del gabinete: el título pisa la etiqueta "FLASH · 2026" y el subtítulo (escritorio y móvil). · *Dueño*: `art-director + frontend-artisan` · `Cabinet.tsx`. Ver informe 2.1.
-- [ ] 2.2.2 Quitar el texto "Sample piece: replace it with your image in src/data/art.ts" visible en el visor. · *Dueño*: `frontend-artisan` · `src/data/art.ts`. Ver informe 2.1.
-- [ ] 2.2.3 404 en móvil: reducir la llave para que el mensaje se vea en la primera pantalla. · *Dueño*: `frontend-artisan` · `404.astro`. Ver informe 2.1.
-- [ ] 2.2.4 Foco de teclado más visible (hoy 1 px punteado) en navegación y objetos. · *Dueño*: `frontend-artisan` · `global.css`. Ver informe 2.1.
-- [ ] 2.2.5 Esqueleto recortado por la derecha en Art (modo día, escritorio). · *Dueño*: `image-alchemist / frontend-artisan` · `objetos/ink/skeleton.webp`. Ver informe 2.1.
+- [x] 2.2.1 Visor del gabinete: el título pisa la etiqueta "FLASH · 2026" y el subtítulo (escritorio y móvil). · *Dueño*: `art-director + frontend-artisan` · `Cabinet.tsx`. Ver informe 2.1.
+- [x] 2.2.2 Quitar el texto "Sample piece: replace it with your image in src/data/art.ts" visible en el visor. · *Dueño*: `frontend-artisan` · `src/data/art.ts`. Ver informe 2.1.
+- [x] 2.2.3 404 en móvil: reducir la llave para que el mensaje se vea en la primera pantalla. · *Dueño*: `frontend-artisan` · `404.astro`. Ver informe 2.1.
+- [x] 2.2.4 Foco de teclado más visible (hoy 1 px punteado) en navegación y objetos. · *Dueño*: `frontend-artisan` · `global.css`. Ver informe 2.1.
+- [x] 2.2.5 Esqueleto recortado por la derecha en Art (modo día, escritorio). · *Dueño*: `image-alchemist / frontend-artisan` · `objetos/ink/skeleton.webp`. Ver informe 2.1.
 - [ ] 2.2.6 Móvil: la sangre cuelga bajo la cabecera en vez de salir del borde superior. · *Dueño*: `art-director + frontend-artisan` · `Altar.tsx / CSS`. Ver informe 2.1.
+  - Recomendación art-director: la causa es que en móvil `.altar` (`altar.css` l.198, `margin-top:0`) empieza bajo la cabecera en flujo y `.blood` es `top:0` de `.altar`. No hacer `.altar` estático (su `::after` de oscuridad usa `inset:0`). Sacar `<div className="blood">` de `.altar` (fragmento en `Altar.tsx`, hermano anterior) y anclarlo al documento: en móvil `body` (solo portada) `position:relative`, `.blood{position:absolute; top:0; z-index:1}` por debajo del texto de la cabecera (título y nav con `position:relative; z-index:2`), altura ~90px / `background-size:600px 90px` (hoy 130px) para que los goteos pasen por detrás del título sin tapar los enlaces. Mantener animación `bleed` y comprobar noche y día a 390x844.
 - [ ] 2.2.7 Comprobar la costura de fondo a 100vh en móvil (puede ser artefacto de captura). · *Dueño*: `qa-tester / frontend-artisan` · `global.css`. Ver informe 2.1.
-- [ ] 2.2.8 Añadir favicon.ico a public/ (hoy 404). · *Dueño*: `frontend-artisan` · `public/`. Ver informe 2.1.
+- [x] 2.2.8 Añadir favicon.ico a public/ (hoy 404). · *Dueño*: `frontend-artisan` · `public/`. Ver informe 2.1.
 
 ## Fase 3 — Contenido real
 - [ ] 3.1 Revisar y ajustar textos de About y títulos del gabinete (Ana aprueba). · *Dueño*: `scribe`.
@@ -88,3 +89,4 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 | 2026-11-26 | 1.2, 1.3, 1.4 | Claude + Ana | Cloudflare Pages conectado, lockfile arreglado, `main` publicada y dominios `arcanasacra.net` y `www` activos. |
 | 2026-11-26 | 2.6, 4.5-4.7 | Claude | Ana decide mantener la fuente; se añaden proyectos de portfolio (tarot, proyecto web previo). |
 | 2026-11-26 | 2.1 | qa-tester | QA completo: pasa con 8 observaciones (media/baja); tareas 2.2.1-2.2.8 y informe en `docs/qa/2026-11-26-qa-completo/`. |
+| 2026-11-26 | 2.2.1-2.2.5, 2.2.8 | frontend-artisan | Visor sin solapes (interlineado y huecos), aviso de pieza de muestra solo en dev, 404 móvil con llave pequeña, foco 2 px sólido, esqueleto con borde derecho fundido (el grabado original viene cortado), `favicon.ico`. |

@@ -18,3 +18,10 @@ y Billa Mount local (`public/fonts/billa-mount.ttf`, ignorada en git).
 
 ## Comprobaciones habituales
 `npm run build` → `npx astro preview --port 4321` → capturas Playwright (CommonJS, `require('playwright')`).
+
+## Trampas (2026-11-26, tareas 2.2.x)
+- Las dos versiones de `skeleton.webp` vienen cortadas por la derecha en el grabado original: se funde con `mask-image` en `cabinet.css` en vez de rehacer la imagen.
+- Sin Python ni ImageMagick: para ICO usar sharp (PNG 48 px dentro de cabecera ICO escrita a mano).
+- `astro preview` ya puede estar en 4399 (sirve `dist`, basta con reconstruir); un segundo preview falla y un `&` en la tool Bash muere al acabar el comando.
+- Imagen de la llave 404 es muy alta (1:3.3): limitar por ancho (92 px en móvil) para que el mensaje entre en la primera pantalla.
+- Aviso de pieza de muestra: `import.meta.env.DEV` en `Cabinet.tsx`.
