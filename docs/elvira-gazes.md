@@ -81,3 +81,7 @@ Iris originales borrados con una elipse blanca del globo ocular (el iris generad
 
 Anadir al pie (`Base.astro`) y README: Orange County Archives (CC BY 2.0) ya cubre las fotos; **anadir** las dos fotos nuevas
 (1980s con monstruos y 1997, mismo autor/licencia) si el pie las lista por separado; y el **marco Cuvillies/Lespilliez, Cooper Hewitt, dominio publico**.
+
+## Marco de los apaisados en uso (2026-11-26, tarea 2.8.8)
+- Por defecto (`USE_OVAL_STRETCHED = true` en `Altar.tsx`): el marco ovalado `frame.webp` estirado en horizontal (150 % de ancho x 70 % de alto de la caja `.tracking-eye`, hueco 11.2/17.6/77.6/68.4 %). Mas limpio y coherente con los verticales; no anade creditos nuevos.
+- Alternativa (`USE_OVAL_STRETCHED = false`): `frame-wide2`, mas recargado. Si Ann se queda con el ovalado estirado, `frame-wide2` y su credito Cuvillies pueden retirarse.
