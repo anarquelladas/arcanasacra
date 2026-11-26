@@ -116,7 +116,7 @@ export default function Cabinet({ items }: { items: ArtPiece[] }) {
               <span className="kind caps">{cur.kind}{cur.year ? ` · ${cur.year}` : ''}</span>
               <strong>{cur.title}</strong>
               {cur.note && <em>{cur.note}</em>}
-              {!cur.src && <small>Sample piece: replace it with your image in src/data/art.ts</small>}
+              {import.meta.env.DEV && !cur.src && <small>Dev only - sample piece: replace it with your image in src/data/art.ts</small>}
             </figcaption>
             <button className="nav prev" onClick={() => go(-1)} aria-label="Previous"><span>← previous</span></button>
             <button className="nav next" onClick={() => go(1)} aria-label="Next"><span>next →</span></button>
