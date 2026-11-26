@@ -71,7 +71,7 @@ Convertidas a alto contraste con `scripts/contrast.py` a partir de:
 - Ernst Haeckel, *Kunstformen der Natur* (dominio público): murciélagos.
 - Andreas Vesalius, *De humani corporis fabrica* (dominio público): esqueleto.
 - Wellcome Collection, frasco de veneno verde (CC BY 4.0).
-- Marco ovalado del medallón: imagen aportada por Ana (comprobar que se puede usar antes de publicar).
+- Marco ovalado del medallón: imagen aportada por Ann (comprobar que se puede usar antes de publicar).
 - Orange County Archives, fotos promocionales de Elvira para Knott's Berry Farm (CC BY 2.0), Wikimedia Commons: los ojos del centro y la figura de About.
   Aviso: Elvira es un personaje registrado y la imagen de Cassandra Peterson tiene derechos de imagen; se usa como homenaje, no como respaldo.
 - Didier Descouens, Wikimedia Commons (CC BY-SA 4.0): esfinge de la calavera (*Acherontia atropos*) y polilla moteada (*Biston betularia*).

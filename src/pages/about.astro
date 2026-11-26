@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import { Stamp } from '../components/Stamp';
+import AboutLetter from '../components/AboutLetter';
 import { WaxSeal } from '../components/engravings/Objects';
 import { site } from '../data/site';
 ---
@@ -15,6 +16,7 @@ import { site } from '../data/site';
         : <Stamp name="mirror" className="mirror" />}
     </div>
 
+    <AboutLetter client:load greeting={`Hello, I'm ${site.author}.`}>
     <article class="carta">
       <svg class="sello" viewBox="0 0 60 60" aria-hidden="true"><WaxSeal cx={30} cy={30} r={22} /></svg>
       <p class="saludo">Hello, I'm {site.author}.</p>
@@ -37,6 +39,7 @@ import { site } from '../data/site';
         <a href="/contact/">write to me</a>
       </div>
     </article>
+    </AboutLetter>
   </section>
 
   <figure class="patron">

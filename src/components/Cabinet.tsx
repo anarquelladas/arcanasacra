@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import type { ArtKind, ArtPiece, Placeholder } from '../data/art';
+import { playSound } from '../lib/sound';
 import { CandelabrumStamp, DaggerStamp, MothStamp, Stamp } from './Stamp';
 import './cabinet.css';
 
@@ -44,12 +45,14 @@ export default function Cabinet({ items }: { items: ArtPiece[] }) {
   const [sel, setSel] = useState<number | null>(null);
 
   const visible = items.map((p, i) => ({ p, i })).filter(({ p }) => !kind || p.kind === kind);
+  const closeViewer = useCallback(() => { playSound('pick'); setSel(null); }, []);
   const go = useCallback(
     (dir: number) => {
       if (sel === null) return;
       const idx = visible.findIndex((v) => v.i === sel);
       const n = visible[(idx + dir + visible.length) % visible.length];
       setSel(n.i);
+      playSound('turn-page');
     },
     [sel, visible],
   );
@@ -57,7 +60,7 @@ export default function Cabinet({ items }: { items: ArtPiece[] }) {
   useEffect(() => {
     if (sel === null) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSel(null);
+      if (e.key === 'Escape') closeViewer();
       if (e.key === 'ArrowRight') go(1);
       if (e.key === 'ArrowLeft') go(-1);
     };
@@ -67,7 +70,7 @@ export default function Cabinet({ items }: { items: ArtPiece[] }) {
       removeEventListener('keydown', onKey);
       document.documentElement.style.overflow = '';
     };
-  }, [sel, go]);
+  }, [sel, go, closeViewer]);
 
   const cur = sel !== null ? items[sel] : null;
 
@@ -75,7 +78,7 @@ export default function Cabinet({ items }: { items: ArtPiece[] }) {
     <section className="gabinete">
       <div className="drawers" role="group" aria-label="Filter pieces">
         {FILTERS.map((f) => (
-          <button key={f.id} className="drawer plaque" onClick={() => setKind(f.id)} aria-pressed={kind === f.id}>
+          <button key={f.id} className="drawer plaque" onClick={() => { if (kind !== f.id) playSound('tick'); setKind(f.id); }} aria-pressed={kind === f.id}>
             <span className="knob" aria-hidden="true" />
             {f.label}
           </button>
@@ -90,7 +93,7 @@ export default function Cabinet({ items }: { items: ArtPiece[] }) {
               <button
                 key={i}
                 className={`cubby s-${p.size} ${hidden ? 'veiled' : ''}`}
-                onClick={() => !hidden && setSel(i)}
+                onClick={() => { if (!hidden) { playSound('drawer'); setSel(i); } }}
                 tabIndex={hidden ? -1 : 0}
                 aria-hidden={hidden}
                 aria-label={`${p.title} (${p.kind})`}
@@ -107,7 +110,7 @@ export default function Cabinet({ items }: { items: ArtPiece[] }) {
       </div>
 
       {cur && (
-        <div className="vitrine" role="dialog" aria-modal="true" aria-label={cur.title} onClick={() => setSel(null)}>
+        <div className="vitrine" role="dialog" aria-modal="true" aria-label={cur.title} onClick={closeViewer}>
           <figure className="medallion" onClick={(e) => e.stopPropagation()}>
             <div className="oval">
               <Piece p={cur} big />
@@ -120,7 +123,7 @@ export default function Cabinet({ items }: { items: ArtPiece[] }) {
             </figcaption>
             <button className="nav prev" onClick={() => go(-1)} aria-label="Previous"><span>← previous</span></button>
             <button className="nav next" onClick={() => go(1)} aria-label="Next"><span>next →</span></button>
-            <button className="close caps" onClick={() => setSel(null)}>close</button>
+            <button className="close caps" onClick={closeViewer}>close</button>
           </figure>
         </div>
       )}

@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState, type ReactNode } from 'react';
 import type { Repo } from '../lib/github';
+import { playSound } from '../lib/sound';
 import { Dual, MothStamp, Stamp } from './Stamp';
 import './tarot.css';
 
@@ -94,14 +95,17 @@ export default function TarotSpread({ repos, sample }: { repos: Repo[]; sample: 
   const langs = useMemo(() => [...new Set(repos.map((r) => r.language).filter(Boolean))] as string[], [repos]);
   const shown = order.filter((i) => !lang || repos[i].language === lang);
 
-  const toggle = (i: number) =>
+  const toggle = (i: number) => {
+    playSound('card-flip');
     setOpen((s) => {
       const n = new Set(s);
       n.has(i) ? n.delete(i) : n.add(i);
       return n;
     });
+  };
 
   const shuffle = () => {
+    playSound('shuffle');
     setShuffling(true);
     setOpen(new Set());
     setTimeout(() => {
@@ -117,7 +121,7 @@ export default function TarotSpread({ repos, sample }: { repos: Repo[]; sample: 
     }, 550);
   };
 
-  const revealAll = () => setOpen((s) => (s.size === shown.length ? new Set() : new Set(shown)));
+  const revealAll = () => { playSound('card-flip'); setOpen((s) => (s.size === shown.length ? new Set() : new Set(shown))); };
 
   return (
     <section className="tirada">
@@ -126,9 +130,9 @@ export default function TarotSpread({ repos, sample }: { repos: Repo[]; sample: 
         <button className="plaque" onClick={revealAll}>{open.size === shown.length && shown.length ? 'Hide all' : 'Reveal all'}</button>
         {langs.length > 1 && (
           <div className="langs" role="group" aria-label="Filter by language">
-            <button className={!lang ? 'on' : ''} onClick={() => setLang('')}>all</button>
+            <button className={!lang ? 'on' : ''} onClick={() => { playSound('tick'); setLang(''); }}>all</button>
             {langs.map((l) => (
-              <button key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{l}</button>
+              <button key={l} className={lang === l ? 'on' : ''} onClick={() => { playSound('tick'); setLang(l); }}>{l}</button>
             ))}
           </div>
         )}

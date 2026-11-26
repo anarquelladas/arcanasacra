@@ -3,8 +3,8 @@ export const site = {
   name: 'Arcana Sacra',
   tagline: 'tattoo · drawing · code',
   description:
-    'Arcana Sacra: tattoos, engraving-style drawings and software projects by Ana.',
-  author: 'Ana',
+    'Arcana Sacra: tattoos, engraving-style drawings and software projects by Ann.',
+  author: 'Ann',
   email: 'hello@arcanasacra.net',
   github: 'anarquelladas',
   // Pon aquí tus perfiles (o deja la cadena vacía para ocultarlos)

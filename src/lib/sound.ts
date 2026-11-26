@@ -15,6 +15,12 @@
  *   'paper'          roce de papel (carta de About)
  *   'seal-break'     el lacre se rompe
  *   'envelope-open'  el sobre se abre
+ *   'unfold'         la carta se despliega (papel largo)
+ *   'drawer'         cajon de madera que se desliza (abrir una pieza del gabinete)
+ *   'turn-page'      cambio de pieza en el visor (roce corto)
+ *   'tick'           toque seco y suave (filtros, copiar)
+ *   'card-flip'      una carta de tarot se gira
+ *   'shuffle'        barajar las cartas
  *
  * Reglas:
  *  - Nada suena hasta el primer gesto real del usuario (clic, tecla o toque): antes, playSound no hace nada.
@@ -25,7 +31,8 @@
 
 export type SoundName =
   | 'flame-on' | 'flame-off' | 'pick' | 'drop' | 'eye' | 'hover'
-  | 'paper' | 'seal-break' | 'envelope-open';
+  | 'paper' | 'seal-break' | 'envelope-open'
+  | 'unfold' | 'drawer' | 'turn-page' | 'tick' | 'card-flip' | 'shuffle';
 
 const KEY = 'as-sound';
 const MASTER = 0.35;
@@ -165,10 +172,32 @@ const RECIPES: Record<SoundName, (c: AudioContext) => void> = {
     burst(c, { at: 0.05, dur: 0.3, type: 'lowpass', f0: 500, gain: 0.12, attack: 0.1 });
     tone(c, { at: 0.34, dur: 0.1, f0: 150, f1: 100, gain: 0.12 });                            // el papel se asienta
   },
+  unfold: (c) => {
+    rustle(c, 0, 10, 0.14);
+    burst(c, { dur: 0.7, type: 'lowpass', f0: 400, f1: 900, gain: 0.08, attack: 0.25 });
+  },
+  drawer: (c) => {
+    burst(c, { dur: 0.32, type: 'lowpass', f0: 500, f1: 260, q: 0.5, gain: 0.22, attack: 0.05 }); // madera que roza
+    tone(c, { at: 0.3, dur: 0.1, f0: 110, f1: 70, gain: 0.22 });                                  // topa al final
+  },
+  'turn-page': (c) => {
+    burst(c, { dur: 0.2, f0: 1500, f1: 4200, q: 0.6, gain: 0.12, attack: 0.04 });
+  },
+  tick: (c) => {
+    tone(c, { dur: 0.05, f0: 900, f1: 600, type: 'triangle', gain: 0.07 });
+    burst(c, { dur: 0.03, f0: 2200, q: 1.2, gain: 0.05 });
+  },
+  'card-flip': (c) => {
+    burst(c, { dur: 0.13, f0: 2200, f1: 700, q: 0.7, gain: 0.16, attack: 0.02 });
+    tone(c, { at: 0.1, dur: 0.07, f0: 170, f1: 120, gain: 0.1 });
+  },
+  shuffle: (c) => {
+    for (let i = 0; i < 14; i++) burst(c, { at: i * 0.035 + Math.random() * 0.015, dur: 0.05, f0: 2800 + Math.random() * 1800, q: 0.6, gain: 0.07 + Math.random() * 0.05 });
+  },
 };
 
 /** Cada sonido se puede lanzar como mucho una vez por este intervalo (ms), para que el hover no ametralle. */
-const MIN_GAP: Partial<Record<SoundName, number>> = { hover: 140, pick: 60, drop: 60 };
+const MIN_GAP: Partial<Record<SoundName, number>> = { hover: 140, pick: 60, drop: 60, tick: 50, 'turn-page': 80 };
 
 export function playSound(name: SoundName): void {
   if (muted || typeof window === 'undefined') return;
