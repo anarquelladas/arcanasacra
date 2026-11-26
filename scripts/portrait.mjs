@@ -6,7 +6,7 @@ const ASPECT=1.65, OW=1200;
 const OPTS={
  'elvira-d':{src:'big/k80s.jpg',eyes:[[1210,902],[1534,899]],r:40,w:3300,ey:.45,thresh:-30},
  'elvira-e':{src:'big/k97.jpg',eyes:[[1585,519],[1699,520]],r:12,w:1100,ey:.40,thresh:-15},
- 'elvira-f':{src:'big/c36.jpg',eyes:[[1938,1118],[2236,1133]],r:33,w:2700,ey:.34,thresh:25},
+ 'elvira-f':{src:'big/c36.jpg',eyes:[[1938,1118],[2236,1133]],r:33,w:1898,ey:.37,thresh:25},
 };
 const name=process.argv[2]; const o=OPTS[name]; if(process.argv[3])o.thresh=+process.argv[3];
 const W=o.w,H=Math.round(W/ASPECT);

@@ -10,10 +10,12 @@ const PORTRAITS = {
   'elvira-c': { eyes: [[40.07, 35.73], [60.0, 36.29]], r: 4.6 },
   'elvira-d': { eyes: [[36.67, 45.05], [46.48, 44.9]], r: 2.8 },
   'elvira-e': { eyes: [[44.82, 39.88], [55.18, 40.03]], r: 2.5 },
-  'elvira-f': { eyes: [[44.48, 33.56], [55.52, 34.47]], r: 2.8 },
+  'elvira-f': { eyes: [[42.15, 36.35], [57.85, 37.65]], r: 3.6 },
 };
 
+const ONLY = process.argv.slice(2);
 for (const [name, { eyes, r }] of Object.entries(PORTRAITS)) {
+  if (ONLY.length && !ONLY.includes(name)) continue;
   const { data, info } = await sharp(`public/objetos/${name}.webp`)
     .flatten({ background: '#000' }).greyscale().raw().toBuffer({ resolveWithObject: true });
   const W = info.width, H = info.height;
