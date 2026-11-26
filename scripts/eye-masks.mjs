@@ -11,10 +11,13 @@ const PORTRAITS = {
   'elvira-d': { eyes: [[36.67, 45.05], [46.48, 44.9]], r: 2.8 },
   'elvira-e': { eyes: [[44.82, 39.88], [55.18, 40.03]], r: 2.5 },
   'elvira-f': { eyes: [[42.15, 36.35], [57.85, 37.65]], r: 3.6 },
+  'elvira-g': { eyes: [[43.18, 39.53], [56.82, 40.44]], r: 4.5, ell: [3.9, 1.65] },
+  'elvira-h': { eyes: [[41.14, 44.78], [58.79, 45.22]], r: 4.5 },
+  'elvira-i': { eyes: [[44.83, 61.72], [55.13, 62.27]], r: 2.8 },
 };
 
 const ONLY = process.argv.slice(2);
-for (const [name, { eyes, r }] of Object.entries(PORTRAITS)) {
+for (const [name, { eyes, r, ell }] of Object.entries(PORTRAITS)) {
   if (ONLY.length && !ONLY.includes(name)) continue;
   const { data, info } = await sharp(`public/objetos/${name}.webp`)
     .flatten({ background: '#000' }).greyscale().raw().toBuffer({ resolveWithObject: true });
@@ -41,6 +44,7 @@ for (const [name, { eyes, r }] of Object.entries(PORTRAITS)) {
       const i = stack.pop(); out[i] = 255;
       const x = i % W, y = (i / W) | 0;
       for (const [nx, ny] of [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]]) {
+        if (ell && (((nx - cx) / (ell[0] / 100 * W)) ** 2 + ((ny - cy) / (ell[1] / 100 * H)) ** 2) > 1) continue;
         if (nx < x0 || nx > x1 || ny < y0 || ny > y1 || nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
         const j = ny * W + nx;
         if (!seen.has(j) && bright(j)) { seen.add(j); stack.push(j); }

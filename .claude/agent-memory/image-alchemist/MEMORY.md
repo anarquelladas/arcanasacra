@@ -53,3 +53,8 @@ Posiciones de ojos e iris en `GAZES` de `Altar.tsx`. El retrato va en left 21.7 
 - En esta maquina NO hay Python (solo stubs de la Store): se uso Node + sharp (scripts/portrait.mjs, scripts/frame-wide.mjs). En sharp, `.raw()` tras resize/blur puede devolver 3 canales: usar `.toColourspace('b-w')`; `resize` con distinta proporcion necesita `fit:'fill'`; `composite` va despues de `resize` (hacer en dos pasos).
 - elvira-d (Knott's mid-1980s 35896686071), elvira-e (1997, 35896692491), elvira-f (36030656275 plano amplio): CC BY 2.0 Orange County Archives. frame-wide: Cuvillies CH 18238167 PD, hueco left16.26 top38.34 w68.42 h47.12. Datos en docs/elvira-gazes.md.
 - Wikimedia limita peticiones (429): espaciar 3-5 s. No quedan mas fotos libres de Elvira en Commons; las de Cassandra Peterson son sin disfraz.
+
+## Sesion 2026-11-26 ronda 2 (Elvira)
+- Ann prefiere a, c, f; rechaza b, d, e. elvira-f ahora cerrado (w1898, ey .37). Nuevos: elvira-g (35641035160, vertical), elvira-h/i (sombrero 35641028170, vertical y apaisado), CC BY 2.0 Orange County Archives. portrait.mjs admite aspect/ow/oval/bgcut (fondo blanco -> negro + filete rim).
+- frame-wide2: Cuvillies CH 18238247 PD, lineas sobre transparente, hueco eliptico left12.27 top29.15 w76.84 h53.44. Scripts leen big/*.jpg del cwd (scratchpad); descargar con dl.mjs (Special:FilePath).
+- Commons ya no tiene mas fotos de Elvira (ni Cassandra caracterizada). En bash, NO usar backticks dentro de node -e con comillas dobles.
