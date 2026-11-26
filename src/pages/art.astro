@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Cabinet from '../components/Cabinet';
+import { art } from '../data/art';
+---
+<Base title="Art" description="Tattoos, flash and engraving-style drawings by Arcana Sacra.">
+  <PageHead title="Cabinet of Curiosities" kicker="art">
+    <p>Tattoos, available flash and drawings.</p>
+  </PageHead>
+  <Cabinet client:visible items={art} />
+</Base>

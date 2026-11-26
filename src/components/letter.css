@@ -1,0 +1,95 @@
+.post {
+  position: relative;
+  width: min(580px, 92vw);
+  margin: 0 auto 5rem;
+  aspect-ratio: 1 / 1.2;
+  container-type: inline-size;
+}
+.hint {
+  position: absolute; top: 36%; left: 0; right: 0; margin: 0;
+  text-align: center; font-family: var(--caps); letter-spacing: .3em; color: var(--ink-dim); font-size: .85rem;
+  transition: opacity .4s;
+  animation: beckon 3s ease-in-out infinite;
+}
+.open .hint { opacity: 0; }
+@keyframes beckon { 50% { transform: translateY(6px); } }
+
+.env {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  aspect-ratio: 26 / 17;
+  perspective: 1400px;
+  filter: drop-shadow(0 20px 24px rgba(0,0,0,.55));
+}
+.env-back {
+  position: absolute; inset: 0; border-radius: 2px;
+  background: url('/tex/paper.webp') center / 300px;
+  filter: brightness(.72) sepia(.2);
+  box-shadow: inset 0 0 40px rgba(0,0,0,.5);
+}
+.letter {
+  position: absolute; left: 5%; right: 5%; top: 4%; height: 92%;
+  padding: 5% 7% 4%;
+  color: var(--ink-dark);
+  background: url('/tex/paper.webp') 40% 30% / 280px;
+  box-shadow: 0 -4px 14px rgba(0,0,0,.25);
+  font-size: clamp(.68rem, 3.1cqw, 1.02rem);
+  line-height: 1.4;
+  z-index: 2;
+  transition: transform 1.1s var(--ease) .55s;
+}
+.open .letter { transform: translateY(-84%); }
+.letter .dear { margin: 0 0 .2em; font-family: var(--script); font-size: 2em; line-height: 1.5; }
+.letter .lead { margin: 0 0 .7em; }
+.letter dl { display: grid; grid-template-columns: auto 1fr; gap: .3em 1em; margin: 0 0 .8em; align-items: baseline; }
+.letter dt { font-family: var(--caps); letter-spacing: .18em; opacity: .6; font-size: .8em; }
+.letter dd { margin: 0; display: flex; flex-wrap: wrap; gap: .2em .8em; align-items: baseline; }
+.letter a { color: var(--ink-dark); text-decoration-thickness: .5px; text-underline-offset: 3px; }
+.letter a:hover { opacity: .6; }
+.copy {
+  font-family: var(--caps); font-size: .78em; letter-spacing: .1em;
+  background: none; border: 1px solid var(--ink-dark); color: var(--ink-dark);
+  padding: .05em .55em; cursor: pointer; border-radius: 2px;
+}
+.copy:hover { background: var(--ink-dark); color: var(--paper); }
+.letter .ps { margin: 0; font-style: italic; font-size: .92em; }
+
+.env-front { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; }
+.env-flap {
+  position: absolute; left: 0; top: 0; width: 100%; height: 70.6%;
+  z-index: 4;
+  transform-origin: 50% 0;
+  transition: transform .8s var(--ease), z-index 0s .35s;
+  filter: drop-shadow(0 4px 4px rgba(0,0,0,.25));
+}
+.open .env-flap { transform: rotateX(180deg); z-index: 1; }
+
+.seal-btn {
+  position: absolute; left: 50%; top: 66%;
+  width: 17%; aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  padding: 0; border: 0; background: none; cursor: pointer;
+  z-index: 5;
+  filter: drop-shadow(0 4px 4px rgba(0,0,0,.5));
+  animation: pulse 2.6s ease-in-out infinite;
+}
+.seal-btn:hover { animation: shake .4s ease-in-out infinite; }
+.seal-btn .half { position: absolute; inset: 0; width: 100%; height: 100%; transition: transform .9s cubic-bezier(.5, 0, .7, 1), opacity .9s; }
+.seal-btn .half.l { clip-path: polygon(0 0, 52% 0, 44% 30%, 56% 55%, 46% 100%, 0 100%); }
+.seal-btn .half.r { clip-path: polygon(52% 0, 100% 0, 100% 100%, 46% 100%, 56% 55%, 44% 30%); }
+.open .seal-btn { animation: none; cursor: default; }
+.open .seal-btn .half.l { transform: translate(-60%, 160%) rotate(-70deg); opacity: 0; }
+.open .seal-btn .half.r { transform: translate(60%, 170%) rotate(80deg); opacity: 0; }
+@keyframes pulse { 50% { transform: translate(-50%, -50%) scale(1.03); } }
+@keyframes shake {
+  0%, 100% { transform: translate(-50%, -50%) rotate(0); }
+  25% { transform: translate(-50%, -50%) rotate(-6deg); }
+  75% { transform: translate(-50%, -50%) rotate(6deg); }
+}
+
+.reseal {
+  position: absolute; bottom: -2.6rem; left: 50%; transform: translateX(-50%);
+  background: none; border: 0; color: var(--ink-dim); font-family: var(--serif); font-style: italic; font-size: 1rem;
+  cursor: pointer; animation: fade 1s ease 1.6s both;
+}
+.reseal:hover { color: var(--ink); }
+@keyframes fade { from { opacity: 0; } }

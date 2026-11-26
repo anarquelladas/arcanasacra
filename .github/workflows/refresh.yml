@@ -1,0 +1,20 @@
+# Vuelve a publicar la web cada día para que la sección Código recoja
+# los repos nuevos con el topic "portfolio", aunque no hayas tocado este repo.
+# Necesita el secreto CLOUDFLARE_DEPLOY_HOOK (ver README).
+name: Refrescar arcanos
+
+on:
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Llamar al deploy hook de Cloudflare
+        env:
+          HOOK: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "Falta el secreto CLOUDFLARE_DEPLOY_HOOK"; exit 1; fi
+          curl -fsS -X POST "$HOOK"

@@ -1,0 +1,159 @@
+.gabinete { max-width: 1180px; margin: 0 auto; padding: 0 1.25rem 5rem; }
+
+/* filtros: texto en versalitas */
+.drawers { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem 2.4rem; margin-bottom: 2.6rem; }
+.drawer .knob { display: none; }
+
+/* vitrina: filetes finos, sin dorados */
+.frame {
+  position: relative;
+  padding: 10px;
+  border: 1px solid rgba(233, 223, 200, .28);
+}
+.frame::before {
+  content: ''; position: absolute; inset: 4px;
+  border: 1px solid rgba(233, 223, 200, .12);
+  pointer-events: none;
+}
+.shelves {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 210px;
+  grid-auto-flow: dense;
+  gap: 1px;
+  background: rgba(233, 223, 200, .14);
+}
+.s-tall { grid-row: span 2; }
+.s-wide { grid-column: span 2; }
+.s-l { grid-row: span 2; grid-column: span 2; }
+
+.cubby {
+  position: relative;
+  display: grid; place-items: center;
+  padding: 14px;
+  overflow: hidden;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  background: var(--surface);
+  transition: background .6s;
+}
+.cubby .item {
+  display: grid; place-items: center;
+  width: 100%; height: 100%;
+  transition: transform .6s var(--ease), filter .6s;
+  filter: drop-shadow(0 6px 6px rgba(0,0,0,.6));
+  opacity: .85;
+}
+.piece-svg { width: 80%; }
+.piece-svg img { max-height: 380px; width: auto; max-width: 100%; margin: 0 auto; }
+.s-tall .piece-svg { width: 56%; }
+.s-m .piece-svg, .s-s .piece-svg { width: 62%; }
+.s-m .piece-svg img, .s-s .piece-svg img { max-height: 170px; }
+.s-wide .piece-svg { width: 62%; }
+.s-wide .piece-svg img { max-height: 170px; }
+.piece-svg.ph-key, .piece-svg.ph-dagger, .piece-svg.ph-poison, .piece-svg.ph-candelabrum { width: 30%; }
+.piece-svg.ph-ball, .piece-svg.ph-skeleton, .piece-svg.ph-elvira { width: 60%; }
+.piece-svg.ph-moth { width: 86%; }
+.piece-img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+.cubby:hover .item, .cubby:focus-visible .item {
+  transform: translateY(-5px);
+  opacity: 1;
+}
+.cubby .label {
+  position: absolute; left: 0; right: 0; bottom: 12px;
+  font-family: var(--serif); font-style: italic; font-size: 1rem; color: var(--ink-dim);
+  text-align: center;
+  opacity: 0; transform: translateY(4px);
+  transition: opacity .5s, transform .6s var(--ease);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 10px;
+}
+.cubby:hover .label, .cubby:focus-visible .label { opacity: 1; transform: none; }
+.cubby:hover { background: var(--surface-hi); }
+.cubby .glass {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.07) 45%, transparent 55%);
+  transform: translateX(-100%);
+  transition: transform 1.1s var(--ease);
+}
+.cubby:hover .glass { transform: translateX(100%); }
+
+/* lo filtrado se apaga */
+.cubby .curtain { display: none; }
+.cubby .item { transition: transform .6s var(--ease), opacity .8s, filter .8s; }
+.cubby.veiled { cursor: default; }
+.cubby.veiled .item { opacity: .08; filter: blur(2px); transition-delay: var(--d); }
+.cubby.veiled .label { display: none; }
+
+/* vitrina / medallón */
+.vitrine {
+  position: fixed; inset: 0; z-index: 100;
+  display: grid; place-items: center;
+  padding: 1rem;
+  background: var(--veil);
+  animation: v-in .35s ease both;
+  overflow-y: auto;
+}
+@keyframes v-in { from { opacity: 0; } }
+.medallion {
+  position: relative; margin: 0;
+  width: min(480px, 86vw);
+  display: flex; flex-direction: column; align-items: center;
+  animation: m-in .6s var(--ease) both;
+}
+@keyframes m-in { from { transform: scale(.85) translateY(30px); opacity: 0; } }
+.m-band { width: 88%; height: auto; display: block; }
+.m-band.top { margin-bottom: -9%; position: relative; z-index: 1; }
+.m-band.bottom { margin-top: -9%; position: relative; z-index: 1; }
+.oval {
+  width: 72%;
+  aspect-ratio: 3 / 4;
+  max-height: 56vh;
+  border-radius: 50%;
+  overflow: hidden;
+  display: grid; place-items: center;
+  background: var(--surface);
+  box-shadow:
+    0 0 0 6px var(--bg), 0 0 0 7px rgba(233, 223, 200, .55), 0 0 0 12px var(--bg), 0 0 0 13px rgba(233, 223, 200, .22),
+    inset 0 0 40px rgba(0,0,0,.9);
+}
+.oval .piece-svg { width: 62%; }
+.oval .piece-svg img { max-height: 46vh; width: auto; max-width: 100%; margin: 0 auto; }
+.oval .ph-key, .oval .ph-dagger, .oval .ph-poison, .oval .ph-candelabrum { width: 26%; }
+.oval .piece-img { width: 100%; height: 100%; object-fit: cover; max-width: none; max-height: none; }
+.medallion figcaption {
+  margin-top: 2.4rem;
+  max-width: 420px;
+  display: flex; flex-direction: column; align-items: center; gap: .2rem; text-align: center;
+  color: var(--ink);
+}
+.medallion figcaption strong { font-weight: 400; font-family: var(--script); font-size: 2.8rem; line-height: 1.2; }
+.medallion figcaption .kind { font-size: .72rem; letter-spacing: .3em; color: var(--ink-dim); }
+.medallion figcaption em { font-size: .95rem; color: var(--ink-dim); }
+.medallion figcaption small { font-size: .72rem; opacity: .5; margin-top: .4rem; }
+.medallion .nav {
+  position: absolute; top: 42%;
+  display: flex; align-items: center; gap: .4rem;
+  background: none; border: 0; color: var(--ink-dim); cursor: pointer;
+  font-family: var(--serif); font-style: italic; font-size: 1rem;
+}
+.medallion .nav:hover { color: var(--gold-hi); }
+.nav-s { width: 22px; height: 22px; transition: transform .5s var(--ease); }
+.medallion .nav:hover .nav-s { transform: rotate(90deg) scale(1.3); }
+.medallion .prev { right: 100%; margin-right: -.5rem; }
+.medallion .next { left: 100%; margin-left: -.5rem; }
+.medallion .close {
+  position: absolute; top: -.4rem; right: -.4rem;
+  background: none; border: 0; color: var(--ink-dim); cursor: pointer; letter-spacing: .2em; font-size: .85rem;
+}
+.medallion .close:hover { color: var(--ink); }
+
+@media (max-width: 760px) {
+  .shelves { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 140px; }
+  .frame { padding: 14px; }
+  .medallion .nav { top: auto; bottom: -3rem; }
+  .medallion .prev { right: auto; left: 0; margin: 0; }
+  .medallion .next { left: auto; right: 0; margin: 0; }
+  .medallion { margin-bottom: 3rem; }
+  .medallion .nav span { display: inline; }
+}

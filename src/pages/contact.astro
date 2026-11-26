@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Letter from '../components/Letter';
+import { site } from '../data/site';
+---
+<Base title="Contact" description="Write to me for tattoo bookings, drawing commissions or job offers.">
+  <PageHead title="Correspondence" kicker="contact" />
+  <Letter client:visible email={site.email} github={site.github} instagram={site.instagram} linkedin={site.linkedin} />
+  <noscript><p style="text-align:center"><a href={`mailto:${site.email}`}>{site.email}</a></p></noscript>
+</Base>

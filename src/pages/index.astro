@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import Altar from '../components/Altar';
+---
+<Base>
+  <Altar client:load />
+  <noscript>
+    <p style="text-align:center">
+      <a href="/art/">Art</a> · <a href="/code/">Code</a> · <a href="/about/">About</a> · <a href="/contact/">Contact</a>
+    </p>
+  </noscript>
+</Base>

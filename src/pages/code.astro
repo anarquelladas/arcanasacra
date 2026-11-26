@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import TarotSpread from '../components/TarotSpread';
+import { getRepos, sampleRepos } from '../lib/github';
+import { site, tools } from '../data/site';
+
+const { repos, error } = await getRepos();
+const sample = repos.length === 0;
+if (error) console.warn(`[codigo] No se pudieron leer los repos: ${error}`);
+---
+<Base title="Code" description="Software projects: TypeScript, React, Python, AI agents and Laravel.">
+  <PageHead title="Arcana of Code" kicker="projects">
+    <p>Each card is a project. Click one to reveal it.</p>
+  </PageHead>
+
+  <ul class="botica" aria-label="Tools">
+    {tools.map((t) => <li>{t}</li>)}
+  </ul>
+
+  <TarotSpread client:visible repos={sample ? sampleRepos : repos} sample={sample} />
+
+  <p class="all">
+    <a href={`https://github.com/${site.github}`} target="_blank" rel="noreferrer">The whole archive on GitHub ↗</a>
+  </p>
+</Base>
+
+<style>
+  .botica { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: .2rem 0; padding: 0 1rem; margin: -1rem auto 3rem; max-width: 720px; font-style: italic; color: var(--ink-dim); }
+  .botica li + li::before { content: '·'; margin: 0 .8em; opacity: .5; }
+  .all { text-align: center; margin: -1rem 0 5rem; }
+  .all a { color: var(--ink-dim); font-family: var(--caps); font-size: .78rem; letter-spacing: .26em; text-decoration: none; }
+  .all a:hover { color: var(--ink); }
+</style>

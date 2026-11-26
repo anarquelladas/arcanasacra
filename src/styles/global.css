@@ -1,0 +1,247 @@
+/* Billa Mount (Alit Design) solo para el logotipo "Arcana Sacra".
+   El archivo actual es la DEMO de uso personal (sin tildes ni eñes);
+   para la web pública hace falta la licencia comercial: sustituye el
+   archivo por el de la versión completa con el mismo nombre. */
+@font-face {
+  font-family: 'Billa Mount';
+  src: url('/fonts/billa-mount.ttf') format('truetype');
+  font-display: swap;
+}
+
+:root {
+  --bg: #0e0d0b;
+  --surface: #0d0c0a;
+  --surface-hi: #13110e;
+  --veil: rgba(8, 7, 6, .96);
+  --wash: rgba(12, 11, 9, .5);
+  --tex: url('/tex/slate.webp');
+  --ink: #e9dfc8;
+  --ink-dim: #a69c86;
+  --ink-dark: #2a2218;
+  /* sin dorados: un único tono hueso, más apagado, para el "metal" */
+  --gold: #b7ab8f;
+  --gold-hi: #e9dfc8;
+  --gold-deep: #5c5548;
+  --blood: #6b1714;
+  --paper: #d9ccb0;
+  --serif: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
+  --caps: 'Cormorant SC', 'Cormorant Garamond', Georgia, serif;
+  --script: 'Billa Mount', 'Ballet', cursive;
+  --script-2: 'Billa Mount', 'Ballet', cursive;
+  --logo: 'Billa Mount', 'Ballet', cursive;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; min-height: 100%; }
+
+body {
+  background:
+    linear-gradient(var(--wash), var(--wash)),
+    var(--bg) var(--tex) repeat;
+  background-size: auto, 820px;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* viñeta: los bordes se oscurecen como una vitrina mal iluminada */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 40%, transparent 45%, rgba(0, 0, 0, .55) 100%);
+  z-index: 0;
+}
+
+a { color: inherit; }
+
+::selection { background: var(--blood); color: var(--ink); }
+
+:focus-visible { outline: 1px dashed var(--gold); outline-offset: 4px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+.caps { font-family: var(--caps); letter-spacing: .06em; }
+
+main { position: relative; }
+
+/* rótulo fino: texto en versalitas con un filete delante */
+.tag {
+  position: absolute;
+  display: inline-flex;
+  flex-direction: column;
+  padding-left: 2.6rem;
+  color: var(--ink);
+  font-family: var(--caps);
+  font-size: .95rem;
+  letter-spacing: .24em;
+  line-height: 1.35;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.tag::before {
+  content: '';
+  position: absolute;
+  left: 0; top: .62em;
+  width: 2rem; height: 1px;
+  background: var(--ink-dim);
+  transform-origin: 0 50%;
+}
+.tag small {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: .95rem;
+  letter-spacing: .02em;
+  color: var(--ink-dim);
+}
+
+/* enlace-botón discreto: versalitas espaciadas y un filete que se dibuja al pasar */
+.plaque {
+  position: relative;
+  display: inline-block;
+  padding: .3em 0;
+  background: none;
+  border: 0;
+  color: var(--ink-dim);
+  font-family: var(--caps);
+  font-size: .9rem;
+  letter-spacing: .24em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .4s;
+}
+.plaque::after {
+  content: '';
+  position: absolute;
+  left: 0; right: .26em; bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform .6s var(--ease);
+}
+.plaque:hover, .plaque[aria-current='page'], .plaque[aria-pressed='true'] { color: var(--ink); }
+.plaque:hover::after, .plaque[aria-current='page']::after, .plaque[aria-pressed='true']::after { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+/* ───────── imágenes de sello ───────── */
+.stamp { position: relative; display: block; }
+.stamp img { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
+.stamp .shine {
+  position: absolute; inset: 0; pointer-events: none;
+  -webkit-mask: var(--src) center / 100% 100% no-repeat;
+  mask: var(--src) center / 100% 100% no-repeat;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 250, 235, .55) 50%, transparent 62%) 160% 0 / 260% 100% no-repeat;
+  opacity: 0;
+  transition: opacity .3s;
+}
+:is(a, button, .stamp):hover > .lift > .stamp .shine,
+:is(a, button, .stamp):hover > .stamp .shine,
+.cubby:hover .stamp .shine,
+.stamp:hover > .shine { opacity: 1; animation: gleam 1.3s var(--ease) both; }
+@keyframes gleam { from { background-position: 160% 0; } to { background-position: -60% 0; } }
+
+/* polilla en dos mitades */
+.moth-fly { perspective: 900px; }
+.moth-fly .wing-img { display: block; width: 100%; height: auto; transform-origin: 50% 50%; transition: transform .5s var(--ease); }
+.moth-fly .wing-img.l { clip-path: inset(0 50% 0 0); }
+.moth-fly .wing-img.r { position: absolute; inset: 0; clip-path: inset(0 0 0 50%); }
+a:hover .moth-fly .wing-img.l, .cubby:hover .moth-fly .wing-img.l { animation: flap-l .42s ease-in-out infinite alternate; }
+a:hover .moth-fly .wing-img.r, .cubby:hover .moth-fly .wing-img.r { animation: flap-r .42s ease-in-out infinite alternate; }
+@keyframes flap-l { to { transform: rotateY(58deg); } }
+@keyframes flap-r { to { transform: rotateY(-58deg); } }
+
+/* vela */
+.candle-wrap { position: relative; display: block; }
+.candle-wrap .flame-svg { position: absolute; left: 50%; top: 1%; width: 120%; transform: translate(-50%, -52%); overflow: visible; pointer-events: none; }
+.flame { transform-box: fill-box; transform-origin: 50% 100%; animation: flicker 2.4s ease-in-out infinite; transition: opacity .4s, transform .4s; }
+.halo { animation: breathe 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; transition: opacity .6s; }
+@keyframes flicker {
+  0%, 100% { transform: scale(1, 1) skewX(0); }
+  20% { transform: scale(.94, 1.06) skewX(2deg); }
+  45% { transform: scale(1.04, .96) skewX(-3deg); }
+  70% { transform: scale(.97, 1.08) skewX(1deg); }
+}
+@keyframes breathe { 50% { transform: scale(1.12); opacity: .7; } }
+
+
+/* ───────── modo claro: papel, tinta y las fotos como sellos estampados ───────── */
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #e7dcc4;
+  --ink: #1a1611;
+  --ink-dim: #5f5548;
+  --ink-dark: #1a1611;
+  --gold: #5f5548;
+  --gold-hi: #1a1611;
+  --paper: #efe6d2;
+  --surface: #e2d6bc;
+  --surface-hi: #dccfb2;
+  --veil: rgba(231, 220, 196, .97);
+  --wash: rgba(239, 230, 210, .35);
+  --tex: url('/tex/paper.webp');
+}
+:root[data-theme='light'] body { background-size: auto, 520px; }
+:root[data-theme='light'] body::before { background: radial-gradient(ellipse at 50% 40%, transparent 55%, rgba(90, 70, 40, .22) 100%); }
+/* las fotos cambian a su versión en tinta negra (como sellos sobre papel) */
+.v-light { display: none !important; }
+:root[data-theme='light'] .v-dark { display: none !important; }
+:root[data-theme='light'] .v-light { display: block !important; }
+:root[data-theme='light'] .stamp .shine { display: none; }
+:root[data-theme='light'] .obj .lift { filter: drop-shadow(0 6px 6px rgba(60, 45, 25, .18)); }
+:root[data-theme='light'] .cubby .item { filter: none; }
+:root[data-theme='light'] h1 { text-shadow: none !important; }
+:root[data-theme='light'] .frame { border-color: rgba(26, 22, 17, .35); }
+:root[data-theme='light'] .frame::before { border-color: rgba(26, 22, 17, .15); }
+:root[data-theme='light'] .shelves { background: rgba(26, 22, 17, .2); }
+:root[data-theme='light'] .back-frame { border-color: rgba(26, 22, 17, .5); outline-color: rgba(26, 22, 17, .22); }
+:root[data-theme='light'] .back { box-shadow: 0 10px 18px rgba(60, 45, 25, .25), inset 0 0 0 1px rgba(26, 22, 17, .2); }
+:root[data-theme='light'] .oval { box-shadow: 0 0 0 6px var(--bg), 0 0 0 7px rgba(26, 22, 17, .5), 0 0 0 12px var(--bg), 0 0 0 13px rgba(26, 22, 17, .2); }
+
+/* ───────── candelabro, daga, murciélago y sangre ───────── */
+.candelabrum { position: relative; display: block; }
+.flame-dot {
+  position: absolute; width: 7%; aspect-ratio: 1 / 2.4;
+  transform: translate(-50%, -96%);
+  border-radius: 50% 50% 45% 45% / 70% 70% 30% 30%;
+  background: radial-gradient(ellipse at 50% 78%, #fff8dc 0, #ffd27a 28%, #e07b26 58%, rgba(163, 58, 18, 0) 75%);
+  filter: blur(.4px) drop-shadow(0 0 10px rgba(255, 190, 110, .85)) drop-shadow(0 0 26px rgba(255, 150, 60, .45));
+  transform-origin: 50% 100%;
+  animation: flick 1.9s ease-in-out infinite;
+  transition: opacity .5s, transform .5s;
+}
+@keyframes flick {
+  0%, 100% { transform: translate(-50%, -96%) scale(1, 1) skewX(0); }
+  30% { transform: translate(-50%, -96%) scale(.92, 1.08) skewX(3deg); }
+  60% { transform: translate(-50%, -96%) scale(1.05, .94) skewX(-3deg); }
+}
+.altar.dark .flame-dot { opacity: 0; transform: translate(-50%, -96%) scale(.2); }
+:root[data-theme='light'] .flame-dot { filter: blur(.4px) drop-shadow(0 0 6px rgba(220, 120, 40, .7)); }
+
+.dagger { position: relative; display: block; }
+.dagger .drop { position: absolute; left: 50%; bottom: -2%; width: 14%; transform: translate(-50%, 0); opacity: 0; pointer-events: none; }
+a:hover .dagger .drop, button:hover .dagger .drop, .cubby:hover .dagger .drop { animation: drip 1.6s ease-in 1; }
+@keyframes drip {
+  0% { opacity: 0; transform: translate(-50%, -10%) scale(.3); }
+  25% { opacity: 1; transform: translate(-50%, 0) scale(1, .8); }
+  45% { opacity: 1; transform: translate(-50%, 20%) scale(.9, 1.15); }
+  100% { opacity: 0; transform: translate(-50%, 520%) scale(.9, 1.1); }
+}

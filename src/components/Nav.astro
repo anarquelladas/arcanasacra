@@ -1,0 +1,47 @@
+---
+import { nav } from '../data/site';
+const path = Astro.url.pathname;
+const current = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+<nav class="top" aria-label="Sections">
+  <a class="mark" href="/" aria-label="Arcana Sacra, home">Arcana Sacra</a>
+  <ul>
+    {nav.filter((n) => n.href !== '/').map((n) => (
+      <li><a class="plaque" href={n.href} aria-current={current(n.href) ? 'page' : undefined}>{n.label}</a></li>
+    ))}
+    <li><button class="plaque theme" type="button" aria-label="Switch between day and night"><span class="to-day">☼ Day</span><span class="to-night">☾ Night</span></button></li>
+  </ul>
+</nav>
+
+<script>
+  const btn = document.querySelector('.theme');
+  btn?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+    root.dataset.theme = next;
+    try { localStorage.setItem('as-theme', next); } catch (e) {}
+  });
+</script>
+
+<style>
+  .top {
+    position: relative; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; padding: 1.6rem clamp(1.25rem, 4vw, 3.5rem);
+    animation: fade-in 1.6s ease both;
+  }
+  .mark {
+    color: var(--ink); text-decoration: none; font-family: var(--logo); font-size: 2.2rem; line-height: 1;
+  }
+  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .2rem 2.2rem; }
+  .theme { margin-left: .6rem; }
+  .theme .to-night { display: none; }
+  :global(:root[data-theme='light']) .theme .to-day { display: none; }
+  :global(:root[data-theme='light']) .theme .to-night { display: inline; }
+  @keyframes fade-in { from { opacity: 0; } }
+  @media (max-width: 640px) {
+    .top { flex-direction: column; gap: 1.1rem; padding-top: 1.2rem; }
+    .mark { font-size: 1.7rem; }
+    ul { justify-content: center; gap: .1rem 1.3rem; }
+  }
+</style>

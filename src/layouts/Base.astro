@@ -1,0 +1,49 @@
+---
+import '@fontsource/ballet/400.css';
+import '@fontsource/cormorant-garamond/400.css';
+import '@fontsource/cormorant-garamond/400-italic.css';
+import '@fontsource/cormorant-garamond/500.css';
+import '@fontsource/cormorant-sc/500.css';
+import '../styles/global.css';
+import Defs from '../components/engravings/Defs';
+import Nav from '../components/Nav.astro';
+import { site } from '../data/site';
+
+interface Props { title?: string; description?: string; nav?: boolean }
+const { title, description = site.description, nav = true } = Astro.props;
+const full = title ? `${title} · ${site.name}` : `${site.name} · ${site.tagline}`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{full}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={full} />
+    <meta property="og:description" content={description} />
+    <meta name="theme-color" content="#0e0d0b" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline>
+      // tema guardado (día / noche) antes de pintar, para que no parpadee
+      try { const t = localStorage.getItem('as-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <Defs />
+    <a class="sr-only" href="#contenido">Skip to content</a>
+    {nav && <Nav />}
+    <main id="contenido">
+      <slot />
+    </main>
+    <footer class="credits">
+      Images adapted from: Walters Art Museum (public domain) · The Metropolitan Museum of Art (CC0) ·
+      Ernst Haeckel, Andreas Vesalius (public domain) · Wellcome Collection (CC BY 4.0) ·
+      Elvira photos: Orange County Archives (CC BY 2.0) ·
+      Didier Descouens and Tarot World Project via Wikimedia Commons (CC BY-SA; adaptations under the same licence).
+    </footer>
+    <style>
+      .credits { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 2.4rem; text-align: center; font-size: .78rem; color: var(--ink-dim); opacity: .55; }
+    </style>
+  </body>
+</html>

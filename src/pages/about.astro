@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { Stamp } from '../components/Stamp';
+import { WaxSeal } from '../components/engravings/Objects';
+import { site } from '../data/site';
+---
+<Base title="About">
+  <PageHead title="Behind the Mirror" kicker="about" />
+
+  <section class="retrato">
+    <div class="mirror-wrap">
+      {site.portrait
+        ? <img class="portrait" src={site.portrait} alt={`Portrait of ${site.author}`} />
+        : <Stamp name="mirror" className="mirror" />}
+    </div>
+
+    <article class="carta">
+      <svg class="sello" viewBox="0 0 60 60" aria-hidden="true"><WaxSeal cx={30} cy={30} r={22} /></svg>
+      <p class="saludo">Hello, I'm {site.author}.</p>
+      <p>
+        By day I write code: I work with <b>Laravel and PHP</b>, and outside work I'm diving deep into{' '}
+        <b>TypeScript, React and Python</b>, above all to build <b>AI agents</b> that do real things.
+      </p>
+      <p>
+        By night I draw. <i>Arcana Sacra</i> is the name I keep my engravings, flash designs and first tattoos under:
+        death's-head moths, daggers, crystal balls, poison bottles, watching eyes. A little witch, a little vampire.
+      </p>
+      <p>
+        This site is both of those at once, and one of my projects too: it is handmade with Astro, TypeScript and React,
+        and it publishes itself from GitHub.
+      </p>
+      <p class="firma">{site.author}</p>
+      <div class="sendas">
+        <a href="/art/">see the cabinet</a>
+        <a href="/code/">see the arcana</a>
+        <a href="/contact/">write to me</a>
+      </div>
+    </article>
+  </section>
+
+  <figure class="patron">
+    <Stamp name="elvira" className="patron-img" alt="Elvira, Mistress of the Dark, 1990s promotional photo" />
+    <figcaption><span class="caps">patron saint of the house</span><em>Elvira, Mistress of the Dark</em></figcaption>
+  </figure>
+</Base>
+
+<style>
+  .retrato {
+    display: grid; grid-template-columns: minmax(200px, 300px) minmax(0, 560px);
+    gap: 3rem; justify-content: center; align-items: center;
+    padding: 0 1.25rem 6rem;
+  }
+  .mirror-wrap { position: relative; justify-self: center; width: min(220px, 50vw); }
+  :global(.mirror) { width: 100%; height: auto; display: block; transform-origin: 50% 8%; animation: sway 9s ease-in-out infinite; filter: drop-shadow(0 14px 14px rgba(0,0,0,.6)); }
+  .portrait { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 50%; box-shadow: 0 0 0 6px var(--bg), 0 0 0 7px var(--ink-dim); }
+  @keyframes sway { 50% { transform: rotate(-1.5deg); } }
+  @keyframes sweep { 0%, 55% { transform: translateX(-90px); } 85%, 100% { transform: translateX(90px); } }
+  :global(.glimmer) { position: absolute; width: 20px; height: 20px; animation: tw 3.5s ease-in-out infinite; }
+  :global(.g1) { top: 12%; right: 4%; }
+  :global(.g2) { top: 42%; left: 2%; animation-delay: 1.6s; width: 14px; height: 14px; }
+  @keyframes tw { 0%, 100% { transform: scale(.3); opacity: .2; } 50% { transform: scale(1) rotate(45deg); opacity: 1; } }
+
+  .carta {
+    position: relative;
+    padding: 2.4rem 2.4rem 2rem;
+    color: var(--ink-dark);
+    background: url('/tex/paper.webp') center / 340px;
+    box-shadow: 0 20px 36px rgba(0,0,0,.55);
+    font-size: 1.12rem; line-height: 1.55;
+  }
+  .carta b { font-weight: 400; font-style: italic; }
+  .saludo { font-family: var(--script); font-size: 2.3rem; margin: 0 0 .4em; line-height: 1.5; }
+  .firma { text-align: right; font-family: var(--script); font-size: 2rem; margin: .4em 0 0; line-height: 1.6; }
+  .sello { position: absolute; top: -6px; right: 18px; width: 64px; transform: rotate(14deg); filter: drop-shadow(0 3px 3px rgba(0,0,0,.5)); }
+  .sendas { display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; margin-top: 1rem; font-family: var(--caps); }
+  .sendas a { color: var(--ink-dark); text-decoration: none; border-bottom: .5px solid currentColor; font-size: .85rem; letter-spacing: .14em; }
+  .sendas a:hover { opacity: .6; }
+  .patron { margin: -2rem auto 6rem; width: min(380px, 80vw); text-align: center; }
+  :global(.patron-img) { filter: drop-shadow(0 18px 18px rgba(0,0,0,.6)); }
+  .patron figcaption { margin-top: 1rem; display: flex; flex-direction: column; gap: .2rem; color: var(--ink-dim); }
+  .patron figcaption .caps { font-size: .72rem; letter-spacing: .32em; }
+  .patron figcaption em { font-family: var(--script); font-style: normal; font-size: 1.6rem; white-space: nowrap; color: var(--ink); line-height: 1.6; }
+  @media (max-width: 760px) {
+    .retrato { grid-template-columns: 1fr; gap: 2rem; }
+    .carta { padding: 2rem 1.4rem 1.6rem; }
+  }
+</style>

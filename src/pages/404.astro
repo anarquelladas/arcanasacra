@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import { Stamp } from '../components/Stamp';
+---
+<Base title="Locked door">
+  <section class="lost">
+    <Stamp name="key" className="lost-key" />
+    <h1>This door opens onto nothing</h1>
+    <p>The key does not fit. Go back to the <a href="/">table of curiosities</a>.</p>
+  </section>
+</Base>
+<style>
+  .lost { text-align: center; padding: 4rem 1.25rem 6rem; }
+  :global(.lost-key) { width: min(320px, 70vw); margin: 0 auto; animation: jiggle 2.4s ease-in-out infinite; filter: drop-shadow(0 14px 12px rgba(0,0,0,.8)); }
+  h1 { font-weight: 400; font-family: var(--script); font-size: clamp(3rem, 7vw, 5rem); margin: 1.5rem 0 .4rem; }
+  p { color: var(--ink-dim); }
+  a { color: var(--ink); }
+  @keyframes jiggle { 0%, 60%, 100% { transform: rotate(0); } 70% { transform: rotate(-8deg); } 80% { transform: rotate(6deg); } 90% { transform: rotate(-3deg); } }
+</style>
