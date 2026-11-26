@@ -19,18 +19,36 @@ interface Thing {
 // Retratos de Elvira para el medallón: posición de cada ojo (%), tamaño del iris y del hueco del ojo.
 // tilt: inclinación (grados) del ojo, usada para colocar el iris. El recorte sale de public/objetos/<file>-eyes.webp
 // (scripts/eye-masks.mjs): el hueco real del ojo, así el iris queda siempre bajo los párpados.
-// wide: retrato apaisado, va en el marco horizontal (frame-wide); si no, en el ovalado.
+// wide: retrato apaisado; va en un marco horizontal con hueco eliptico (ver WIDE_FRAME); si no, en el ovalado.
 // Poner USE_WIDE_FRAME a false deja solo los retratos verticales y el marco ovalado.
 const USE_WIDE_FRAME = true;
+// Marco de los apaisados: false = frame-wide2 (grabado ligero); true = el ovalado (frame.webp) estirado en horizontal.
+const USE_OVAL_STRETCHED = true;
 interface Gaze { file: string; wide?: boolean; eyes: readonly (readonly [number, number, number])[]; iris: number }
+// Orden del ciclo al pulsar: mezcla de verticales y apaisados.
 const ALL_GAZES: readonly Gaze[] = [
   { file: 'elvira-a', eyes: [[26.18, 38.13, 10], [73.82, 37.95, -10]], iris: 11.4 },
-  { file: 'elvira-b', eyes: [[26.27, 43.0, 10], [73.73, 37.02, -24]], iris: 11.2 },
   { file: 'elvira-c', eyes: [[40.07, 35.73, 0], [60.0, 36.29, 0]], iris: 4.6 },
-  { file: 'elvira-d', wide: true, eyes: [[36.67, 45.05, 0], [46.48, 44.9, 0]], iris: 2.55 },
-  { file: 'elvira-e', wide: true, eyes: [[44.82, 39.88, 0], [55.18, 40.03, 0]], iris: 2.29 },
-  { file: 'elvira-f', wide: true, eyes: [[44.48, 33.56, 0], [55.52, 34.47, 0]], iris: 2.57 },
+  { file: 'elvira-g', eyes: [[43.18, 39.53, 0], [56.82, 40.44, 0]], iris: 4.69 },
+  { file: 'elvira-f', wide: true, eyes: [[42.15, 36.35, 0], [57.85, 37.65, 0]], iris: 3.65 },
+  { file: 'elvira-h', eyes: [[41.14, 44.78, 0], [58.79, 45.22, 0]], iris: 4.8 },
+  { file: 'elvira-i', wide: true, eyes: [[44.83, 61.72, 0], [55.13, 62.27, 0]], iris: 2.8 },
 ];
+// Marcos apaisados. fw/fh: tamano del marco en % de la caja fija .tracking-eye (centrado en ella);
+// hole: [left, top, width, height] del hueco en % del marco.
+interface WideFrame { file: string; fw: number; fh: number; hole: readonly [number, number, number, number] }
+const WIDE_FRAME: WideFrame = USE_OVAL_STRETCHED
+  ? { file: 'frame.webp', fw: 150, fh: 70, hole: [11.2, 17.6, 77.6, 68.4] }
+  : { file: 'frame-wide2.webp', fw: 130, fh: 77.8, hole: [12.27, 29.15, 76.84, 53.44] }; // 1500x1312 px: fh = fw / 1.1433 / 1.4619
+// Coloca marco y retrato apaisado dentro de la caja con variables CSS.
+const wideVars = (f: WideFrame) => {
+  const l = (100 - f.fw) / 2, t = (100 - f.fh) / 2, [hl, ht, hw, hh] = f.hole;
+  return {
+    '--fl': `${l}%`, '--ft': `${t}%`, '--fw': `${f.fw}%`, '--fh': `${f.fh}%`,
+    '--pl': `${l + (f.fw * hl) / 100}%`, '--pt': `${t + (f.fh * ht) / 100}%`,
+    '--pw': `${(f.fw * hw) / 100}%`, '--ph': `${(f.fh * hh) / 100}%`,
+  } as React.CSSProperties;
+};
 // TEMPORAL: muestra "3 / 6" junto al marco para que Ana elija retrato. Ponerlo a false (o borrar su <span>) cuando decida.
 const SHOW_PORTRAIT_INDEX = true;
 const GAZES = USE_WIDE_FRAME ? ALL_GAZES : ALL_GAZES.filter((g) => !g.wide);
@@ -241,7 +259,7 @@ export default function Altar() {
           onClick={() => { playSound('eye'); setBlink(true); setTimeout(() => { setGaze((g) => (g + 1) % GAZES.length); setBlink(false); }, 180); }}
           aria-label="Elvira, Mistress of the Dark: click to change her gaze"
         >
-          <span className={`tracking-eye eye${g.wide ? ' wide' : ''}`}>
+          <span className={`tracking-eye eye${g.wide ? ' wide' : ''}`} style={g.wide ? wideVars(WIDE_FRAME) : undefined}>
             <span className={`portrait ${g.wide ? 'wide' : ''} ${blink ? 'blink' : ''}`}>
               <Dual file={`${g.file}.webp`} className="face" lazy={false} alt="Elvira, Mistress of the Dark" />
               {g.eyes.map(([x, y], i) => (
@@ -258,7 +276,7 @@ export default function Altar() {
                 </span>
               ))}
             </span>
-            <Dual key={g.wide ? 'w' : 'o'} file={g.wide ? 'frame-wide.webp' : 'frame.webp'} className="frame-img" lazy={false} />
+            <Dual key={g.wide ? 'w' : 'o'} file={g.wide ? WIDE_FRAME.file : 'frame.webp'} className="frame-img" lazy={false} />
           </span>
           {SHOW_PORTRAIT_INDEX && <span className="portrait-index caps" aria-hidden="true">{gaze + 1} / {GAZES.length}</span>}
         </button>

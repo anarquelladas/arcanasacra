@@ -50,7 +50,7 @@ Categoria *Elvira, Mistress of the Dark* en Commons: solo las 8 de Orange County
 - Origen: *Frame with Two Scrolls of Leaves*, Troisieme Livre de Cadres, 1740-68, F. de Cuvillies (diseno) y C. A. de Lespilliez (grabado). Cooper Hewitt (CH 18238247). **Dominio publico**. https://commons.wikimedia.org/wiki/File:Bound_Print,_Frame_with_Two_Scrolls_of_Leaves,_Troisi%C3%A8me_Livre_de_Cadres_(Third_Book_of_Frames),_1740%E2%80%9368_(CH_18238247).jpg
 - Transformacion: recorte sin filete de lamina, tinta separada del papel, hueco vaciado, estirado x1.62, motas quitadas (`scripts/frame-wide2.mjs`).
 
-## Marco `frame-wide` (apaisado, recargado; descartado por Ann)
+## Marco `frame-wide` (BORRADO: descartado por Ann; solo queda el script)
 
 - Archivos: `public/objetos/frame-wide.webp` y `public/objetos/ink/frame-wide.webp`, 1500x1317 px (relacion 1.14).
 - Hueco para el retrato (rectangulo), en % del marco: **left 16.26, top 38.34, width 68.42, height 47.12** (relacion del hueco 1.65).
