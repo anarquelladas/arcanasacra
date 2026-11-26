@@ -15,8 +15,14 @@ const reduced = () => typeof matchMedia !== 'undefined' && matchMedia('(prefers-
 export default function AboutLetter({ children, greeting }: { children: ReactNode; greeting: string }) {
   const [phase, setPhase] = useState<Phase>('closed');
   const sheet = useRef<HTMLDivElement>(null);
+  const seal = useRef<HTMLButtonElement>(null);
+  const refocusSeal = useRef(false); // al plegar la carta el foco vuelve al lacre
   const timers = useRef<number[]>([]);
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
+  // el lacre esta deshabilitado con la carta abierta: solo se le puede dar foco cuando ya se ha vuelto a habilitar
+  useEffect(() => {
+    if (phase === 'closed' && refocusSeal.current) { refocusSeal.current = false; seal.current?.focus(); }
+  }, [phase]);
 
   const later = (ms: number, fn: () => void) => { timers.current.push(window.setTimeout(fn, ms)); };
 
@@ -38,6 +44,7 @@ export default function AboutLetter({ children, greeting }: { children: ReactNod
   const fold = () => {
     timers.current.forEach(clearTimeout);
     playSound('paper');
+    refocusSeal.current = true;
     setPhase('closed');
   };
 
@@ -65,7 +72,7 @@ export default function AboutLetter({ children, greeting }: { children: ReactNod
             <path d="M0,0L130,112 260,0Z" fill="url(#paper)" stroke="var(--ink-dark)" strokeWidth=".8" />
             <path d="M0,0L130,112 260,0 248,0 130,102 12,0Z" fill="url(#hh-k)" opacity=".18" />
           </svg>
-          <button className="seal-btn" onClick={openLetter} disabled={isOpen} aria-label="Break the seal and open the letter">
+          <button ref={seal} className="seal-btn" onClick={openLetter} disabled={isOpen} aria-label="Break the seal and open the letter">
             <svg className="half l" viewBox="0 0 60 60"><WaxSeal cx={30} cy={30} r={26} /></svg>
             <svg className="half r" viewBox="0 0 60 60"><WaxSeal cx={30} cy={30} r={26} /></svg>
           </button>
