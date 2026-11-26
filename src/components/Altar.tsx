@@ -39,6 +39,35 @@ function eyeClip(x: number, y: number, rx: number, ry: number, tilt: number) {
   return `polygon(${pts.join(',')})`;
 }
 
+// Gotas de la tira blood-drip.webp (1600x260) que se reutilizan sueltas: [x de origen, ancho, alto], de más fina a más ancha; todas con su bulbo.
+const DRIPS: ReadonlyArray<readonly [number, number, number]> = [
+  [445, 20, 69], [1102, 24, 69], [795, 28, 86], [368, 29, 77], [875, 28, 65],
+];
+interface Drip { x: number; y: number; w: number; h: number; bx: number }
+
+/** Huecos entre letras/palabras del título y la nav (coordenadas de página) donde cuelga una gota. */
+function measureGaps(): { cx: number; cy: number; gw: number }[] {
+  const gaps: { cx: number; cy: number; gw: number }[] = [];
+  const mark = document.querySelector('nav.top .mark');
+  const text = mark?.firstChild;
+  if (text && text.nodeType === Node.TEXT_NODE) {
+    const i = (text.textContent ?? '').indexOf(' ');
+    if (i > 0) {
+      const range = document.createRange();
+      range.setStart(text, i); range.setEnd(text, i + 1);
+      const r = range.getBoundingClientRect();
+      gaps.push({ cx: r.left + r.width / 2, cy: r.top + r.height / 2, gw: Math.max(r.width, 14) });
+    }
+  }
+  const items = [...document.querySelectorAll('nav.top ul > li')].map((li) => li.getBoundingClientRect());
+  for (let i = 0; i < items.length - 1; i++) {
+    const a = items[i], b = items[i + 1];
+    if (Math.abs(a.top - b.top) > a.height / 2) continue; // otra fila (móvil)
+    gaps.push({ cx: (a.right + b.left) / 2, cy: a.top + a.height / 2, gw: b.left - a.right });
+  }
+  return gaps;
+}
+
 const THINGS: Thing[] = [
   { id: 'moth', href: '/art/', label: 'Art', hint: 'tattoos & drawings', depth: 8, rot: -6, node: <MothStamp /> },
   { id: 'deck', href: '/code/', label: 'Code', hint: 'projects & agents', depth: 6, rot: 5, node: <Stamp name="tarot" /> },
@@ -53,6 +82,7 @@ export default function Altar() {
   const [blink, setBlink] = useState(false);
   const [look, setLook] = useState<[number, number]>([0, 0]);
   const [gaze, setGaze] = useState(0);
+  const [drips, setDrips] = useState<Drip[]>([]);
   const [lit, setLit] = useState(true);
   const [moved, setMoved] = useState<Record<string, [number, number]>>({});
   const [top, setTop] = useState<string>('');
@@ -83,6 +113,29 @@ export default function Altar() {
     };
     addEventListener('pointermove', onMove);
     return () => removeEventListener('pointermove', onMove);
+  }, []);
+
+  // gotas extra que cuelgan de los huecos entre letras, calculadas con el layout real (y al redimensionar)
+  useEffect(() => {
+    const place = () => {
+      const blood = document.querySelector('.blood') as HTMLElement | null;
+      if (!blood) return;
+      const s = blood.offsetHeight / 260; // escala de la tira (1 en escritorio, menos en móvil)
+      const out: Drip[] = [];
+      let n = 0;
+      for (const g of measureGaps()) {
+        if (g.cy > blood.offsetHeight * 0.5) continue; // la gota no llegaría a esa fila
+        const pool = DRIPS.filter(([, w]) => w * s <= g.gw);
+        if (!pool.length) continue;
+        const [bx, w, h] = pool[n++ % pool.length];
+        out.push({ x: g.cx - (w * s) / 2, y: 0, w: w * s, h: h * s, bx });
+      }
+      setDrips(out);
+    };
+    place();
+    document.fonts?.ready.then(place);
+    addEventListener('resize', place);
+    return () => removeEventListener('resize', place);
   }, []);
 
   const down = (id: string) => (e: React.PointerEvent) => {
@@ -116,7 +169,11 @@ export default function Altar() {
   return (
     <>
       {/* la sangre va fuera del altar para anclarse al borde superior de la pagina */}
-      <div className="blood" aria-hidden="true" />
+      <div className="blood" aria-hidden="true">
+        {drips.map((d, i) => (
+          <span key={i} className="drip" style={{ left: d.x, width: d.w, height: d.h, ['--bx' as string]: d.bx }} />
+        ))}
+      </div>
       <div ref={stage} className={`altar ${lit ? '' : 'dark'}`}>
       <div className="light" aria-hidden="true" />
       <span className="bat-flight" aria-hidden="true"><Dual file="bat.webp" className="bat-img" lazy={false} /></span>

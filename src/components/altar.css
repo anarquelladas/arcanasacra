@@ -142,12 +142,28 @@
 .obj-candle { left: 3%; top: 48%; width: clamp(120px, 10vw, 165px); animation-delay: 1.4s; }
 .obj-dagger { right: 27%; bottom: 6%; width: clamp(80px, 6.6vw, 112px); animation-delay: 1.6s; }
 
-/* sangre que gotea desde el borde superior */
+/* sangre que gotea desde el borde superior: se ancla al documento (body), no a main, para pegarse al borde sin hueco */
+body:has(.blood) { position: relative; }
+main:has(.blood) { position: static; }
 .blood {
-  position: absolute; left: 0; right: 0; top: 0; height: 260px; z-index: 2; pointer-events: none;
+  --s: 1; /* escala de la tira respecto a su tamaño original (1600x260) */
+  position: absolute; left: 0; right: 0; top: 0; height: 260px; z-index: 1; pointer-events: none;
   background: url('/objetos/blood-drip.webp') repeat-x -220px 0 / 1600px 260px;
   animation: bleed 9s cubic-bezier(.3, .1, .2, 1) both .2s;
 }
+/* gotas sueltas entre las letras: un trozo de la misma tira (mismo granate, mismo brillo) */
+.blood .drip {
+  position: absolute; top: 0;
+  background: url('/objetos/blood-drip.webp') no-repeat calc(var(--bx) * var(--s) * -1px) 0 / calc(1600px * var(--s)) calc(260px * var(--s));
+  /* se funde con la tira: sin la banda de arriba ni cantos verticales visibles */
+  --fade: linear-gradient(180deg, transparent calc(14px * var(--s)), #000 calc(32px * var(--s)));
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent), var(--fade);
+  mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent), var(--fade);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+/* letras de la cabecera siempre legibles sobre la sangre */
+body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6px var(--bg), 0 0 2px var(--bg); }
 @keyframes bleed { from { clip-path: inset(0 0 88% 0); } to { clip-path: inset(0 0 0 0); } }
 
 /* murciélago que cruza la noche */
@@ -229,9 +245,6 @@
   .obj .lift { opacity: 1; }
   .obj { display: flex; flex-direction: column; align-items: center; }
   .altar .obj-candle, .altar .obj-key, .altar .obj-dagger, .altar .obj-poison { display: none; }
-  /* la sangre se ancla al documento (body), no a main: cuelga del borde superior, tras la cabecera */
-  body:has(.blood) { position: relative; }
-  main:has(.blood) { position: static; }
-  .blood { top: 0; height: 90px; background-size: 600px 90px; z-index: 1; }
+  .blood { --s: .375; height: 90px; background-size: 600px 90px; }
   .bat-flight { display: none; }
 }
