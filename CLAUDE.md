@@ -5,10 +5,14 @@ Une dos facetas: **tatuaje / dibujo** (marca "Arcana Sacra") y **portfolio de pr
 (trabaja con Laravel/PHP; quiere mostrar TypeScript, React, Python y agentes de IA).
 
 - Ana habla en **español**; la **web está en inglés** (no hacen falta tildes ni eñes en la web).
-- Subir a GitHub: en su ordenador GitHub Desktop está con una cuenta corporativa; sube a su cuenta personal desde el navegador (ventana privada → repo → *Add file → Upload files*).
+- Repo local: `C:\Users\Ana Arquelladas\Documents\GitHub\arcanasacra` (rama `main`, remoto `github.com/anarquelladas/arcanasacra`, primer commit "first version").
+  Ana tiene GitHub Desktop vinculado a su cuenta `anarquelladas`. Trabajo con ramas: crear rama → cambios → commit → push → PR a `main`.
+- Historial completo de decisiones y estado: `docs/HISTORIA.md`. Léelo al empezar una sesión nueva.
 - Despliegue: GitHub → Cloudflare (Workers & Pages), build `npm run build`, salida `dist`, `NODE_VERSION=22`.
 
 ## Comandos
+
+Requisitos: Node 22+, Python 3 con `pip install numpy opencv-python scipy pillow` (solo para los scripts de imágenes).
 
 ```bash
 npm install
@@ -16,6 +20,8 @@ npm run dev      # http://localhost:4321
 npm run build
 python3 scripts/contrast.py foto.jpg public/objetos/nombre.webp --width 900   # foto → alto contraste
 python3 scripts/textures.py                                                   # regenera texturas
+python3 scripts/medallion.py   # retratos de Elvira para el marco (necesita las fotos as-elv*.jpg en la carpeta actual)
+python3 scripts/blood.py       # goteo y gota de sangre
 ```
 
 ## Estructura
@@ -68,8 +74,7 @@ Sangre: `public/objetos/blood-drip.webp` y `blood-drop.webp`, generadas por cód
 - Créditos actuales (pie de la web y README): Walters Art Museum (PD), The Met (*Lover's Eyes*, bola de cristal, candelabro de Pugin; CC0),
   Haeckel y Vesalius (PD), Wellcome Collection (frasco de veneno, CC BY 4.0), Didier Descouens (polillas, CC BY-SA), Tarot World Project (*L'Étoile*, CC BY-SA).
 - **No** usar las hojas de sellos que Ana mandó como referencia: parecen un producto comercial.
-- Fuente Billa Mount: el archivo que tiene Ana es la **demo de uso personal**; no se sube al repo público
-  (`.gitignore`). Con licencia comercial, poner `public/fonts/billa-mount.ttf` (o `.woff2`).
+- Fuente Billa Mount en `public/fonts/billa-mount.ttf`.
 
 ## Convenciones de código
 

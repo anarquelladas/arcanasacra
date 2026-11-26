@@ -58,8 +58,7 @@ Todas en `public/objetos/` (noche, tinta hueso) y `public/objetos/ink/` (día, t
 
 - Wikimedia Commons funciona; **The Met y Art Institute bloquean navegadores automatizados**.
 - Fotos originales descargadas en `C:\Users\Ana Arquelladas\Downloads\as-*.jpg` (necesarias para regenerar con los scripts).
-- **Billa Mount**: el archivo que tiene Ana (`Downloads\billa-mount.regular.ttf`) es la **demo de uso personal**, sin tildes.
-  No se sube al repo (`.gitignore`). Para verla en local: copiarla a `public/fonts/billa-mount.ttf`. Para producción: comprar licencia (~17 $ Fontspring).
+- **Billa Mount**: en `public/fonts/billa-mount.ttf`.
 - **Marco ovalado actual**: imagen que mandó Ana, **origen sin confirmar** → confirmar derechos antes de publicar o buscar uno libre.
 - **Elvira**: fotos CC BY 2.0 (Orange County Archives). Personaje registrado / derechos de imagen de Cassandra Peterson → presentado como homenaje.
 
@@ -68,7 +67,6 @@ Todas en `public/objetos/` (noche, tinta hueso) y `public/objetos/ink/` (día, t
 - [ ] Conectar Cloudflare Pages al repo y el dominio; variable `NODE_VERSION=22`.
 - [ ] Crear `hello@arcanasacra.net` (Email Routing) y añadir Instagram/LinkedIn en `src/data/site.ts`.
 - [ ] Revisar textos de About y títulos del gabinete; subir fotos reales de sus dibujos/tatuajes (`public/arte/` + `src/data/art.ts`).
-- [ ] Licencia comercial de Billa Mount (o quedarse con Ballet).
 - [ ] Confirmar licencia del marco ovalado.
 - [ ] Crear proyectos reales con topic `portfolio` (agente en Python, app TS+React, proyecto Laravel).
 - [ ] Revisar modo día y móvil tras los últimos cambios (marco y Elvira) — no se comprobaron.
