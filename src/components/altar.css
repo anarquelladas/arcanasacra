@@ -227,6 +227,9 @@
   .obj .lift { opacity: 1; }
   .obj { display: flex; flex-direction: column; align-items: center; }
   .altar .obj-candle, .altar .obj-key, .altar .obj-dagger, .altar .obj-poison { display: none; }
-  .blood { top: 0; height: 130px; background-size: 800px 130px; }
+  /* la sangre se ancla al documento (body), no a main: cuelga del borde superior, tras la cabecera */
+  body:has(.blood) { position: relative; }
+  main:has(.blood) { position: static; }
+  .blood { top: 0; height: 90px; background-size: 600px 90px; z-index: 1; }
   .bat-flight { display: none; }
 }

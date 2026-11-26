@@ -107,9 +107,11 @@ export default function Altar() {
   };
 
   return (
-    <div ref={stage} className={`altar ${lit ? '' : 'dark'}`}>
-            <div className="light" aria-hidden="true" />
+    <>
+      {/* la sangre va fuera del altar para anclarse al borde superior de la pagina */}
       <div className="blood" aria-hidden="true" />
+      <div ref={stage} className={`altar ${lit ? '' : 'dark'}`}>
+      <div className="light" aria-hidden="true" />
       <span className="bat-flight" aria-hidden="true"><Dual file="bat.webp" className="bat-img" lazy={false} /></span>
 
       <header className="crest">
@@ -180,5 +182,6 @@ export default function Altar() {
         );
       })}
     </div>
+    </>
   );
 }
