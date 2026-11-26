@@ -61,6 +61,8 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 - [x] 2.2.9 Portada: iris de Elvira recortados con elipse inclinada por ojo (no se salen de los párpados en noche ni día). · *Dueño*: `frontend-artisan` · `Altar.tsx`.
 - [x] 2.2.10 Portada: sin parpadeo ni giro automático del marco; el retrato solo cambia al pulsar. · *Dueño*: `frontend-artisan` · `Altar.tsx / altar.css`.
 - [x] 2.2.11 Portada: sangre pegada al borde superior en escritorio (sin hueco de 16 px), letras por encima y gotas entre las letras de título y nav. · *Dueño*: `frontend-artisan` · `Altar.tsx / altar.css`.
+- [ ] 2.2.9 Integrar en `Altar.tsx` los retratos apaisados `elvira-d/e/f` y el marco `frame-wide` (datos en `docs/elvira-gazes.md`). · *Dueño*: `frontend-artisan` · dep.: assets hechos (ver Registro).
+- [ ] 2.2.10 Créditos pendientes: añadir al pie (`Base.astro`) y al README las fotos *Elvira with monsters, mid-1980s* y *Elvira at Knott's Berry Farm, 1997* (Orange County Archives, CC BY 2.0) y el marco `frame-wide` (*Frame with Rocaille Volutes and Wings*, F. de Cuvilliés / C. A. von Lespilliez, Cooper Hewitt CH 18238167, dominio público). · *Dueño*: `license-auditor`.
 
 ## Fase 3 — Contenido real
 - [ ] 3.1 Revisar y ajustar textos de About y títulos del gabinete (Ana aprueba). · *Dueño*: `scribe`.
@@ -95,3 +97,4 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 | 2026-11-26 | 2.2.1-2.2.5, 2.2.8 | frontend-artisan | Visor sin solapes (interlineado y huecos), aviso de pieza de muestra solo en dev, 404 móvil con llave pequeña, foco 2 px sólido, esqueleto con borde derecho fundido (el grabado original viene cortado), `favicon.ico`. |
 | 2026-11-26 | 2.2.6 | frontend-artisan | Sangre de la portada fuera de `.altar` y anclada al borde superior del documento en móvil (90 px, tras la cabecera); escritorio sin cambios. |
 | 2026-11-26 | 2.2.9-2.2.11 | frontend-artisan | Iris con recorte inclinado por ojo; eliminado el parpadeo periódico que aplastaba el marco; sangre anclada a body en todos los anchos, con gotas sueltas (trozos de blood-drip.webp, máscara de fundido) calculadas desde los huecos de título y nav. |
+| 2026-11-26 | 2.2.9, 2.2.10 | image-alchemist | Nuevos retratos apaisados `elvira-d/e/f` (noche y día), marco apaisado `frame-wide` (grabado PD de Cuvilliés) y datos de ojos en `docs/elvira-gazes.md`; scripts `portrait.mjs` y `frame-wide.mjs`. |
