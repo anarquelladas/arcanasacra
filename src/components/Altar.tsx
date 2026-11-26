@@ -30,6 +30,8 @@ const ALL_GAZES: readonly Gaze[] = [
   { file: 'elvira-e', wide: true, eyes: [[44.82, 39.88, 0], [55.18, 40.03, 0]], iris: 2.29, rx: 2.18, ry: 1.89 },
   { file: 'elvira-f', wide: true, eyes: [[44.48, 33.56, 0], [55.52, 34.47, 0]], iris: 2.57, rx: 2.44, ry: 2.12 },
 ];
+// TEMPORAL: muestra "3 / 6" junto al marco para que Ana elija retrato. Ponerlo a false (o borrar su <span>) cuando decida.
+const SHOW_PORTRAIT_INDEX = true;
 const GAZES = USE_WIDE_FRAME ? ALL_GAZES : ALL_GAZES.filter((g) => !g.wide);
 
 // Relación alto/ancho del retrato: permite dibujar una elipse inclinada en porcentajes.
@@ -274,6 +276,7 @@ export default function Altar() {
             </span>
             <Dual key={g.wide ? 'w' : 'o'} file={g.wide ? 'frame-wide.webp' : 'frame.webp'} className="frame-img" lazy={false} />
           </span>
+          {SHOW_PORTRAIT_INDEX && <span className="portrait-index caps" aria-hidden="true">{gaze + 1} / {GAZES.length}</span>}
         </button>
         <h1>Arcana Sacra</h1>
         <p className="tagline">tattoo, drawing &amp; code</p>
