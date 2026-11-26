@@ -35,9 +35,9 @@ Contexto: `CLAUDE.md` (reglas), `docs/HISTORIA.md` (decisiones y estado). Este a
 ## Fase 1 — Despliegue (para ver la web en el dominio)
 Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`.
 - [x] 1.1 Subir `develop` a GitHub (`git push -u origin develop`). · *Dueño*: Ana (o `portfolio-keeper` con permiso) · dep.: 0.3, 0.4.
-- [!] 1.2 Conectar Cloudflare Pages al repo `anarquelladas/arcanasacra`: preset Astro, `npm run build`, salida `dist`, `NODE_VERSION=22`, **rama de producción `main`**, vistas previas de ramas activadas. · *Dueño*: Ana, guiada por `portfolio-keeper` · *Hecho cuando*: existe una URL `*.pages.dev` y `develop` genera su propia vista previa.
-- [!] 1.3 Custom domain `arcanasacra.net` (y `www`) en el proyecto Pages. · *Dueño*: Ana · dep.: 1.2 · *Hecho cuando*: `https://arcanasacra.net` responde con HTTPS.
-- [ ] 1.4 Primera publicación: PR `develop` → `main` solo con lo ya revisado. · *Dueño*: Ana aprueba · dep.: 1.2, 2.1.
+- [x] 1.2 Conectar Cloudflare Pages al repo `anarquelladas/arcanasacra`: preset Astro, `npm run build`, salida `dist`, `NODE_VERSION=22`, **rama de producción `main`**, vistas previas de ramas activadas. · *Dueño*: Ana, guiada por `portfolio-keeper` · *Hecho cuando*: existe una URL `*.pages.dev` y `develop` genera su propia vista previa. (hecho 2026-11-26)
+- [x] 1.3 Custom domain `arcanasacra.net` (y `www`) en el proyecto Pages. · *Dueño*: Ana · dep.: 1.2 · *Hecho cuando*: `https://arcanasacra.net` responde con HTTPS. (hecho 2026-11-26; `www` pendiente de comprobar)
+- [x] 1.4 Primera publicación: PR `develop` → `main` solo con lo ya revisado. · *Dueño*: Ana aprueba · dep.: 1.2, 2.1. (PR #2 fusionado)
 - [!] 1.5 Email Routing: `hello@arcanasacra.net` → Gmail de Ana. · *Dueño*: Ana, guiada por `portfolio-keeper`.
 - [!] 1.6 Deploy Hook de Cloudflare como secreto `CLOUDFLARE_DEPLOY_HOOK` en GitHub; probar `refresh.yml` a mano. · *Dueño*: Ana · dep.: 1.2.
 
@@ -73,3 +73,4 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 | --- | --- | --- | --- |
 | 2026-11-26 | 0.1, 0.2 | Claude | Rama `develop`, hoja de ruta y agentes nuevos. |
 | 2026-11-26 | 0.3, 0.4, 1.1, 2.6 | Claude | Fuente confirmada libre por Ana; commit y push de `develop`. |
+| 2026-11-26 | 1.2, 1.3, 1.4 | Claude + Ana | Cloudflare Pages conectado, lockfile arreglado, `main` publicada y dominios `arcanasacra.net` y `www` activos. |
