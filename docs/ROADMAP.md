@@ -42,12 +42,21 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 - [!] 1.6 Deploy Hook de Cloudflare como secreto `CLOUDFLARE_DEPLOY_HOOK` en GitHub; probar `refresh.yml` a mano. · *Dueño*: Ana · dep.: 1.2.
 
 ## Fase 2 — Revisión y limpieza (lo que ya existe)
-- [ ] 2.1 QA completo: modo día, móvil y noche tras los cambios del marco y Elvira (todas las páginas). Informe con capturas y lista de fallos. · *Dueño*: `qa-tester`, luego `art-director` valora · *Hecho cuando*: informe en `docs/qa/` y fallos convertidos en tareas.
+- [x] 2.1 QA completo: modo día, móvil y noche tras los cambios del marco y Elvira (todas las páginas). Informe con capturas y lista de fallos. · *Dueño*: `qa-tester`, luego `art-director` valora · *Hecho cuando*: informe en `docs/qa/` y fallos convertidos en tareas. (informe: `docs/qa/2026-11-26-qa-completo/informe.md`)
 - [ ] 2.2 Arreglar los fallos de 2.1 (una tarea por fallo, añadidas aquí). · *Dueño*: `frontend-artisan`.
 - [ ] 2.3 Limpiar código e imágenes sin uso: `engravings/Ironwork.tsx`, `Objects.tsx` (salvo `CardBack`/`WaxSeal`), `lib/ornament.ts`, imágenes `eye`, `iris-l/r`, `candle`, `inkwell`, `key` (comprobar con búsqueda que nada las usa). · *Dueño*: `frontend-artisan` · *Hecho cuando*: build verde y sin referencias rotas.
 - [ ] 2.4 Auditoría de licencias: marco ovalado (origen sin confirmar), fuente, Elvira, créditos del pie y del README. · *Dueño*: `license-auditor` · *Hecho cuando*: tabla en `docs/LICENCIAS.md` con cada recurso, licencia, URL y estado.
 - [ ] 2.5 Resolver el marco: confirmar derechos o sustituirlo por uno libre. · *Dueño*: `image-alchemist` + Ana · dep.: 2.4.
 - [!] 2.6 Fuente Billa Mount: **decisión de Ana (2026-11-26): dejarla como está.** Queda anotado que el archivo es la demo "just for personal use" de Kana Widana / Alit Design (© 2020); `license-auditor` lo documenta en `docs/LICENCIAS.md` como riesgo aceptado y no vuelve a preguntar. Reabrir si Ana compra la licencia (~17 $, Fontspring) o decide pasar a Ballet.
+
+- [ ] 2.2.1 Visor del gabinete: el título pisa la etiqueta "FLASH · 2026" y el subtítulo (escritorio y móvil). · *Dueño*: `art-director + frontend-artisan` · `Cabinet.tsx`. Ver informe 2.1.
+- [ ] 2.2.2 Quitar el texto "Sample piece: replace it with your image in src/data/art.ts" visible en el visor. · *Dueño*: `frontend-artisan` · `src/data/art.ts`. Ver informe 2.1.
+- [ ] 2.2.3 404 en móvil: reducir la llave para que el mensaje se vea en la primera pantalla. · *Dueño*: `frontend-artisan` · `404.astro`. Ver informe 2.1.
+- [ ] 2.2.4 Foco de teclado más visible (hoy 1 px punteado) en navegación y objetos. · *Dueño*: `frontend-artisan` · `global.css`. Ver informe 2.1.
+- [ ] 2.2.5 Esqueleto recortado por la derecha en Art (modo día, escritorio). · *Dueño*: `image-alchemist / frontend-artisan` · `objetos/ink/skeleton.webp`. Ver informe 2.1.
+- [ ] 2.2.6 Móvil: la sangre cuelga bajo la cabecera en vez de salir del borde superior. · *Dueño*: `art-director + frontend-artisan` · `Altar.tsx / CSS`. Ver informe 2.1.
+- [ ] 2.2.7 Comprobar la costura de fondo a 100vh en móvil (puede ser artefacto de captura). · *Dueño*: `qa-tester / frontend-artisan` · `global.css`. Ver informe 2.1.
+- [ ] 2.2.8 Añadir favicon.ico a public/ (hoy 404). · *Dueño*: `frontend-artisan` · `public/`. Ver informe 2.1.
 
 ## Fase 3 — Contenido real
 - [ ] 3.1 Revisar y ajustar textos de About y títulos del gabinete (Ana aprueba). · *Dueño*: `scribe`.
@@ -78,3 +87,4 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 | 2026-11-26 | 0.3, 0.4, 1.1, 2.6 | Claude | Fuente confirmada libre por Ana; commit y push de `develop`. |
 | 2026-11-26 | 1.2, 1.3, 1.4 | Claude + Ana | Cloudflare Pages conectado, lockfile arreglado, `main` publicada y dominios `arcanasacra.net` y `www` activos. |
 | 2026-11-26 | 2.6, 4.5-4.7 | Claude | Ana decide mantener la fuente; se añaden proyectos de portfolio (tarot, proyecto web previo). |
+| 2026-11-26 | 2.1 | qa-tester | QA completo: pasa con 8 observaciones (media/baja); tareas 2.2.1-2.2.8 y informe en `docs/qa/2026-11-26-qa-completo/`. |
