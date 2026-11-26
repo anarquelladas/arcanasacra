@@ -25,3 +25,4 @@ y Billa Mount local (`public/fonts/billa-mount.ttf`, ignorada en git).
 - `astro preview` ya puede estar en 4399 (sirve `dist`, basta con reconstruir); un segundo preview falla y un `&` en la tool Bash muere al acabar el comando.
 - Imagen de la llave 404 es muy alta (1:3.3): limitar por ancho (92 px en móvil) para que el mensaje entre en la primera pantalla.
 - Aviso de pieza de muestra: `import.meta.env.DEV` en `Cabinet.tsx`.
+- [Portada: intro, tema, humo, sonido](portada_intro_sonido.md) — decisiones y trampas de las tareas 2.7.x
