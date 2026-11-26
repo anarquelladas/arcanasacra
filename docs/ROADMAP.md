@@ -47,7 +47,7 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 - [ ] 2.3 Limpiar código e imágenes sin uso: `engravings/Ironwork.tsx`, `Objects.tsx` (salvo `CardBack`/`WaxSeal`), `lib/ornament.ts`, imágenes `eye`, `iris-l/r`, `candle`, `inkwell`, `key` (comprobar con búsqueda que nada las usa). · *Dueño*: `frontend-artisan` · *Hecho cuando*: build verde y sin referencias rotas.
 - [ ] 2.4 Auditoría de licencias: marco ovalado (origen sin confirmar), fuente, Elvira, créditos del pie y del README. · *Dueño*: `license-auditor` · *Hecho cuando*: tabla en `docs/LICENCIAS.md` con cada recurso, licencia, URL y estado.
 - [ ] 2.5 Resolver el marco: confirmar derechos o sustituirlo por uno libre. · *Dueño*: `image-alchemist` + Ana · dep.: 2.4.
-- [x] 2.6 Fuente decidida: Billa Mount (versión libre según Ana). Pendiente solo documentar su origen en 2.4.
+- [!] 2.6 Fuente Billa Mount: **decisión de Ana (2026-11-26): dejarla como está.** Queda anotado que el archivo es la demo "just for personal use" de Kana Widana / Alit Design (© 2020); `license-auditor` lo documenta en `docs/LICENCIAS.md` como riesgo aceptado y no vuelve a preguntar. Reabrir si Ana compra la licencia (~17 $, Fontspring) o decide pasar a Ballet.
 
 ## Fase 3 — Contenido real
 - [ ] 3.1 Revisar y ajustar textos de About y títulos del gabinete (Ana aprueba). · *Dueño*: `scribe`.
@@ -60,6 +60,9 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 - [ ] 4.2 Proyecto 2: app TypeScript + React que consuma una API con agente o chat integrado. · idem.
 - [ ] 4.3 Proyecto 3: proyecto Laravel (p. ej. gestor de citas para estudio de tatuaje). · idem.
 - [ ] 4.4 Comprobar que las cartas de Code leen los repos reales y desaparecen las de ejemplo. · *Dueño*: `portfolio-keeper`.
+- [ ] 4.5 Proyecto: **página de tarot** (lecturas/cartas, algo vistoso que enseñar). Definir alcance con Ana. · *Dueño*: Ana con `portfolio-keeper` y `frontend-artisan`.
+- [ ] 4.6 Proyecto: **el proyecto web que Ana ya hizo** (pendiente de que Ana diga cuál y dónde está el código). Subirlo a su cuenta con README y topic `portfolio`. · *Dueño*: `portfolio-keeper`.
+- [ ] 4.7 Otros proyectos "chulos" que se vayan ocurriendo (apuntarlos aquí).
 
 ## Fase 5 — Pulido y lanzamiento
 - [ ] 5.1 Rendimiento y accesibilidad (Lighthouse, foco de teclado, `aria-label`, `prefers-reduced-motion`). · *Dueño*: `frontend-artisan` + `qa-tester`.
@@ -74,3 +77,4 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 | 2026-11-26 | 0.1, 0.2 | Claude | Rama `develop`, hoja de ruta y agentes nuevos. |
 | 2026-11-26 | 0.3, 0.4, 1.1, 2.6 | Claude | Fuente confirmada libre por Ana; commit y push de `develop`. |
 | 2026-11-26 | 1.2, 1.3, 1.4 | Claude + Ana | Cloudflare Pages conectado, lockfile arreglado, `main` publicada y dominios `arcanasacra.net` y `www` activos. |
+| 2026-11-26 | 2.6, 4.5-4.7 | Claude | Ana decide mantener la fuente; se añaden proyectos de portfolio (tarot, proyecto web previo). |
