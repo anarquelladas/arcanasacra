@@ -180,6 +180,12 @@ export default function Altar() {
       const blood = document.querySelector('.blood') as HTMLElement | null;
       if (!blood) return;
       const s = blood.offsetHeight / 260; // escala de la tira (1 en escritorio, menos en móvil)
+      // tramo horizontal de los enlaces: la tira no cuelga delante de ellos (ver .blood::before)
+      const lis = [...document.querySelectorAll('nav.top ul > li')].map((li) => li.getBoundingClientRect());
+      if (lis.length && lis[0].top < 170 * s) { // las gotas largas llegan a ~170 px de la tira; en móvil los enlaces quedan más abajo
+        blood.style.setProperty('--hl', `${Math.min(...lis.map((r) => r.left)) - 6}px`);
+        blood.style.setProperty('--hr', `${Math.max(...lis.map((r) => r.right)) + 6}px`);
+      } else { blood.style.removeProperty('--hl'); blood.style.removeProperty('--hr'); }
       const out: Drip[] = [];
       let n = 0;
       for (const g of measureGaps()) {

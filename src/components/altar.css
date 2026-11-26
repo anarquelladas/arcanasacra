@@ -156,8 +156,19 @@ main:has(.blood) { position: static; }
 .blood {
   --s: 1; /* escala de la tira respecto a su tamaño original (1600x260) */
   position: absolute; left: 0; right: 0; top: 0; height: 260px; z-index: 1; pointer-events: none;
-  background: url('/objetos/blood-drip.webp') repeat-x -220px 0 / 1600px 260px;
   animation: bleed 9s cubic-bezier(.3, .1, .2, 1) both .2s;
+}
+/* la tira de goteo va en un pseudoelemento para recortarla sobre los enlaces de la cabecera: bajo ellos solo queda la banda superior
+   (--hl / --hr = inicio y fin horizontal de los enlaces, los pone Altar.tsx); las gotas sueltas entre enlaces siguen visibles */
+.blood::before {
+  content: ''; position: absolute; inset: 0;
+  background: url('/objetos/blood-drip.webp') repeat-x -220px 0 / 1600px 260px;
+  -webkit-mask-image: linear-gradient(#000, #000), linear-gradient(#000, #000), linear-gradient(#000 55%, transparent);
+  mask-image: linear-gradient(#000, #000), linear-gradient(#000, #000), linear-gradient(#000 55%, transparent);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: 0 0, 100% 0, 0 0; mask-position: 0 0, 100% 0, 0 0;
+  -webkit-mask-size: var(--hl, 100%) 100%, calc(100% - var(--hr, 100%)) 100%, 100% calc(30px * var(--s));
+  mask-size: var(--hl, 100%) 100%, calc(100% - var(--hr, 100%)) 100%, 100% calc(30px * var(--s));
 }
 /* gotas sueltas entre las letras: un trozo de la misma tira (mismo granate, mismo brillo) */
 .blood .drip {
@@ -172,6 +183,11 @@ main:has(.blood) { position: static; }
 }
 /* letras de la cabecera siempre legibles sobre la sangre */
 body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6px var(--bg), 0 0 2px var(--bg); }
+/* de dia la sangre es mas oscura que la tinta dim: enlaces en tinta plena con halo de papel para que se lean siempre */
+:root[data-theme='light'] body:has(.blood) nav.top .plaque {
+  color: var(--ink);
+  text-shadow: 0 0 2px var(--bg), 0 0 4px var(--bg), 0 0 7px var(--bg), 0 0 10px var(--bg), 0 0 14px var(--bg);
+}
 @keyframes bleed { from { clip-path: inset(0 0 88% 0); } to { clip-path: inset(0 0 0 0); } }
 
 /* murciélago que cruza la noche */
@@ -264,6 +280,7 @@ body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6
   /* el candelabro se queda en movil: es la intro y el interruptor de tema */
   .obj-candle { grid-column: 1 / -1; max-width: 150px; margin-top: 2.6rem; }
   .intro-hint { position: fixed; bottom: 1.2rem; font-size: .7rem; padding: 0 1rem; }
-  .blood { --s: .375; height: 90px; background-size: 600px 90px; }
+  .blood { --s: .375; height: 90px; }
+  .blood::before { background-size: 600px 90px; }
   .bat-flight { display: none; }
 }
