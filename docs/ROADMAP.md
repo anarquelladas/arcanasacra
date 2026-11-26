@@ -71,11 +71,13 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 - [ ] 2.7.5 `art-director`: valorar el interruptor de sonido (hoy texto "♪ Sound" como la pestaña de tema); sustituirlo por un objeto (campana, reloj de arena…) con `image-alchemist`. Ajustar a oído el timbre y volumen de los sonidos.
 - [ ] 2.7.6 `qa-tester`: probar la intro en móvil táctil real (el candelabro queda al final de la página; la pista es fija abajo) y teclado (Tab hasta el candelabro).
 - [x] 2.7.7 Carta de About (en `about.astro`, no en `Letter.tsx`, que es el sobre de Contact) convertida en sobre interactivo `AboutLetter.tsx`; sonidos en About, Contact, gabinete y tarot.
-- [ ] 2.8.1 `frontend-artisan`: en la portada de dia (1440), las gotas de sangre tapan los enlaces de la cabecera. (QA 2026-11-26 ronda 2)
-- [ ] 2.8.2 `frontend-artisan`: AboutLetter, al plegar la carta el foco debe volver al boton del lacre.
-- [ ] 2.8.3 `frontend-artisan`: AboutLetter movil/dia, copia fantasma del texto dentro del sobre abierto (verificar).
-- [ ] 2.8.4 `art-director`: About, rotulo "patron saint" pisado por el titulo de Elvira y titulo rozando el borde en movil.
-- [ ] 2.8.5 `frontend-artisan`: portada noche, la pista inferior queda cortada por la daga; valorar salto de teclado al candelabro (14 tabulaciones).
+- [x] 2.8.1 `frontend-artisan`: en la portada de dia (1440), las gotas de sangre tapan los enlaces de la cabecera. (QA 2026-11-26 ronda 2)
+- [x] 2.8.2 `frontend-artisan`: AboutLetter, al plegar la carta el foco debe volver al boton del lacre.
+- [x] 2.8.3 (no reproducible fuera de fullPage: la hoja pequena del sobre queda a opacity 0 al abrir; sin cambios) `frontend-artisan`: AboutLetter movil/dia, copia fantasma del texto dentro del sobre abierto (verificar).
+- [x] 2.8.4 Resuelta quitando a Elvira de About (Ana, 2026-11-26): fuera la figura y el rotulo; titulo sin rozar el borde en movil.
+- [x] 2.8.5 (enlace "Skip to the candelabrum" primero en el orden de tab durante la intro: 1 Tab + Enter; pista inferior sin cortar) `frontend-artisan`: portada noche, la pista inferior queda cortada por la daga; valorar salto de teclado al candelabro (14 tabulaciones).
+- [ ] 2.8.6 `frontend-artisan`: Ana elige retrato de Elvira para la portada (indicador temporal "n / 6", constante `SHOW_PORTRAIT_INDEX` en `Altar.tsx`). Al decidir: dejar solo el elegido (y su marco), borrar `GAZES` restantes, `SHOW_PORTRAIT_INDEX`, su <span> y CSS `.portrait-index`; `image-alchemist` retira del repo los `elvira-*` no usados. Avisar a `license-auditor` si cambian los creditos (c: fotos Orange County Archives).
+- [ ] 2.8.7 `license-auditor`: About ya no usa fotos de Elvira; siguen en portada y gabinete (`Stamp elvira`), el credito del pie debe mantenerse. Revisar al cerrar 2.8.6.
 
 ## Fase 3 — Contenido real
 - [ ] 3.1 Revisar y ajustar textos de About y títulos del gabinete (Ana aprueba). · *Dueño*: `scribe`.
@@ -115,3 +117,4 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 | 2026-11-26 | 2.7.1-2.7.4 | frontend-artisan | Intro a oscuras con candelabro, candelabro como interruptor de tema, llamas en tinta con humo por inercia, módulo de sonido WebAudio e interruptor de sonido en la cabecera. |
 | 2026-11-26 | 2.7.7 | frontend-artisan | `AboutLetter.tsx`: sobre lacrado que se abre (lacre, solapa, hoja, carta desplegada; teclado, estado anunciado, sin animacion con reduced-motion). Nuevos sonidos unfold/drawer/turn-page/tick/card-flip/shuffle en gabinete, tarot y Contact. Nombre de la web: Ann. |
 | 2026-11-26 | 2.1 (ronda 2) | qa-tester | QA tras sangre, intro, candelabro, sonido y carta: pasa con 5 observaciones; tareas 2.8.1-2.8.5, informe en `docs/qa/2026-11-26-qa-ronda2/`. |
+| 2026-11-26 | 2.8.1-2.8.5 | frontend-artisan | Sangre: la tira se recorta tras la banda superior bajo los enlaces (mascara en .blood::before) y de dia llevan halo de papel; foco vuelve al lacre al plegar la carta; About sin Elvira; skip link a candelabro en la intro y pista sin cortar; indicador temporal "n / 6" del retrato (SHOW_PORTRAIT_INDEX). |
