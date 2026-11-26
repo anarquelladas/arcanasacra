@@ -65,7 +65,7 @@ a { color: inherit; }
 
 ::selection { background: var(--blood); color: var(--ink); }
 
-:focus-visible { outline: 1px dashed var(--gold); outline-offset: 4px; }
+:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 4px; border-radius: 2px; }
 
 .sr-only {
   position: absolute; width: 1px; height: 1px; overflow: hidden;
