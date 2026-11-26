@@ -74,7 +74,7 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 - [ ] 2.8.1 `frontend-artisan`: en la portada de dia (1440), las gotas de sangre tapan los enlaces de la cabecera. (QA 2026-11-26 ronda 2)
 - [ ] 2.8.2 `frontend-artisan`: AboutLetter, al plegar la carta el foco debe volver al boton del lacre.
 - [ ] 2.8.3 `frontend-artisan`: AboutLetter movil/dia, copia fantasma del texto dentro del sobre abierto (verificar).
-- [ ] 2.8.4 : About, rotulo "patron saint" pisado por el titulo de Elvira y titulo rozando el borde en movil.
+- [ ] 2.8.4 `art-director`: About, rotulo "patron saint" pisado por el titulo de Elvira y titulo rozando el borde en movil.
 - [ ] 2.8.5 `frontend-artisan`: portada noche, la pista inferior queda cortada por la daga; valorar salto de teclado al candelabro (14 tabulaciones).
 
 ## Fase 3 — Contenido real

@@ -48,3 +48,8 @@ Retiradas: *I Le Bateleur* (sustituida por La Estrella); Graellsia isabellae y A
 | elvira-c.webp | Knott's (36030656275), manos junto a la cara | CC BY 2.0 | iris pequeños (4.6 %) |
 Posiciones de ojos e iris en `GAZES` de `Altar.tsx`. El retrato va en left 21.7 %, top 29 %, 58.2 × 51.9 % del marco.
 - Descargas desde el navegador: piden confirmación porque su navegador pregunta dónde guardar; se arregla en sus ajustes de descargas.
+
+## Sesion 2026-11-26 (retratos apaisados)
+- En esta maquina NO hay Python (solo stubs de la Store): se uso Node + sharp (scripts/portrait.mjs, scripts/frame-wide.mjs). En sharp, `.raw()` tras resize/blur puede devolver 3 canales: usar `.toColourspace('b-w')`; `resize` con distinta proporcion necesita `fit:'fill'`; `composite` va despues de `resize` (hacer en dos pasos).
+- elvira-d (Knott's mid-1980s 35896686071), elvira-e (1997, 35896692491), elvira-f (36030656275 plano amplio): CC BY 2.0 Orange County Archives. frame-wide: Cuvillies CH 18238167 PD, hueco left16.26 top38.34 w68.42 h47.12. Datos en docs/elvira-gazes.md.
+- Wikimedia limita peticiones (429): espaciar 3-5 s. No quedan mas fotos libres de Elvira en Commons; las de Cassandra Peterson son sin disfraz.

@@ -1,6 +1,6 @@
 # Arcana Sacra — memoria del proyecto
 
-Web personal de **Ana** (GitHub `anarquelladas`), dominio `arcanasacra.net` (registrado en Cloudflare).
+Web personal de **Ann** (así se llama en la web, no "Ana"; GitHub `anarquelladas`), dominio `arcanasacra.net` (registrado en Cloudflare).
 Une dos facetas: **tatuaje / dibujo** (marca "Arcana Sacra") y **portfolio de programación** para buscar trabajo
 (trabaja con Laravel/PHP; quiere mostrar TypeScript, React, Python y agentes de IA).
 
