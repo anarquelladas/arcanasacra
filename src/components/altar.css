@@ -232,7 +232,7 @@ body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6
 :root[data-intro='dark'] .obj-candle:hover .lift, :root[data-intro='dark'] .obj-candle:focus-visible .lift { opacity: 1; }
 .obj-candle .lift { transition: transform .5s var(--ease), filter .5s, opacity 1.2s; }
 .intro-hint {
-  position: absolute; left: 0; right: 0; bottom: 5%; z-index: 7; margin: 0; text-align: center;
+  position: absolute; left: 0; right: 0; bottom: 1.2rem; z-index: 8; margin: 0; text-align: center;
   font-size: .8rem; letter-spacing: .32em; color: var(--ink-dim); pointer-events: none;
   animation: fade 3s ease both;
 }

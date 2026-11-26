@@ -41,7 +41,8 @@ const full = title ? `${title} · ${site.name}` : `${site.name} · ${site.taglin
   </head>
   <body>
     <Defs />
-    <a class="sr-only" href="#contenido">Skip to content</a>
+    <a class="sr-only skip skip-candle" href="#candle">Skip to the candelabrum</a>
+    <a class="sr-only skip" href="#contenido">Skip to content</a>
     {nav && <Nav />}
     <main id="contenido">
       <slot />

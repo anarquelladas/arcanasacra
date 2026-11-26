@@ -72,6 +72,11 @@ a { color: inherit; }
   clip: rect(0 0 0 0); white-space: nowrap;
 }
 
+/* los enlaces de salto se hacen visibles al recibir foco; el del candelabro solo existe durante la intro de la portada */
+.skip:focus { position: fixed; top: .6rem; left: .6rem; z-index: 100; width: auto; height: auto; clip: auto; padding: .5rem .9rem; background: var(--bg); color: var(--ink); font-family: var(--caps); font-size: .85rem; letter-spacing: .12em; }
+.skip-candle { display: none; }
+:root[data-intro='dark'] .skip-candle { display: inline; }
+
 .caps { font-family: var(--caps); letter-spacing: .06em; }
 
 main { position: relative; }
