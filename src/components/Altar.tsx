@@ -17,43 +17,27 @@ interface Thing {
 }
 
 // Retratos de Elvira para el medallón: posición de cada ojo (%), tamaño del iris y del hueco del ojo.
-// tilt: inclinación (grados) del hueco de cada ojo; el recorte sigue su forma para que el iris no asome por los párpados.
+// tilt: inclinación (grados) del ojo, usada para colocar el iris. El recorte sale de public/objetos/<file>-eyes.webp
+// (scripts/eye-masks.mjs): el hueco real del ojo, así el iris queda siempre bajo los párpados.
 // wide: retrato apaisado, va en el marco horizontal (frame-wide); si no, en el ovalado.
 // Poner USE_WIDE_FRAME a false deja solo los retratos verticales y el marco ovalado.
 const USE_WIDE_FRAME = true;
-interface Gaze { file: string; wide?: boolean; eyes: readonly (readonly [number, number, number])[]; iris: number; rx: number; ry: number }
+interface Gaze { file: string; wide?: boolean; eyes: readonly (readonly [number, number, number])[]; iris: number }
 const ALL_GAZES: readonly Gaze[] = [
-  { file: 'elvira-a', eyes: [[26.18, 38.13, 10], [73.82, 37.95, -10]], iris: 11.4, rx: 9.6, ry: 3.6 },
-  { file: 'elvira-b', eyes: [[26.27, 43.0, 10], [73.73, 37.02, -24]], iris: 11.2, rx: 9.4, ry: 3.2 },
-  { file: 'elvira-c', eyes: [[40.07, 35.73, 0], [60.0, 36.29, 0]], iris: 4.6, rx: 4.2, ry: 1.6 },
-  { file: 'elvira-d', wide: true, eyes: [[36.67, 45.05, 0], [46.48, 44.9, 0]], iris: 2.55, rx: 2.42, ry: 2.1 },
-  { file: 'elvira-e', wide: true, eyes: [[44.82, 39.88, 0], [55.18, 40.03, 0]], iris: 2.29, rx: 2.18, ry: 1.89 },
-  { file: 'elvira-f', wide: true, eyes: [[44.48, 33.56, 0], [55.52, 34.47, 0]], iris: 2.57, rx: 2.44, ry: 2.12 },
+  { file: 'elvira-a', eyes: [[26.18, 38.13, 10], [73.82, 37.95, -10]], iris: 11.4 },
+  { file: 'elvira-b', eyes: [[26.27, 43.0, 10], [73.73, 37.02, -24]], iris: 11.2 },
+  { file: 'elvira-c', eyes: [[40.07, 35.73, 0], [60.0, 36.29, 0]], iris: 4.6 },
+  { file: 'elvira-d', wide: true, eyes: [[36.67, 45.05, 0], [46.48, 44.9, 0]], iris: 2.55 },
+  { file: 'elvira-e', wide: true, eyes: [[44.82, 39.88, 0], [55.18, 40.03, 0]], iris: 2.29 },
+  { file: 'elvira-f', wide: true, eyes: [[44.48, 33.56, 0], [55.52, 34.47, 0]], iris: 2.57 },
 ];
 // TEMPORAL: muestra "3 / 6" junto al marco para que Ana elija retrato. Ponerlo a false (o borrar su <span>) cuando decida.
 const SHOW_PORTRAIT_INDEX = true;
 const GAZES = USE_WIDE_FRAME ? ALL_GAZES : ALL_GAZES.filter((g) => !g.wide);
 
-// Relación alto/ancho del retrato: permite dibujar una elipse inclinada en porcentajes.
-const AR_OVAL = 1.289;
-const AR_WIDE = 727 / 1200;
 // Recorrido del iris (% de su ancho): en planos amplios el iris es pequeño y necesita más.
 const TRAVEL = 34;
 const TRAVEL_WIDE = 40;
-/** Elipse inclinada como polygon() en % del retrato. */
-function eyeClip(x: number, y: number, rx: number, ry: number, tilt: number, AR: number) {
-  const t = (tilt * Math.PI) / 180;
-  const pts: string[] = [];
-  for (let i = 0; i < 28; i++) {
-    const a = (i / 28) * Math.PI * 2;
-    const ex = rx * Math.cos(a), ey = ry * AR * Math.sin(a); // unidades de ancho
-    const px = ex * Math.cos(t) - ey * Math.sin(t);
-    const py = ex * Math.sin(t) + ey * Math.cos(t);
-    pts.push(`${(x + px).toFixed(2)}% ${(y + py / AR).toFixed(2)}%`);
-  }
-  return `polygon(${pts.join(',')})`;
-}
-
 // Gotas de la tira blood-drip.webp (1600x260) que se reutilizan sueltas: [x de origen, ancho, alto], de más fina a más ancha; todas con su bulbo.
 const DRIPS: ReadonlyArray<readonly [number, number, number]> = [
   [445, 20, 69], [1102, 24, 69], [795, 28, 86], [368, 29, 77], [875, 28, 65],
@@ -260,8 +244,8 @@ export default function Altar() {
           <span className={`tracking-eye eye${g.wide ? ' wide' : ''}`}>
             <span className={`portrait ${g.wide ? 'wide' : ''} ${blink ? 'blink' : ''}`}>
               <Dual file={`${g.file}.webp`} className="face" lazy={false} alt="Elvira, Mistress of the Dark" />
-              {g.eyes.map(([x, y, tilt], i) => (
-                <span key={i} className="iris-clip" style={{ clipPath: eyeClip(x, y, g.rx, g.ry, tilt, g.wide ? AR_WIDE : AR_OVAL) }}>
+              {g.eyes.map(([x, y], i) => (
+                <span key={i} className="iris-clip" style={{ ['--eye-mask' as string]: `url(/objetos/${g.file}-eyes.webp)` }}>
                   <Dual
                     file={i ? 'elvira-iris-r.webp' : 'elvira-iris-l.webp'}
                     className="iris"

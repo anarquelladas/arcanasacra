@@ -84,7 +84,7 @@
   width: calc(var(--ws) * 68.42%);
   height: auto; aspect-ratio: 1200 / 727;
 }
-.tracking-eye .iris-clip { position: absolute; inset: 0; transition: transform .1s; transform-origin: 50% 37%; }
+.tracking-eye .iris-clip { position: absolute; inset: 0; -webkit-mask: var(--eye-mask) center / 100% 100% no-repeat; mask: var(--eye-mask) center / 100% 100% no-repeat; transition: transform .1s; transform-origin: 50% 37%; }
 .tracking-eye .iris { position: absolute; transition: transform .22s ease-out; }
 /* indicador temporal de retrato (SHOW_PORTRAIT_INDEX en Altar.tsx) */
 .portrait-index { position: absolute; left: 100%; top: 42%; margin-left: 3.2rem; font-size: .9rem; letter-spacing: .3em; color: var(--ink-dim); white-space: nowrap; pointer-events: none; }
