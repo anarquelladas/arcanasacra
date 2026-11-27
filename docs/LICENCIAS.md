@@ -17,6 +17,8 @@ Pie de la web (`Base.astro`) y README llevan los créditos agrupados por autor; 
 | Recurso | Autor | Licencia | URL | Crédito en web | Estado |
 | --- | --- | --- | --- | --- | --- |
 | mirror, candle, key, dagger, inkwell | Walters Art Museum (Walters 54105, 48715, 52137, 51517, 54514) | Dominio público | por confirmar (solo constan los números de inventario) | sí (pie y README) | ok |
+| dagger-h | Walters Art Museum, *Turkish - Dagger and Scabbard*, Walters 5177 | Dominio público | https://commons.wikimedia.org/wiki/File:Turkish_-_Dagger_and_Scabbard_-_Walters_5177.jpg | sí (pie y README) | ok |
+| key-a, key-b, key-ring | Rijksmuseum, *Sleutel* BK-KOG-2301 (key-a), BK-16959 (key-b), BK-KOG-2001 (argolla) | CC0 | https://commons.wikimedia.org/wiki/File:Sleutel,_BK-KOG-2301.jpg · https://commons.wikimedia.org/wiki/File:Sleutel,_BK-16959.jpg · https://commons.wikimedia.org/wiki/File:Sleutel,_BK-KOG-2001.jpg | sí (pie y README) | ok |
 | ball (MET 32811), eye (*Lover's Eyes*, DT4436), candelabrum (MET DP-12252-029, A. Pugin) | The Metropolitan Museum of Art | CC0 | por confirmar (constan los números de objeto) | sí | ok |
 | bat, batface | Ernst Haeckel, *Kunstformen der Natur* | Dominio público | por confirmar | sí | ok |
 | skeleton | Andreas Vesalius, *De humani corporis fabrica* (164frc) | Dominio público | por confirmar | sí | ok |
