@@ -115,15 +115,9 @@ function makeScribble(): string | null {
   return cv.toDataURL('image/png');
 }
 
-/** Hoja que se curva al pasar: tres tiras encadenadas, cada una gira un poco mas que la anterior. */
+/** Hoja del grimorio: una pieza con anverso y reverso; al girar se inclina un poco para parecer curvada. */
 function Leaf({ n }: { n: number }) {
-  const strip = (i: number): React.ReactNode => (
-    <span className={`gs gs${i}`}>
-      <span className="g-side g-f" /><span className="g-side g-b" />
-      {i < 3 && strip(i + 1)}
-    </span>
-  );
-  return <span className={`g-leaf l${n}`}>{strip(1)}</span>;
+  return <span className={`g-leaf l${n}`}><span className="g-side g-f" /><span className="g-side g-b" /></span>;
 }
 
 /** Grimorio: al pasar se abre la tapa y se van pasando las hojas, curvandose. Puerta a About. */
@@ -138,7 +132,7 @@ export function GrimoireStamp({ className = '' }: { className?: string }) {
   return (
     <span ref={el} className={`grimoire ${className}`}>
       <span className="g-block" />
-      <Leaf n={1} /><Leaf n={2} /><Leaf n={3} />
+      {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => <Leaf key={n} n={n} />)}
       <span className="g-cover">
         <Stamp name="grimoire" className="g-front" />
         <span className="g-inside" />
