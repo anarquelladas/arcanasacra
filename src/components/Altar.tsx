@@ -35,7 +35,7 @@ const THINGS: Thing[] = [
   { id: 'moth', href: '/art/', label: 'Art', hint: 'tattoos & drawings', depth: 8, rot: -6, node: <MothChoice /> },
   { id: 'deck', href: '/code/', label: 'Code', hint: 'projects & agents', depth: 6, rot: 5, node: <DeckStamp /> },
   // Guardado sin usar: { id: 'mirror', href: '/about/', label: 'About', hint: 'who is behind it', depth: 5, rot: -8, node: <Stamp name="mirror" /> },
-  // PRUEBA: bolas candidatas 3 y 4 (la 4 con ?ball=4). La bola original (Stamp name="ball") queda guardada sin usar.
+  // PRUEBA: bolas candidatas 3 y 4 (la roja 4 por defecto; ?ball=3 para la 3). La bola original (Stamp name="ball") queda guardada sin usar.
   { id: 'ball', href: '/contact/', label: 'Contact', hint: 'ask the crystal ball', depth: 7, rot: 2, node: <BallChoice /> },
   { id: 'candle', depth: 3, rot: 0, node: null }, // el candelabro se pinta aparte: depende del estado de la luz
   { id: 'book', href: '/about/', label: 'About', hint: 'who is behind it', depth: 5, rot: -4, node: <GrimoireStamp /> },

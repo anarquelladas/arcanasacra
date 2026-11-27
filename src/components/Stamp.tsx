@@ -141,11 +141,11 @@ export function GrimoireStamp({ className = '' }: { className?: string }) {
   );
 }
 
-/** PRUEBA: bola de cristal candidata. Por defecto la 3; con ?ball=4 en la URL se ve la 4. */
+/** PRUEBA: bola de cristal candidata. Por defecto la roja (4); con ?ball=3 en la URL se ve la 3 (cuarzo transparente). */
 export function BallChoice({ className = '' }: { className?: string }) {
-  const [v, setV] = useState<'ball-3' | 'ball-4'>('ball-3');
+  const [v, setV] = useState<'ball-3' | 'ball-4'>('ball-4');
   useEffect(() => {
-    try { if (new URLSearchParams(location.search).get('ball') === '4') setV('ball-4'); } catch { /* sin URL */ }
+    try { if (new URLSearchParams(location.search).get('ball') === '3') setV('ball-3'); } catch { /* sin URL */ }
   }, []);
   return <Stamp name={v} className={className} />;
 }
