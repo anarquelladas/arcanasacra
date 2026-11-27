@@ -4,7 +4,7 @@ import Smoke from './Smoke';
 
 export type StampName =
   | 'moth' | 'moth-pepper' | 'deathshead' | 'tarot' | 'mirror' | 'key' | 'candle' | 'candelabrum' | 'dagger'
-  | 'inkwell' | 'eye' | 'ball' | 'poison' | 'bat' | 'batface' | 'skeleton' | 'elvira' | 'tarot-priestess' | 'tarot-empress' | 'dagger-h' | 'key-a' | 'key-b' | 'key-ring';
+  | 'inkwell' | 'eye' | 'ball' | 'poison' | 'bat' | 'batface' | 'skeleton' | 'elvira' | 'tarot-priestess' | 'tarot-empress' | 'dagger-h' | 'key-a' | 'key-b' | 'key-ring' | 'grimoire';
 
 /** La misma imagen en dos tintas: hueso para el modo oscuro y tinta negra para el claro. */
 export function Dual({ file, className = '', style, alt = '', lazy = true }: { file: string; className?: string; style?: CSSProperties; alt?: string; lazy?: boolean }) {
@@ -84,6 +84,22 @@ export function KeysStamp({ className = '' }: { className?: string }) {
       <Stamp name="key-a" className="k k-a" />
       <Stamp name="key-b" className="k k-b" />
       <Stamp name="key-ring" className="k k-ring" />
+    </span>
+  );
+}
+
+/** Grimorio: al pasar se abre la tapa y se van pasando las hojas. Puerta a About. */
+export function GrimoireStamp({ className = '' }: { className?: string }) {
+  return (
+    <span className={`grimoire ${className}`}>
+      <span className="g-block" />
+      {[1, 2, 3].map((n) => (
+        <span key={n} className={`g-leaf l${n}`}><span className="g-side g-f" /><span className="g-side g-b" /></span>
+      ))}
+      <span className="g-cover">
+        <Stamp name="grimoire" className="g-front" />
+        <span className="g-inside" />
+      </span>
     </span>
   );
 }

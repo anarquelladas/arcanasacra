@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { playSound } from '../lib/sound';
 import Blood from './Blood';
-import { CandelabrumStamp, DaggerHStamp, DeckStamp, Dual, KeysStamp, MothStamp, Stamp } from './Stamp';
+import { CandelabrumStamp, DaggerHStamp, DeckStamp, Dual, GrimoireStamp, KeysStamp, MothStamp, Stamp } from './Stamp';
 import './altar.css';
 
 // La portada es una mesa de curiosidades: cada objeto se puede arrastrar,
@@ -36,6 +36,7 @@ const THINGS: Thing[] = [
   // Guardado sin usar: { id: 'mirror', href: '/about/', label: 'About', hint: 'who is behind it', depth: 5, rot: -8, node: <Stamp name="mirror" /> },
   // Guardado sin usar (Ann: se sustituira por otro objeto): { id: 'ball', href: '/contact/', label: 'Contact', hint: 'ask the crystal ball', depth: 7, rot: 2, node: <Stamp name="ball" /> },
   { id: 'candle', depth: 3, rot: 0, node: null }, // el candelabro se pinta aparte: depende del estado de la luz
+  { id: 'book', href: '/about/', label: 'About', hint: 'who is behind it', depth: 5, rot: -4, node: <GrimoireStamp /> },
   { id: 'dagger', depth: 12, rot: -5, node: <DaggerHStamp /> },
   { id: 'key', href: '/contact/', label: 'Contact', hint: 'send me a letter', depth: 9, rot: -8, node: <KeysStamp /> }, // provisional: el reparto de objetos y enlaces se decidira despues
 ];
@@ -181,7 +182,7 @@ export default function Altar() {
   const click = (t: Thing) => (e: React.MouseEvent) => {
     if (wasDrag.current) { e.preventDefault(); wasDrag.current = false; return; }
     // en tactil no hay hover: el primer toque abre el abanico de la carta, el segundo entra en Code
-    if (t.id === 'deck' && matchMedia('(hover: none)').matches && !e.currentTarget.classList.contains('fanned')) {
+    if ((t.id === 'deck' || t.id === 'book') && matchMedia('(hover: none)').matches && !e.currentTarget.classList.contains('fanned')) {
       e.preventDefault();
       const el = e.currentTarget;
       el.classList.add('fanned');
