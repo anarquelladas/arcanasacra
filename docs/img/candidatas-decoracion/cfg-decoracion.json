@@ -1,0 +1,12 @@
+{
+"encaje-collar":{"src":"lace4","kind":"dark","crop":[0.02,0.02,0.98,0.98],"floor":110,"bias":14,"sigma":4,"thick":0},
+"encaje-cuello":{"src":"lace5","kind":"dark","crop":[0,0.2,1,0.85],"floor":100,"bias":10,"sigma":4,"thick":0},
+"encaje-hojas":{"src":"lace7","kind":"dark","crop":[0,0.05,1,1],"floor":80,"bias":8,"sigma":4,"thick":1},
+"cruz-bizantina":{"src":"cross1","kind":"obj","thick":1,"diff":12},
+"cruz-esmalte":{"src":"cross2","kind":"obj","thick":1,"diff":14},
+"cruz-cristal":{"src":"cross3","kind":"obj","thick":1,"diff":10},
+"colgante-bizantino":{"src":"cross4","kind":"obj","thick":1,"diff":40,"sigma":5},
+"tijeras-coreanas":{"src":"scissors1","kind":"obj","thick":2,"diff":14},
+"tijeras-americanas":{"src":"scissors2","kind":"obj","crop":[0.12,0.3,0.88,0.75],"thick":2,"diff":14},
+"corazon-lazo":{"src":"lace2","kind":"line","crop":[0.3,0.1,0.8,0.5],"thick":1,"bias":8}
+}
