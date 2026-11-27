@@ -4,7 +4,7 @@ import Smoke from './Smoke';
 
 export type StampName =
   | 'moth' | 'moth-pepper' | 'deathshead' | 'tarot' | 'mirror' | 'key' | 'candle' | 'candelabrum' | 'dagger'
-  | 'inkwell' | 'eye' | 'ball' | 'poison' | 'bat' | 'batface' | 'skeleton' | 'elvira';
+  | 'inkwell' | 'eye' | 'ball' | 'poison' | 'bat' | 'batface' | 'skeleton' | 'elvira' | 'tarot-priestess' | 'tarot-empress';
 
 /** La misma imagen en dos tintas: hueso para el modo oscuro y tinta negra para el claro. */
 export function Dual({ file, className = '', style, alt = '', lazy = true }: { file: string; className?: string; style?: CSSProperties; alt?: string; lazy?: boolean }) {
@@ -63,6 +63,17 @@ export function DaggerStamp({ className = '' }: { className?: string }) {
     <span className={`dagger ${className}`}>
       <Stamp name="dagger" />
       <img className="drop" src="/objetos/blood-drop.webp" alt="" draggable={false} />
+    </span>
+  );
+}
+
+/** La carta de la portada: al pasar, detras salen en abanico La Sacerdotisa y La Emperatriz. */
+export function DeckStamp() {
+  return (
+    <span className="deck-fan">
+      <Stamp name="tarot-priestess" className="fan-card fan-l" />
+      <Stamp name="tarot-empress" className="fan-card fan-r" />
+      <Stamp name="tarot" className="fan-main" />
     </span>
   );
 }
