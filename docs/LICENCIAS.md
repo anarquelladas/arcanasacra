@@ -11,7 +11,6 @@ Pie de la web (`Base.astro`) y README llevan los créditos agrupados por autor; 
 | Fuente **Billa Mount**: archivo = demo "just for personal use" de Kana Widana / Alit Design (© 2020) | Alto, **aceptado por Ann (decisión 2026-11-26; no volver a preguntar)** | Nada ahora. Reabrir solo si Ann compra la licencia (~17 $, Fontspring) o pasa a Ballet. |
 | **`frame.webp`** (marco ovalado de forja): imagen aportada por Ann, origen sin confirmar. Es el marco en uso de todos los retratos | Alto | Ann: de dónde salió; o sustituir por uno libre (tarea 2.5). |
 | Elvira: personaje registrado y derechos de imagen de Cassandra Peterson | Medio | Presentado como homenaje, solo fotos CC BY 2.0 con crédito; nunca dibujada ni como marca. |
-| Retratos de Elvira que se quedan: sin decidir | Informativo | Al cerrar 2.8.6 revisar esta tabla y el pie (si cambian las fotos usadas). |
 
 ## Imágenes (`public/objetos/` y `public/objetos/ink/`)
 
@@ -26,14 +25,12 @@ Pie de la web (`Base.astro`) y README llevan los créditos agrupados por autor; 
 | tarot | Tarot World Project, *XVII L'Étoile*, Nicolas Conver 1760 | CC BY-SA 4.0 | por confirmar | sí | ok |
 | blood-drip, blood-drop, elvira-iris-l/r | Generadas por código (propias) | Propias | n/a | n/a | ok |
 | elvira-a (y `elvira-a-eyes`) | Orange County Archives, *Elvira promoting Knott's Berry Farm's Halloween Haunt* (35859341932) | CC BY 2.0 | por confirmar (solo consta el ID de Flickr) | sí | ok |
-| elvira-c y elvira-f | Orange County Archives, misma foto (36030656275) | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Elvira_promoting_Knott%27s_Berry_Farm%27s_Halloween_Haunt_(36030656275).jpg | sí | ok |
-| elvira-g y `elvira.webp` (gabinete, `Stamp elvira`) | Orange County Archives (35641035160) | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Elvira_promoting_Knott%27s_Berry_Farm%27s_Halloween_Haunt_(35641035160).jpg | sí | ok |
-| elvira-h y elvira-i | Orange County Archives, *Elvira ... Haunt hat 1991* (35641028170) | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Elvira_with_Elvira_promoting_Knott%27s_Berry_Farm%27s_Halloween_Haunthat_1991_(35641028170).jpg | sí | ok |
-| frame-wide2 (marco alternativo, `USE_OVAL_STRETCHED = false`) | F. de Cuvilliés (diseño) y C. A. de Lespilliez (grabado), *Frame with Two Scrolls of Leaves*, Cooper Hewitt CH 18238247 | Dominio público | https://commons.wikimedia.org/wiki/File:Bound_Print,_Frame_with_Two_Scrolls_of_Leaves,_Troisi%C3%A8me_Livre_de_Cadres_(Third_Book_of_Frames),_1740%E2%80%9368_(CH_18238247).jpg | sí (pie y README) | ok. Hoy es la alternativa, no el marco por defecto; si Ann se queda con el ovalado, se puede retirar con su crédito |
+| elvira-c | Orange County Archives, misma foto (36030656275) | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Elvira_promoting_Knott%27s_Berry_Farm%27s_Halloween_Haunt_(36030656275).jpg | sí | ok |
+| `elvira.webp` (gabinete, `Stamp elvira`) | Orange County Archives (35641035160) | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Elvira_promoting_Knott%27s_Berry_Farm%27s_Halloween_Haunt_(35641035160).jpg | sí | ok |
 | **frame.webp** (marco ovalado en uso) | Aportado por Ann; autor desconocido | **Sin confirmar** | por confirmar | no | **sin confirmar** (riesgo) |
 | frame-wide (Cuvilliés CH 18238167) | F. de Cuvilliés / C. A. von Lespilliez | Dominio público | https://commons.wikimedia.org/wiki/File:Bound_Print,_Frame_with_Rocaille_Volutes_and_Wings,_Premier_Livre_de_Cadres_(First_Book_of_Frames),_1740%E2%80%9368_(CH_18238167).jpg | no hace falta | retirado del repo; la tarea 2.2.10 original ya no aplica (elvira-d/e y frame-wide borrados) |
 
-Fotos de Elvira retiradas del repo (b, d, e): sin crédito pendiente. Los orígenes de b, d, e constan en `docs/elvira-gazes.md` por si se recuperan.
+Fotos de Elvira retiradas del repo (b, d, e, f, g, h, i; Ann eligio a y c el 2026-11-27, 2.8.6) y marco frame-wide2 (retirado): sin crédito pendiente. Los orígenes de b, d, e constan en `docs/elvira-gazes.md` por si se recuperan.
 Texturas (`public/tex/paper.webp`, `slate.webp`): generadas con `scripts/textures.py` (propias). `favicon.svg/.ico`: no consta autor; por confirmar (probablemente propios).
 
 ## Fuentes

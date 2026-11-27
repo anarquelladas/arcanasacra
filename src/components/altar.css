@@ -76,15 +76,8 @@
 .tracking-eye .frame-img { position: relative; display: block; width: 100%; height: auto; pointer-events: none; }
 .tracking-eye .portrait { position: absolute; left: 11.2%; top: 17.6%; width: 77.6%; height: 68.4%; }
 .tracking-eye .portrait .face { display: block; width: 100%; height: 100%; animation: gaze-in .5s ease both; }
-/* marco apaisado: posicion y hueco calculados en Altar.tsx (--fl/--ft/--fw/--fh marco, --pl/--pt/--pw/--ph hueco); el retrato se recorta en elipse */
-.tracking-eye.wide .frame-img { position: absolute; left: var(--fl); top: var(--ft); width: var(--fw); height: var(--fh); animation: gaze-in .5s ease both; }
-.tracking-eye .portrait.wide { left: var(--pl); top: var(--pt); width: var(--pw); height: var(--ph); }
-.tracking-eye .portrait.wide .face { object-fit: cover; clip-path: ellipse(50% 50% at 50% 50%); }
-.tracking-eye .portrait.wide .iris-clip { clip-path: ellipse(50% 50% at 50% 50%); }
 .tracking-eye .iris-clip { position: absolute; inset: 0; -webkit-mask: var(--eye-mask) center / 100% 100% no-repeat; mask: var(--eye-mask) center / 100% 100% no-repeat; transition: transform .1s; transform-origin: 50% 37%; }
 .tracking-eye .iris { position: absolute; transition: transform .22s ease-out; }
-/* indicador temporal de retrato (SHOW_PORTRAIT_INDEX en Altar.tsx) */
-.portrait-index { position: absolute; left: 100%; top: 42%; margin-left: calc(25% + 1.6rem); font-size: .9rem; letter-spacing: .3em; color: var(--ink-dim); white-space: nowrap; pointer-events: none; }
 @keyframes gaze-in { from { opacity: 0; filter: blur(6px); } }
 /* solo el retrato se cierra al pulsar; el marco no se mueve nunca */
 .portrait { transition: transform .12s; transform-origin: 50% 40%; }
@@ -279,7 +272,6 @@ body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6
   /* el candelabro se queda en movil: es la intro y el interruptor de tema */
   .obj-candle { grid-column: 1 / -1; max-width: 150px; margin-top: 2.6rem; }
   .intro-hint { position: fixed; bottom: 1.2rem; font-size: .7rem; padding: 0 1rem; }
-  .portrait-index { margin-left: 1.6rem; font-size: .75rem; }
   .blood { --s: .375; height: 90px; }
   .blood::before { background-size: 600px 90px; }
   .bat-flight { display: none; }
