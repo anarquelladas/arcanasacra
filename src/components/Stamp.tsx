@@ -4,7 +4,7 @@ import Smoke from './Smoke';
 
 export type StampName =
   | 'moth' | 'moth-pepper' | 'deathshead' | 'tarot' | 'mirror' | 'key' | 'candle' | 'candelabrum' | 'dagger'
-  | 'inkwell' | 'eye' | 'ball' | 'poison' | 'bat' | 'batface' | 'skeleton' | 'elvira' | 'tarot-priestess' | 'tarot-empress';
+  | 'inkwell' | 'eye' | 'ball' | 'poison' | 'bat' | 'batface' | 'skeleton' | 'elvira' | 'tarot-priestess' | 'tarot-empress' | 'dagger-h' | 'key-a' | 'key-b' | 'key-ring';
 
 /** La misma imagen en dos tintas: hueso para el modo oscuro y tinta negra para el claro. */
 export function Dual({ file, className = '', style, alt = '', lazy = true }: { file: string; className?: string; style?: CSSProperties; alt?: string; lazy?: boolean }) {
@@ -63,6 +63,27 @@ export function DaggerStamp({ className = '' }: { className?: string }) {
     <span className={`dagger ${className}`}>
       <Stamp name="dagger" />
       <img className="drop" src="/objetos/blood-drop.webp" alt="" draggable={false} />
+    </span>
+  );
+}
+
+/** Daga horizontal de la portada: de la punta cae despacio una gota de sangre. */
+export function DaggerHStamp({ className = '' }: { className?: string }) {
+  return (
+    <span className={`dagger dagger-h ${className}`}>
+      <Stamp name="dagger-h" />
+      <img className="drop" src="/objetos/blood-drop.webp" alt="" draggable={false} />
+    </span>
+  );
+}
+
+/** Llavero: dos llaves cuelgan de una argolla y se balancean desde ella al pasar el cursor. */
+export function KeysStamp({ className = '' }: { className?: string }) {
+  return (
+    <span className={`keys ${className}`}>
+      <Stamp name="key-a" className="k k-a" />
+      <Stamp name="key-b" className="k k-b" />
+      <Stamp name="key-ring" className="k k-ring" />
     </span>
   );
 }

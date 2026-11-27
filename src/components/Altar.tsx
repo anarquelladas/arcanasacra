@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { playSound } from '../lib/sound';
-import { CandelabrumStamp, DaggerStamp, DeckStamp, Dual, MothStamp, Stamp } from './Stamp';
+import { CandelabrumStamp, DaggerHStamp, DeckStamp, Dual, KeysStamp, MothStamp, Stamp } from './Stamp';
 import './altar.css';
 
 // La portada es una mesa de curiosidades: cada objeto se puede arrastrar,
@@ -63,15 +63,40 @@ const THINGS: Thing[] = [
   { id: 'mirror', href: '/about/', label: 'About', hint: 'who is behind it', depth: 5, rot: -8, node: <Stamp name="mirror" /> },
   { id: 'ball', href: '/contact/', label: 'Contact', hint: 'ask the crystal ball', depth: 7, rot: 2, node: <Stamp name="ball" /> },
   { id: 'candle', depth: 3, rot: 0, node: null }, // el candelabro se pinta aparte: depende del estado de la luz
-  { id: 'dagger', depth: 12, rot: 24, node: <DaggerStamp /> },
+  { id: 'dagger', depth: 12, rot: -5, node: <DaggerHStamp /> },
+  { id: 'key', depth: 9, rot: -8, node: <KeysStamp /> },
 ];
+
+/** Un retrato con sus iris que siguen al cursor. El nuevo entra fundiendose sobre el anterior (ghost). */
+function Portrait({ g, look, ghost = false }: { g: Gaze; look: [number, number]; ghost?: boolean }) {
+  return (
+    <span className={`portrait${ghost ? ' ghost' : ''}`} aria-hidden={ghost ? true : undefined}>
+      <Dual file={`${g.file}.webp`} className="face" lazy={false} alt={ghost ? '' : 'Elvira, Mistress of the Dark'} />
+      {g.eyes.map(([x, y], i) => (
+        <span key={i} className="iris-clip" style={{ ['--eye-mask' as string]: `url(/objetos/${g.file}-eyes.webp)` }}>
+          <Dual
+            file={i ? 'elvira-iris-r.webp' : 'elvira-iris-l.webp'}
+            className="iris"
+            lazy={false}
+            style={{
+              left: `${x}%`, top: `${y}%`, width: `${g.iris}%`,
+              transform: `translate(calc(-50% + ${look[0] * TRAVEL}%), calc(-50% + ${look[1] * 8}%))`,
+            }}
+          />
+        </span>
+      ))}
+      {!ghost && <span className="shine" aria-hidden="true" style={{ ['--src' as string]: `url(/objetos/${g.file}.webp)` }} />}
+    </span>
+  );
+}
 
 type Theme = 'dark' | 'light';
 const currentTheme = (): Theme => (document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
 
 export default function Altar() {
   const stage = useRef<HTMLDivElement>(null);
-  const [blink, setBlink] = useState(false);
+  const [prev, setPrev] = useState<number | null>(null); // retrato anterior: se funde mientras entra el nuevo
+  const fuse = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const [look, setLook] = useState<[number, number]>([0, 0]);
   const [gaze, setGaze] = useState(0);
   // en cada carga aparece uno de los retratos al azar (se elige en el cliente para no romper la hidratacion)
@@ -239,27 +264,12 @@ export default function Altar() {
       <header className="crest">
         <button
           className="eye-btn"
-          onClick={() => { playSound('eye'); setBlink(true); setTimeout(() => { setGaze((g) => (g + 1) % GAZES.length); setBlink(false); }, 180); }}
+          onClick={() => { playSound('eye'); setPrev(gaze); setGaze((gaze + 1) % GAZES.length); clearTimeout(fuse.current); fuse.current = setTimeout(() => setPrev(null), 900); }}
           aria-label="Elvira, Mistress of the Dark: click to change her gaze"
         >
           <span className="tracking-eye eye">
-            <span className={`portrait ${blink ? 'blink' : ''}`}>
-              <Dual file={`${g.file}.webp`} className="face" lazy={false} alt="Elvira, Mistress of the Dark" />
-              {g.eyes.map(([x, y], i) => (
-                <span key={i} className="iris-clip" style={{ ['--eye-mask' as string]: `url(/objetos/${g.file}-eyes.webp)` }}>
-                  <Dual
-                    file={i ? 'elvira-iris-r.webp' : 'elvira-iris-l.webp'}
-                    className="iris"
-                    lazy={false}
-                    style={{
-                      left: `${x}%`, top: `${y}%`, width: `${g.iris}%`,
-                      transform: `translate(calc(-50% + ${look[0] * TRAVEL}%), calc(-50% + ${look[1] * 8}%))`,
-                    }}
-                  />
-                </span>
-              ))}
-            <span className="shine" aria-hidden="true" style={{ ['--src' as string]: `url(/objetos/${g.file}.webp)` }} />
-            </span>
+            {prev !== null && prev !== gaze && <Portrait g={GAZES[prev]} look={look} ghost />}
+            <Portrait key={gaze} g={g} look={look} />
             <Dual file="frame.webp" className="frame-img" lazy={false} />
           </span>
         </button>
@@ -304,7 +314,7 @@ export default function Altar() {
         return t.href ? (
           <a key={t.id} href={t.href} aria-label={`${t.label}: ${t.hint}`} {...common}>{inner}</a>
         ) : (
-          <button key={t.id} type="button" id={t.id === 'candle' ? 'candle' : undefined} aria-label={t.id === 'candle' ? (intro ? 'Light the candelabrum to reveal the table' : 'Candelabrum: light it for day mode, blow it out for night mode') : t.id === 'key' ? 'Turn the key' : `Move the ${t.id}`} aria-pressed={t.id === 'candle' && !intro ? theme === 'light' : undefined} {...common}>{inner}</button>
+          <button key={t.id} type="button" id={t.id === 'candle' ? 'candle' : undefined} aria-label={t.id === 'candle' ? (intro ? 'Light the candelabrum to reveal the table' : 'Candelabrum: light it for day mode, blow it out for night mode') : t.id === 'key' ? 'Move the keys' : `Move the ${t.id}`} aria-pressed={t.id === 'candle' && !intro ? theme === 'light' : undefined} {...common}>{inner}</button>
         );
       })}
     </div>

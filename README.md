@@ -66,7 +66,8 @@ Si algún día la API de GitHub te limita, crea un token de solo lectura y ponlo
 
 Convertidas a alto contraste con `scripts/contrast.py` a partir de:
 
-- Walters Art Museum (dominio público): espejo etrusco, palmatoria de Sèvres, llave, daga, tintero.
+- Walters Art Museum (dominio público): espejo etrusco, palmatoria de Sèvres, llave, daga, tintero, y la daga horizontal (Turkish, *Dagger and Scabbard*, Walters 5177; Commons: Turkish_-_Dagger_and_Scabbard_-_Walters_5177.jpg).
+- Rijksmuseum (CC0), vía Wikimedia Commons: llaves del llavero de la portada (*Sleutel* BK-KOG-2301 y BK-16959) y argolla recortada de BK-KOG-2001.
 - The Met (CC0): *Lover's Eyes* (el ojo), esfera de cristal, candelabro de Augustus Pugin.
 - Ernst Haeckel, *Kunstformen der Natur* (dominio público): murciélagos.
 - Andreas Vesalius, *De humani corporis fabrica* (dominio público): esqueleto.
