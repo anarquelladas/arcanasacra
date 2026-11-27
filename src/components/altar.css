@@ -291,9 +291,9 @@ body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6
 .deck-fan .fan-card { position: absolute; inset: 0; z-index: 1; opacity: 0; transform-origin: 50% 92%; transition: transform .7s var(--ease), opacity .45s; }
 .deck-fan .fan-l { transform: rotate(0deg) translateX(0); }
 .deck-fan .fan-r { transform: rotate(0deg) translateX(0); }
-.obj:hover .deck-fan .fan-card, .obj:focus-visible .deck-fan .fan-card { opacity: 1; }
-.obj:hover .deck-fan .fan-l, .obj:focus-visible .deck-fan .fan-l { transform: rotate(-15deg) translateX(-14%); }
-.obj:hover .deck-fan .fan-r, .obj:focus-visible .deck-fan .fan-r { transform: rotate(13deg) translateX(8%); }
+.obj.fanned .deck-fan .fan-card, .obj:hover .deck-fan .fan-card, .obj:focus-visible .deck-fan .fan-card { opacity: 1; }
+.obj.fanned .deck-fan .fan-l, .obj:hover .deck-fan .fan-l, .obj:focus-visible .deck-fan .fan-l { transform: rotate(-15deg) translateX(-14%); }
+.obj.fanned .deck-fan .fan-r, .obj:hover .deck-fan .fan-r, .obj:focus-visible .deck-fan .fan-r { transform: rotate(13deg) translateX(8%); }
 .obj:hover .deck-fan .fan-main .shine, .obj:focus-visible .deck-fan .fan-main .shine { opacity: 1; animation: gleam 1.3s var(--ease) both; }
 @media (prefers-reduced-motion: reduce) { .deck-fan .fan-card { transition: opacity .2s; } }
 .obj-deck .tag { z-index: 3; }

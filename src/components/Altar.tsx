@@ -211,6 +211,15 @@ export default function Altar() {
   };
   const click = (t: Thing) => (e: React.MouseEvent) => {
     if (wasDrag.current) { e.preventDefault(); wasDrag.current = false; return; }
+    // en tactil no hay hover: el primer toque abre el abanico de la carta, el segundo entra en Code
+    if (t.id === 'deck' && matchMedia('(hover: none)').matches && !e.currentTarget.classList.contains('fanned')) {
+      e.preventDefault();
+      const el = e.currentTarget;
+      el.classList.add('fanned');
+      playSound('card-flip');
+      setTimeout(() => el.classList.remove('fanned'), 5000);
+      return;
+    }
     if (t.id === 'candle') { if (intro) ignite(); else toggleTheme(); }
     if (t.id === 'key') e.currentTarget.classList.toggle('turned');
   };
