@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { playSound } from '../lib/sound';
 import Blood from './Blood';
+import BatPerch from './BatPerch';
 import { CandelabrumStamp, BallChoice, DaggerHStamp, DeckStamp, Dual, GrimoireStamp, KeysStamp, MothStamp, Stamp } from './Stamp';
 import './altar.css';
 
@@ -200,9 +201,9 @@ export default function Altar() {
       <Blood />
       <div ref={stage} className="altar">
       <div className="light" aria-hidden="true" />
-      <span className="bat-flight" aria-hidden="true"><Dual file="bat.webp" className="bat-img" lazy={false} /></span>
 
       <header className="crest">
+        <div className="eye-wrap">
         <button
           className="eye-btn"
           onClick={() => { playSound('eye'); setPrev(gaze); setGaze((gaze + 1) % GAZES.length); clearTimeout(fuse.current); fuse.current = setTimeout(() => setPrev(null), 1900); }}
@@ -214,6 +215,8 @@ export default function Altar() {
             <Dual file="frame.webp" className="frame-img" lazy={false} />
           </span>
         </button>
+        <BatPerch />
+        </div>
         <h1>Arcana Sacra</h1>
         <p className="tagline">tattoo, drawing &amp; code</p>
         <span className="rule" aria-hidden="true" />

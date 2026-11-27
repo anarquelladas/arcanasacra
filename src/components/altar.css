@@ -60,10 +60,11 @@
   opacity: .5;
   animation: fade 2s ease 2.6s both;
 }
+.eye-wrap { position: relative; width: 30%; margin: 0 auto -1.6rem; z-index: 2; }
 .eye-btn {
   display: block;
-  width: 30%;
-  margin: 0 auto -1.6rem;
+  width: 100%;
+  margin: 0;
   padding: 0;
   background: none;
   border: 0;
@@ -170,20 +171,31 @@ body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6
   text-shadow: 0 0 2px var(--bg), 0 0 4px var(--bg), 0 0 7px var(--bg), 0 0 10px var(--bg), 0 0 14px var(--bg);
 }
 
-/* murciélago que cruza la noche */
-.bat-flight {
-  position: absolute; left: 0; top: 22%; width: clamp(110px, 9vw, 150px); z-index: 5; pointer-events: none;
-  animation: fly 19s linear infinite 3s; opacity: 0;
-}
-.bat-flight .bat-img { width: 100%; display: block; animation: wingbeat .32s ease-in-out infinite alternate; transform-origin: 50% 40%; }
+/* murciélago posado en el marco de Elvira: colgado del borde, se mece; al pulsarlo se va volando y vuelve al rato */
 @keyframes wingbeat { to { transform: scaleY(.62) translateY(4%); } }
-@keyframes fly {
-  0% { transform: translate(-20vw, 10vh) rotate(-8deg); opacity: 1; }
-  25% { transform: translate(25vw, -6vh) rotate(6deg); }
-  50% { transform: translate(60vw, 8vh) rotate(-6deg); }
-  70% { transform: translate(110vw, -10vh) rotate(4deg); opacity: 1; }
-  71%, 100% { transform: translate(120vw, -10vh); opacity: 0; }
+.bat-spot { position: absolute; inset: 0; pointer-events: none; z-index: 4; }
+.bat-perch { position: absolute; left: 64%; top: -4%; width: 29%; padding: 0; background: none; border: 0; cursor: pointer; pointer-events: auto; transform-origin: 50% 0; animation: bat-sway 7s ease-in-out infinite; }
+.bat-perch-img { display: block; width: 100%; height: auto; filter: drop-shadow(0 4px 4px rgba(0, 0, 0, .6)); }
+:root[data-theme='light'] .bat-perch-img { filter: drop-shadow(0 3px 3px rgba(60, 45, 25, .25)); }
+@keyframes bat-sway { 0%, 100% { transform: rotate(-1.8deg); } 50% { transform: rotate(1.8deg); } }
+.bat-fly { position: absolute; left: 52%; top: -2%; width: 56%; pointer-events: none; }
+.bat-wings { display: block; width: 100%; height: auto; animation: wingbeat .3s ease-in-out infinite alternate; transform-origin: 50% 40%; }
+.bat-fly.leaving { animation: bat-leave 3s cubic-bezier(.45, 0, .75, .5) forwards; }
+.bat-fly.returning { animation: bat-return 3.6s cubic-bezier(.2, .55, .3, 1) forwards; }
+@keyframes bat-leave {
+  0% { transform: translate(0, 0) scale(.5) rotate(0deg); opacity: 1; }
+  18% { transform: translate(-30%, -70%) scale(.8) rotate(-10deg); }
+  45% { transform: translate(120%, -180%) scale(1.1) rotate(8deg); }
+  100% { transform: translate(1100%, -1100%) scale(1.8) rotate(14deg); opacity: 0; }
 }
+@keyframes bat-return {
+  0% { transform: translate(-1300%, -900%) scale(1.8) rotate(-12deg); opacity: 0; }
+  12% { opacity: 1; }
+  55% { transform: translate(-260%, -300%) scale(1.1) rotate(8deg); }
+  82% { transform: translate(-50%, -80%) scale(.7) rotate(-6deg); }
+  100% { transform: translate(0, 0) scale(.5) rotate(0deg); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .bat-perch { animation: none; } }
 /* rótulos hacia el lado con más aire */
 .obj-deck .tag, .obj-ball .tag { left: auto; right: 92%; padding-left: 0; padding-right: 2.6rem; align-items: flex-end; }
 .obj-deck .tag::before, .obj-ball .tag::before { left: auto; right: 0; transform-origin: 100% 50%; }
@@ -260,7 +272,6 @@ body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6
   .obj-candle { grid-column: 1 / -1; max-width: 150px; margin-top: 2.6rem; }
   .intro-hint { position: fixed; bottom: 1.2rem; font-size: .7rem; padding: 0 1rem; }
   .blood { height: 360px; }
-  .bat-flight { display: none; }
 }
 
 /* abanico de la carta de Code: Sacerdotisa y Emperatriz asoman por detras y se abren al pasar */
