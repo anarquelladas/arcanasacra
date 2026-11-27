@@ -72,14 +72,24 @@
   z-index: 2;
 }
 .eye { display: block; width: 100%; transform-origin: 50% 50%; transition: transform .12s; }
-.tracking-eye { position: relative; display: block; }
+.tracking-eye { position: relative; display: block; aspect-ratio: 946 / 1383; /* caja fija: el marco apaisado no mueve el titulo */ }
 .tracking-eye .frame-img { position: relative; display: block; width: 100%; height: auto; pointer-events: none; }
 .tracking-eye .portrait { position: absolute; left: 11.2%; top: 17.6%; width: 77.6%; height: 68.4%; }
 .tracking-eye .portrait .face { display: block; width: 100%; height: 100%; animation: gaze-in .5s ease both; }
-.tracking-eye .iris-clip { position: absolute; inset: 0; transition: transform .1s; transform-origin: 50% 37%; }
+/* al pasar solo recorre el retrato un reflejo de cristal, como en el resto de objetos */
+.tracking-eye .shine {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
+  -webkit-mask: var(--src) center / 100% 100% no-repeat; mask: var(--src) center / 100% 100% no-repeat;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 250, 235, .55) 50%, transparent 62%) 160% 0 / 260% 100% no-repeat;
+}
+.eye-btn:hover .shine, .eye-btn:focus-visible .shine { opacity: 1; animation: gleam 1.3s var(--ease) both; }
+:root[data-theme='light'] .tracking-eye .shine { display: none; }
+.tracking-eye .iris-clip { position: absolute; inset: 0; -webkit-mask: var(--eye-mask) center / 100% 100% no-repeat; mask: var(--eye-mask) center / 100% 100% no-repeat; transition: transform .1s; transform-origin: 50% 37%; }
 .tracking-eye .iris { position: absolute; transition: transform .22s ease-out; }
 @keyframes gaze-in { from { opacity: 0; filter: blur(6px); } }
-.eye.blink { transform: scaleY(.08); }
+/* solo el retrato se cierra al pulsar; el marco no se mueve nunca */
+.portrait { transition: transform .12s; transform-origin: 50% 40%; }
+.portrait.blink { transform: scaleY(.08); }
 
 @keyframes ink-in { from { filter: blur(10px); opacity: 0; } }
 @keyframes fade { from { opacity: 0; } }
@@ -140,11 +150,43 @@
 .obj-candle { left: 3%; top: 48%; width: clamp(120px, 10vw, 165px); animation-delay: 1.4s; }
 .obj-dagger { right: 27%; bottom: 6%; width: clamp(80px, 6.6vw, 112px); animation-delay: 1.6s; }
 
-/* sangre que gotea desde el borde superior */
+/* sangre que gotea desde el borde superior: se ancla al documento (body), no a main, para pegarse al borde sin hueco */
+body:has(.blood) { position: relative; }
+main:has(.blood) { position: static; }
 .blood {
-  position: absolute; left: 0; right: 0; top: 0; height: 260px; z-index: 2; pointer-events: none;
-  background: url('/objetos/blood-drip.webp') repeat-x -220px 0 / 1600px 260px;
+  --s: 1; /* escala de la tira respecto a su tamaño original (1600x260) */
+  position: absolute; left: 0; right: 0; top: 0; height: 260px; z-index: 1; pointer-events: none;
   animation: bleed 9s cubic-bezier(.3, .1, .2, 1) both .2s;
+}
+/* la tira de goteo va en un pseudoelemento para recortarla sobre los enlaces de la cabecera: bajo ellos solo queda la banda superior
+   (--hl / --hr = inicio y fin horizontal de los enlaces, los pone Altar.tsx); las gotas sueltas entre enlaces siguen visibles */
+.blood::before {
+  content: ''; position: absolute; inset: 0;
+  background: url('/objetos/blood-drip.webp') repeat-x -220px 0 / 1600px 260px;
+  -webkit-mask-image: linear-gradient(#000, #000), linear-gradient(#000, #000), linear-gradient(#000 55%, transparent);
+  mask-image: linear-gradient(#000, #000), linear-gradient(#000, #000), linear-gradient(#000 55%, transparent);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: 0 0, 100% 0, 0 0; mask-position: 0 0, 100% 0, 0 0;
+  -webkit-mask-size: var(--hl, 100%) 100%, calc(100% - var(--hr, 100%)) 100%, 100% calc(30px * var(--s));
+  mask-size: var(--hl, 100%) 100%, calc(100% - var(--hr, 100%)) 100%, 100% calc(30px * var(--s));
+}
+/* gotas sueltas entre las letras: un trozo de la misma tira (mismo granate, mismo brillo) */
+.blood .drip {
+  position: absolute; top: 0;
+  background: url('/objetos/blood-drip.webp') no-repeat calc(var(--bx) * var(--s) * -1px) 0 / calc(1600px * var(--s)) calc(260px * var(--s));
+  /* se funde con la tira: sin la banda de arriba ni cantos verticales visibles */
+  --fade: linear-gradient(180deg, transparent calc(14px * var(--s)), #000 calc(32px * var(--s)));
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent), var(--fade);
+  mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent), var(--fade);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+/* letras de la cabecera siempre legibles sobre la sangre */
+body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6px var(--bg), 0 0 2px var(--bg); }
+/* de dia la sangre es mas oscura que la tinta dim: enlaces en tinta plena con halo de papel para que se lean siempre */
+:root[data-theme='light'] body:has(.blood) nav.top .plaque {
+  color: var(--ink);
+  text-shadow: 0 0 2px var(--bg), 0 0 4px var(--bg), 0 0 7px var(--bg), 0 0 10px var(--bg), 0 0 14px var(--bg);
 }
 @keyframes bleed { from { clip-path: inset(0 0 88% 0); } to { clip-path: inset(0 0 0 0); } }
 
@@ -168,7 +210,6 @@
 .obj-deck .tag { transform: translateX(8px); }
 .obj-ball .tag { transform: translateX(8px); }
 
-.altar.dark .flame, .altar.dark .halo { opacity: 0; transform: scale(.2, .1); }
 .altar::after {
   content: '';
   position: absolute;
@@ -176,14 +217,23 @@
   z-index: 6;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 1.2s;
+  transition: opacity 2s;
   background: radial-gradient(
     circle 210px at calc((var(--px) + .5) * 100%) calc((var(--py) + .5) * 100%),
     transparent 0, rgba(5, 4, 3, .55) 55%, rgba(3, 2, 2, .93) 100%
   );
 }
-.altar.dark::after { opacity: 1; }
-.altar.dark .obj-candle { z-index: 7; }
+/* intro: la mesa esta a oscuras (salvo la luz del cursor) hasta que se enciende el candelabro; el script del <head> pone data-intro */
+:root[data-intro='dark'] .altar::after { opacity: 1; }
+:root[data-intro='dark'] .obj-candle { z-index: 7; }
+:root[data-intro='dark'] .obj-candle .lift { opacity: .45; }
+:root[data-intro='dark'] .obj-candle:hover .lift, :root[data-intro='dark'] .obj-candle:focus-visible .lift { opacity: 1; }
+.obj-candle .lift { transition: transform .5s var(--ease), filter .5s, opacity 1.2s; }
+.intro-hint {
+  position: absolute; left: 0; right: 0; bottom: 1.2rem; z-index: 8; margin: 0; text-align: center;
+  font-size: .8rem; letter-spacing: .32em; color: var(--ink-dim); pointer-events: none;
+  animation: fade 3s ease both;
+}
 
 /* llave */
 .obj-key .lift { transition: transform .8s cubic-bezier(.3, 1.6, .4, 1), filter .5s; }
@@ -226,7 +276,24 @@
   .obj .tag::before { display: none; }
   .obj .lift { opacity: 1; }
   .obj { display: flex; flex-direction: column; align-items: center; }
-  .altar .obj-candle, .altar .obj-key, .altar .obj-dagger, .altar .obj-poison { display: none; }
-  .blood { top: 0; height: 130px; background-size: 800px 130px; }
+  .altar .obj-key, .altar .obj-dagger, .altar .obj-poison { display: none; }
+  /* el candelabro se queda en movil: es la intro y el interruptor de tema */
+  .obj-candle { grid-column: 1 / -1; max-width: 150px; margin-top: 2.6rem; }
+  .intro-hint { position: fixed; bottom: 1.2rem; font-size: .7rem; padding: 0 1rem; }
+  .blood { --s: .375; height: 90px; }
+  .blood::before { background-size: 600px 90px; }
   .bat-flight { display: none; }
 }
+
+/* abanico de la carta de Code: Sacerdotisa y Emperatriz asoman por detras y se abren al pasar */
+.deck-fan { position: relative; display: block; }
+.deck-fan .fan-main { position: relative; z-index: 2; }
+.deck-fan .fan-card { position: absolute; inset: 0; z-index: 1; opacity: 0; transform-origin: 50% 92%; transition: transform .7s var(--ease), opacity .45s; }
+.deck-fan .fan-l { transform: rotate(0deg) translateX(0); }
+.deck-fan .fan-r { transform: rotate(0deg) translateX(0); }
+.obj.fanned .deck-fan .fan-card, .obj:hover .deck-fan .fan-card, .obj:focus-visible .deck-fan .fan-card { opacity: 1; }
+.obj.fanned .deck-fan .fan-l, .obj:hover .deck-fan .fan-l, .obj:focus-visible .deck-fan .fan-l { transform: rotate(-15deg) translateX(-14%); }
+.obj.fanned .deck-fan .fan-r, .obj:hover .deck-fan .fan-r, .obj:focus-visible .deck-fan .fan-r { transform: rotate(13deg) translateX(8%); }
+.obj:hover .deck-fan .fan-main .shine, .obj:focus-visible .deck-fan .fan-main .shine { opacity: 1; animation: gleam 1.3s var(--ease) both; }
+@media (prefers-reduced-motion: reduce) { .deck-fan .fan-card { transition: opacity .2s; } }
+.obj-deck .tag { z-index: 3; }

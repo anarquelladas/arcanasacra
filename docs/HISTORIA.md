@@ -79,3 +79,18 @@ Todas en `public/objetos/` (noche, tinta hueso) y `public/objetos/ink/` (día, t
 - Respuestas en español, breves. Pedir confirmación antes de descargar archivos o publicar.
 - Las descargas del navegador le piden confirmación (ajuste de su navegador).
 - Antes de dar algo por bueno: `npm run build` + mirar la página (escritorio y móvil, noche y día).
+
+## 8. Sesión 2026-11-26 (resumen para la próxima)
+
+PR #4 fusionado en `develop` (vista previa: rama `develop` en Cloudflare Pages). `main` / `arcanasacra.net` NO tiene aún esto.
+
+Hecho: QA rondas 1 y 2 (`docs/qa/`) y arreglos; portada con intro a oscuras + candelabro como interruptor de tema
+(tema inicial según el sistema; llamas en tinta; humo en hilo con viento e inercia); sangre desde el borde superior con
+gotas entre letras; iris recortados con máscara real del ojo (`scripts/eye-masks.mjs`); retratos de Elvira a, c, g, f, h, i
+(ciclo al clic, indicador "n / 6" con `SHOW_PORTRAIT_INDEX`); marco apaisado = ovalado estirado (`USE_OVAL_STRETCHED`,
+alternativa `frame-wide2`); About sin Elvira y con carta interactiva; nombre en la web = **Ann**; sonido sintetizado
+(`src/lib/sound.ts`, botón ♪) en portada, About, Contact, gabinete y tarot.
+
+Pendiente: afinar sonidos de oído y probar la intro en móvil táctil real (2.7.5, 2.7.6); elegir retratos finales (2.8.6);
+auditoría de licencias (2.2.10, 2.8.7, 2.8.9); créditos del marco Cuvilliés si se vuelve a usar; 1.5 y 1.6 (cuenta de Ann);
+fase 3 (textos, Instagram/LinkedIn, fotos reales) y fase 4 (proyectos de portfolio). Ver `docs/ROADMAP.md`.

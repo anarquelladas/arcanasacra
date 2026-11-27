@@ -1,0 +1,38 @@
+/* Carta de About: reutiliza el sobre de letter.css, con otras proporciones y la carta que se despliega encima. */
+.about-env { display: flex; flex-direction: column; align-items: center; }
+
+/* la carta completa crece desde el sobre: 0fr -> 1fr */
+.sheet-wrap {
+  display: grid; grid-template-rows: 0fr; width: 100%;
+  transition: grid-template-rows 1.3s var(--ease);
+}
+.ph-open .sheet-wrap { grid-template-rows: 1fr; }
+.sheet {
+  min-height: 0; overflow: hidden; outline: none;
+  opacity: 0; transform: translateY(40px);
+  transition: opacity .8s ease .15s, transform 1.3s var(--ease);
+}
+.ph-open .sheet { opacity: 1; transform: none; }
+.sheet > .carta { margin-bottom: .6rem; }
+
+.about-env .post { width: min(420px, 92vw); aspect-ratio: 26 / 17; margin: 1.6rem auto 2.4rem; }
+/* la solapa abierta sube por encima del sobre: se le reserva sitio para que no tape la carta */
+.about-env .post { transition: margin-top .7s var(--ease); }
+.about-env .post.open { margin-top: calc(min(420px, 92vw) * .5); }
+.about-env .hint { top: auto; bottom: -2rem; }
+.about-env .open .letter { transform: translateY(-34%); transition-delay: .55s; }
+.about-env .letter { padding: 6% 8%; font-size: clamp(.7rem, 3.4cqw, 1rem); }
+.about-env .letter .dear { font-size: 2.4em; }
+/* al desplegarse la carta, la hoja pequena del sobre desaparece */
+.ph-open .letter { opacity: 0; transition: opacity .4s ease; }
+
+.fold {
+  display: block; margin: .2rem auto 1.4rem; background: none; border: 0; cursor: pointer;
+  color: var(--ink-dim); font-family: var(--serif); font-style: italic; font-size: 1rem;
+}
+.fold:hover { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet-wrap, .sheet, .about-env .post, .about-env .letter, .env-flap, .seal-btn .half { transition: none !important; animation: none !important; }
+  .about-env .hint, .seal-btn { animation: none !important; }
+}

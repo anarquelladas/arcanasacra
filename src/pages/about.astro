@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import { Stamp } from '../components/Stamp';
+import AboutLetter from '../components/AboutLetter';
 import { WaxSeal } from '../components/engravings/Objects';
 import { site } from '../data/site';
 ---
@@ -15,6 +16,7 @@ import { site } from '../data/site';
         : <Stamp name="mirror" className="mirror" />}
     </div>
 
+    <AboutLetter client:load greeting={`Hello, I'm ${site.author}.`}>
     <article class="carta">
       <svg class="sello" viewBox="0 0 60 60" aria-hidden="true"><WaxSeal cx={30} cy={30} r={22} /></svg>
       <p class="saludo">Hello, I'm {site.author}.</p>
@@ -37,12 +39,8 @@ import { site } from '../data/site';
         <a href="/contact/">write to me</a>
       </div>
     </article>
+    </AboutLetter>
   </section>
-
-  <figure class="patron">
-    <Stamp name="elvira" className="patron-img" alt="Elvira, Mistress of the Dark, 1990s promotional photo" />
-    <figcaption><span class="caps">patron saint of the house</span><em>Elvira, Mistress of the Dark</em></figcaption>
-  </figure>
 </Base>
 
 <style>
@@ -76,11 +74,6 @@ import { site } from '../data/site';
   .sendas { display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; margin-top: 1rem; font-family: var(--caps); }
   .sendas a { color: var(--ink-dark); text-decoration: none; border-bottom: .5px solid currentColor; font-size: .85rem; letter-spacing: .14em; }
   .sendas a:hover { opacity: .6; }
-  .patron { margin: -2rem auto 6rem; width: min(380px, 80vw); text-align: center; }
-  :global(.patron-img) { filter: drop-shadow(0 18px 18px rgba(0,0,0,.6)); }
-  .patron figcaption { margin-top: 1rem; display: flex; flex-direction: column; gap: .2rem; color: var(--ink-dim); }
-  .patron figcaption .caps { font-size: .72rem; letter-spacing: .32em; }
-  .patron figcaption em { font-family: var(--script); font-style: normal; font-size: 1.6rem; white-space: nowrap; color: var(--ink); line-height: 1.6; }
   @media (max-width: 760px) {
     .retrato { grid-template-columns: 1fr; gap: 2rem; }
     .carta { padding: 2rem 1.4rem 1.6rem; }

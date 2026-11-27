@@ -9,7 +9,7 @@ Web personal de tatuaje, dibujo y código. Hecha con **Astro + TypeScript + Reac
 
 Los objetos son imágenes de sello de alto contraste en `public/objetos/` (generadas con `scripts/stamp.py`). Puedes sustituir cualquiera por tu propio dibujo escaneado con el mismo nombre: PNG/WebP con fondo transparente y tinta clara. Las texturas se generan con `scripts/textures.py`.
 
-Tipografías: Ballet (títulos y subtítulos, licencia libre OFL) y Cormorant Garamond (texto).
+Tipografías: Billa Mount (solo el logotipo; ver riesgo en `docs/LICENCIAS.md`), Ballet (títulos y subtítulos, licencia libre OFL) y Cormorant Garamond (texto).
 
 ## En tu ordenador
 
@@ -71,8 +71,8 @@ Convertidas a alto contraste con `scripts/contrast.py` a partir de:
 - Ernst Haeckel, *Kunstformen der Natur* (dominio público): murciélagos.
 - Andreas Vesalius, *De humani corporis fabrica* (dominio público): esqueleto.
 - Wellcome Collection, frasco de veneno verde (CC BY 4.0).
-- Marco ovalado del medallón: imagen aportada por Ana (comprobar que se puede usar antes de publicar).
-- Orange County Archives, fotos promocionales de Elvira para Knott's Berry Farm (CC BY 2.0), Wikimedia Commons: los ojos del centro y la figura de About.
+- Marco ovalado del medallón (`frame.webp`): imagen aportada por Ann; **origen sin confirmar** (riesgo anotado en `docs/LICENCIAS.md`).
+- Orange County Archives, fotos promocionales de Elvira para Knott's Berry Farm (CC BY 2.0), Wikimedia Commons: retratos de la portada y del gabinete (IDs de Flickr 35859341932, 36030656275, 35641035160). Recortadas y pasadas a alto contraste.
   Aviso: Elvira es un personaje registrado y la imagen de Cassandra Peterson tiene derechos de imagen; se usa como homenaje, no como respaldo.
 - Didier Descouens, Wikimedia Commons (CC BY-SA 4.0): esfinge de la calavera (*Acherontia atropos*) y polilla moteada (*Biston betularia*).
 - Tarot World Project, *XVII L'Étoile*, tarot de Nicolas Conver 1760 (CC BY-SA 4.0), Wikimedia Commons.

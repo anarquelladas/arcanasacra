@@ -7,6 +7,7 @@ import '@fontsource/cormorant-sc/500.css';
 import '../styles/global.css';
 import Defs from '../components/engravings/Defs';
 import Nav from '../components/Nav.astro';
+import Fireflies from '../components/Fireflies';
 import { site } from '../data/site';
 
 interface Props { title?: string; description?: string; nav?: boolean }
@@ -26,12 +27,23 @@ const full = title ? `${title} · ${site.name}` : `${site.name} · ${site.taglin
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script is:inline>
       // tema guardado (día / noche) antes de pintar, para que no parpadee
-      try { const t = localStorage.getItem('as-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+      // sin eleccion guardada, se sigue el tema del sistema (oscuro / claro)
+      try {
+        let t = null;
+        try { t = localStorage.getItem('as-theme'); } catch (e) {}
+        if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      // intro de la portada: a oscuras hasta encender el candelabro (una vez por sesion; sin movimiento reducido no hay oscuridad)
+      try {
+        if (location.pathname === '/' && !sessionStorage.getItem('as-lit') && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.dataset.intro = 'dark';
+      } catch (e) {}
     </script>
   </head>
   <body>
     <Defs />
-    <a class="sr-only" href="#contenido">Skip to content</a>
+    <a class="sr-only skip skip-candle" href="#candle">Skip to the candelabrum</a>
+    <a class="sr-only skip" href="#contenido">Skip to content</a>
     {nav && <Nav />}
     <main id="contenido">
       <slot />
@@ -39,11 +51,12 @@ const full = title ? `${title} · ${site.name}` : `${site.name} · ${site.taglin
     <footer class="credits">
       Images adapted from: Walters Art Museum (public domain) · The Metropolitan Museum of Art (CC0) ·
       Ernst Haeckel, Andreas Vesalius (public domain) · Wellcome Collection (CC BY 4.0) ·
-      Elvira photos: Orange County Archives (CC BY 2.0) ·
+      Elvira photos: Orange County Archives via Wikimedia Commons (CC BY 2.0; tribute, no endorsement) ·
       Didier Descouens and Tarot World Project via Wikimedia Commons (CC BY-SA; adaptations under the same licence).
     </footer>
     <style>
       .credits { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 2.4rem; text-align: center; font-size: .78rem; color: var(--ink-dim); opacity: .55; }
     </style>
+    <Fireflies client:idle />
   </body>
 </html>
