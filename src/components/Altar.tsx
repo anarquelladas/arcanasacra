@@ -19,43 +19,15 @@ interface Thing {
 // Retratos de Elvira para el medallón: posición de cada ojo (%), tamaño del iris y del hueco del ojo.
 // tilt: inclinación (grados) del ojo, usada para colocar el iris. El recorte sale de public/objetos/<file>-eyes.webp
 // (scripts/eye-masks.mjs): el hueco real del ojo, así el iris queda siempre bajo los párpados.
-// wide: retrato apaisado; va en un marco horizontal con hueco eliptico (ver WIDE_FRAME); si no, en el ovalado.
-// Poner USE_WIDE_FRAME a false deja solo los retratos verticales y el marco ovalado.
-const USE_WIDE_FRAME = true;
-// Marco de los apaisados: false = frame-wide2 (grabado ligero); true = el ovalado (frame.webp) estirado en horizontal.
-const USE_OVAL_STRETCHED = true;
-interface Gaze { file: string; wide?: boolean; eyes: readonly (readonly [number, number, number])[]; iris: number }
-// Orden del ciclo al pulsar: mezcla de verticales y apaisados.
-const ALL_GAZES: readonly Gaze[] = [
+interface Gaze { file: string; eyes: readonly (readonly [number, number, number])[]; iris: number }
+// Retratos elegidos por Ann (el 1 y el 2); al pulsar alternan.
+const GAZES: readonly Gaze[] = [
   { file: 'elvira-a', eyes: [[26.18, 38.13, 10], [73.82, 37.95, -10]], iris: 11.4 },
   { file: 'elvira-c', eyes: [[40.07, 35.73, 0], [60.0, 36.29, 0]], iris: 4.6 },
-  { file: 'elvira-g', eyes: [[43.18, 39.53, 0], [56.82, 40.44, 0]], iris: 4.69 },
-  { file: 'elvira-f', wide: true, eyes: [[42.15, 36.35, 0], [57.85, 37.65, 0]], iris: 3.65 },
-  { file: 'elvira-h', eyes: [[41.14, 44.78, 0], [58.79, 45.22, 0]], iris: 4.8 },
-  { file: 'elvira-i', wide: true, eyes: [[44.83, 61.72, 0], [55.13, 62.27, 0]], iris: 2.8 },
 ];
-// Marcos apaisados. fw/fh: tamano del marco en % de la caja fija .tracking-eye (centrado en ella);
-// hole: [left, top, width, height] del hueco en % del marco.
-interface WideFrame { file: string; fw: number; fh: number; hole: readonly [number, number, number, number] }
-const WIDE_FRAME: WideFrame = USE_OVAL_STRETCHED
-  ? { file: 'frame.webp', fw: 150, fh: 70, hole: [11.2, 17.6, 77.6, 68.4] }
-  : { file: 'frame-wide2.webp', fw: 130, fh: 77.8, hole: [12.27, 29.15, 76.84, 53.44] }; // 1500x1312 px: fh = fw / 1.1433 / 1.4619
-// Coloca marco y retrato apaisado dentro de la caja con variables CSS.
-const wideVars = (f: WideFrame) => {
-  const l = (100 - f.fw) / 2, t = (100 - f.fh) / 2, [hl, ht, hw, hh] = f.hole;
-  return {
-    '--fl': `${l}%`, '--ft': `${t}%`, '--fw': `${f.fw}%`, '--fh': `${f.fh}%`,
-    '--pl': `${l + (f.fw * hl) / 100}%`, '--pt': `${t + (f.fh * ht) / 100}%`,
-    '--pw': `${(f.fw * hw) / 100}%`, '--ph': `${(f.fh * hh) / 100}%`,
-  } as React.CSSProperties;
-};
-// TEMPORAL: muestra "3 / 6" junto al marco para que Ana elija retrato. Ponerlo a false (o borrar su <span>) cuando decida.
-const SHOW_PORTRAIT_INDEX = true;
-const GAZES = USE_WIDE_FRAME ? ALL_GAZES : ALL_GAZES.filter((g) => !g.wide);
 
-// Recorrido del iris (% de su ancho): en planos amplios el iris es pequeño y necesita más.
+// Recorrido del iris (% de su ancho).
 const TRAVEL = 34;
-const TRAVEL_WIDE = 40;
 // Gotas de la tira blood-drip.webp (1600x260) que se reutilizan sueltas: [x de origen, ancho, alto], de más fina a más ancha; todas con su bulbo.
 const DRIPS: ReadonlyArray<readonly [number, number, number]> = [
   [445, 20, 69], [1102, 24, 69], [795, 28, 86], [368, 29, 77], [875, 28, 65],
@@ -259,8 +231,8 @@ export default function Altar() {
           onClick={() => { playSound('eye'); setBlink(true); setTimeout(() => { setGaze((g) => (g + 1) % GAZES.length); setBlink(false); }, 180); }}
           aria-label="Elvira, Mistress of the Dark: click to change her gaze"
         >
-          <span className={`tracking-eye eye${g.wide ? ' wide' : ''}`} style={g.wide ? wideVars(WIDE_FRAME) : undefined}>
-            <span className={`portrait ${g.wide ? 'wide' : ''} ${blink ? 'blink' : ''}`}>
+          <span className="tracking-eye eye">
+            <span className={`portrait ${blink ? 'blink' : ''}`}>
               <Dual file={`${g.file}.webp`} className="face" lazy={false} alt="Elvira, Mistress of the Dark" />
               {g.eyes.map(([x, y], i) => (
                 <span key={i} className="iris-clip" style={{ ['--eye-mask' as string]: `url(/objetos/${g.file}-eyes.webp)` }}>
@@ -270,15 +242,14 @@ export default function Altar() {
                     lazy={false}
                     style={{
                       left: `${x}%`, top: `${y}%`, width: `${g.iris}%`,
-                      transform: `translate(calc(-50% + ${look[0] * (g.wide ? TRAVEL_WIDE : TRAVEL)}%), calc(-50% + ${look[1] * 8}%))`,
+                      transform: `translate(calc(-50% + ${look[0] * TRAVEL}%), calc(-50% + ${look[1] * 8}%))`,
                     }}
                   />
                 </span>
               ))}
             </span>
-            <Dual key={g.wide ? 'w' : 'o'} file={g.wide ? WIDE_FRAME.file : 'frame.webp'} className="frame-img" lazy={false} />
+            <Dual file="frame.webp" className="frame-img" lazy={false} />
           </span>
-          {SHOW_PORTRAIT_INDEX && <span className="portrait-index caps" aria-hidden="true">{gaze + 1} / {GAZES.length}</span>}
         </button>
         <h1>Arcana Sacra</h1>
         <p className="tagline">tattoo, drawing &amp; code</p>
