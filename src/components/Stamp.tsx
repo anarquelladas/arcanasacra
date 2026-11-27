@@ -1,10 +1,10 @@
 // Imagen de sello (tinta maciza, en /public/objetos) con un brillo que la recorre al pasar.
-import { useEffect, useRef, type CSSProperties, type RefObject } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type RefObject } from 'react';
 import Smoke from './Smoke';
 
 export type StampName =
   | 'moth' | 'moth-pepper' | 'deathshead' | 'tarot' | 'mirror' | 'key' | 'candle' | 'candelabrum' | 'dagger'
-  | 'inkwell' | 'eye' | 'ball' | 'poison' | 'bat' | 'batface' | 'skeleton' | 'elvira' | 'tarot-priestess' | 'tarot-empress' | 'dagger-h' | 'key-a' | 'key-b' | 'key-ring' | 'grimoire';
+  | 'inkwell' | 'eye' | 'ball' | 'poison' | 'bat' | 'batface' | 'skeleton' | 'elvira' | 'tarot-priestess' | 'tarot-empress' | 'dagger-h' | 'key-a' | 'key-b' | 'key-ring' | 'grimoire' | 'ball-3' | 'ball-4';
 
 /** La misma imagen en dos tintas: hueso para el modo oscuro y tinta negra para el claro. */
 export function Dual({ file, className = '', style, alt = '', lazy = true }: { file: string; className?: string; style?: CSSProperties; alt?: string; lazy?: boolean }) {
@@ -145,6 +145,15 @@ export function GrimoireStamp({ className = '' }: { className?: string }) {
       </span>
     </span>
   );
+}
+
+/** PRUEBA: bola de cristal candidata. Por defecto la 3; con ?ball=4 en la URL se ve la 4. */
+export function BallChoice({ className = '' }: { className?: string }) {
+  const [v, setV] = useState<'ball-3' | 'ball-4'>('ball-3');
+  useEffect(() => {
+    try { if (new URLSearchParams(location.search).get('ball') === '4') setV('ball-4'); } catch { /* sin URL */ }
+  }, []);
+  return <Stamp name={v} className={className} />;
 }
 
 /** La carta de la portada: al pasar, detras salen en abanico La Sacerdotisa y La Emperatriz. */
