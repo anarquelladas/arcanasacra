@@ -23,6 +23,7 @@ Pie de la web (`Base.astro`) y README llevan los créditos agrupados por autor; 
 | poison | Wellcome Collection, *Green glass poison bottle* (L0036271) | CC BY 4.0 | por confirmar | sí | ok |
 | moth, moth-pepper, deathshead | Didier Descouens (MHNT), Wikimedia Commons | CC BY-SA 4.0 | por confirmar (archivos: *Acherontia atropos MHNT dos / Tête de mort*, *Biston betularia male dorsal*) | sí (con aviso de misma licencia) | ok |
 | tarot | Tarot World Project, *XVII L'Étoile*, Nicolas Conver 1760 | CC BY-SA 4.0 | por confirmar | sí | ok |
+| tarot-priestess, tarot-empress | Tarot World Project, *La Papesse* y *L'Imperatrice*, Nicolas Conver 1760 (Commons: File:II_LA_PAPESSE_Nicolas_Conver_Tarot_1760.jpg y File:II_L%27IMP%C3%89RATRICE_Nicolas_Conver_Tarot_1760.jpg) | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:II_LA_PAPESSE_Nicolas_Conver_Tarot_1760.jpg | si (mismo credito que L'Etoile) | ok |
 | blood-drip, blood-drop, elvira-iris-l/r | Generadas por código (propias) | Propias | n/a | n/a | ok |
 | elvira-a (y `elvira-a-eyes`) | Orange County Archives, *Elvira promoting Knott's Berry Farm's Halloween Haunt* (35859341932) | CC BY 2.0 | por confirmar (solo consta el ID de Flickr) | sí | ok |
 | elvira-c | Orange County Archives, misma foto (36030656275) | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Elvira_promoting_Knott%27s_Berry_Farm%27s_Halloween_Haunt_(36030656275).jpg | sí | ok |

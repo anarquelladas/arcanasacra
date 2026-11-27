@@ -253,3 +253,6 @@ a:hover .dagger .drop, button:hover .dagger .drop, .cubby:hover .dagger .drop { 
   45% { opacity: 1; transform: translate(-50%, 20%) scale(.9, 1.15); }
   100% { opacity: 0; transform: translate(-50%, 520%) scale(.9, 1.1); }
 }
+
+/* luciernagas: capa fija sobre el contenido, sin eventos */
+.fireflies { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 40; }

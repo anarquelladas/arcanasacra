@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { playSound } from '../lib/sound';
-import { CandelabrumStamp, DaggerStamp, Dual, MothStamp, Stamp } from './Stamp';
+import { CandelabrumStamp, DaggerStamp, DeckStamp, Dual, MothStamp, Stamp } from './Stamp';
 import './altar.css';
 
 // La portada es una mesa de curiosidades: cada objeto se puede arrastrar,
@@ -59,7 +59,7 @@ function measureGaps(): { cx: number; cy: number; gw: number }[] {
 
 const THINGS: Thing[] = [
   { id: 'moth', href: '/art/', label: 'Art', hint: 'tattoos & drawings', depth: 8, rot: -6, node: <MothStamp /> },
-  { id: 'deck', href: '/code/', label: 'Code', hint: 'projects & agents', depth: 6, rot: 5, node: <Stamp name="tarot" /> },
+  { id: 'deck', href: '/code/', label: 'Code', hint: 'projects & agents', depth: 6, rot: 5, node: <DeckStamp /> },
   { id: 'mirror', href: '/about/', label: 'About', hint: 'who is behind it', depth: 5, rot: -8, node: <Stamp name="mirror" /> },
   { id: 'ball', href: '/contact/', label: 'Contact', hint: 'ask the crystal ball', depth: 7, rot: 2, node: <Stamp name="ball" /> },
   { id: 'candle', depth: 3, rot: 0, node: null }, // el candelabro se pinta aparte: depende del estado de la luz
@@ -74,6 +74,8 @@ export default function Altar() {
   const [blink, setBlink] = useState(false);
   const [look, setLook] = useState<[number, number]>([0, 0]);
   const [gaze, setGaze] = useState(0);
+  // en cada carga aparece uno de los retratos al azar (se elige en el cliente para no romper la hidratacion)
+  useEffect(() => { setGaze(Math.floor(Math.random() * GAZES.length)); }, []);
   const [drips, setDrips] = useState<Drip[]>([]);
   // intro: la mesa empieza a oscuras hasta que se enciende el candelabro (el atributo data-intro lo pone el script del <head>)
   const [intro, setIntro] = useState(false);
@@ -247,6 +249,7 @@ export default function Altar() {
                   />
                 </span>
               ))}
+            <span className="shine" aria-hidden="true" style={{ ['--src' as string]: `url(/objetos/${g.file}.webp)` }} />
             </span>
             <Dual file="frame.webp" className="frame-img" lazy={false} />
           </span>

@@ -76,6 +76,14 @@
 .tracking-eye .frame-img { position: relative; display: block; width: 100%; height: auto; pointer-events: none; }
 .tracking-eye .portrait { position: absolute; left: 11.2%; top: 17.6%; width: 77.6%; height: 68.4%; }
 .tracking-eye .portrait .face { display: block; width: 100%; height: 100%; animation: gaze-in .5s ease both; }
+/* al pasar solo recorre el retrato un reflejo de cristal, como en el resto de objetos */
+.tracking-eye .shine {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
+  -webkit-mask: var(--src) center / 100% 100% no-repeat; mask: var(--src) center / 100% 100% no-repeat;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 250, 235, .55) 50%, transparent 62%) 160% 0 / 260% 100% no-repeat;
+}
+.eye-btn:hover .shine, .eye-btn:focus-visible .shine { opacity: 1; animation: gleam 1.3s var(--ease) both; }
+:root[data-theme='light'] .tracking-eye .shine { display: none; }
 .tracking-eye .iris-clip { position: absolute; inset: 0; -webkit-mask: var(--eye-mask) center / 100% 100% no-repeat; mask: var(--eye-mask) center / 100% 100% no-repeat; transition: transform .1s; transform-origin: 50% 37%; }
 .tracking-eye .iris { position: absolute; transition: transform .22s ease-out; }
 @keyframes gaze-in { from { opacity: 0; filter: blur(6px); } }
@@ -276,3 +284,16 @@ body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6
   .blood::before { background-size: 600px 90px; }
   .bat-flight { display: none; }
 }
+
+/* abanico de la carta de Code: Sacerdotisa y Emperatriz asoman por detras y se abren al pasar */
+.deck-fan { position: relative; display: block; }
+.deck-fan .fan-main { position: relative; z-index: 2; }
+.deck-fan .fan-card { position: absolute; inset: 0; z-index: 1; opacity: 0; transform-origin: 50% 92%; transition: transform .7s var(--ease), opacity .45s; }
+.deck-fan .fan-l { transform: rotate(0deg) translateX(0); }
+.deck-fan .fan-r { transform: rotate(0deg) translateX(0); }
+.obj:hover .deck-fan .fan-card, .obj:focus-visible .deck-fan .fan-card { opacity: 1; }
+.obj:hover .deck-fan .fan-l, .obj:focus-visible .deck-fan .fan-l { transform: rotate(-15deg) translateX(-14%); }
+.obj:hover .deck-fan .fan-r, .obj:focus-visible .deck-fan .fan-r { transform: rotate(13deg) translateX(8%); }
+.obj:hover .deck-fan .fan-main .shine, .obj:focus-visible .deck-fan .fan-main .shine { opacity: 1; animation: gleam 1.3s var(--ease) both; }
+@media (prefers-reduced-motion: reduce) { .deck-fan .fan-card { transition: opacity .2s; } }
+.obj-deck .tag { z-index: 3; }
