@@ -249,6 +249,8 @@ body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6
   .crest { position: relative; left: auto; top: auto; transform: none; width: 100%; grid-column: 1 / -1; padding-top: 2rem; }
   .whisper { display: none; }
   .obj { position: relative; inset: auto !important; width: 100% !important; max-width: 165px; transform: rotate(calc(var(--rot) * .4)); animation: none; }
+  .obj-book { max-width: 150px; }
+  .obj-key { max-width: 130px; }
   .obj-mirror { max-width: 90px; }
   .obj-deck { max-width: 110px; }
   .obj-ball { max-width: 120px; }
@@ -265,7 +267,7 @@ body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6
     transform: none !important;
   }
   .obj .tag::before { display: none; }
-  .obj .lift { opacity: 1; }
+  .obj .lift { opacity: 1; width: 100%; }
   .obj { display: flex; flex-direction: column; align-items: center; }
   .altar .obj-dagger, .altar .obj-poison { display: none; }
   /* el candelabro se queda en movil: es la intro y el interruptor de tema */

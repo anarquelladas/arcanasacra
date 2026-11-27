@@ -75,6 +75,8 @@ Convertidas a alto contraste con `scripts/contrast.py` a partir de:
 - Andreas Vesalius, *De humani corporis fabrica* (dominio público): esqueleto.
 - Wellcome Collection, frasco de veneno verde (CC BY 4.0).
 - Marco ovalado del medallón (`frame.webp`): imagen aportada por Ann; **origen sin confirmar** (riesgo anotado en `docs/LICENCIAS.md`).
+- Bola de cristal de prueba (`ball-3.webp`, `ball-4.webp`): de Pinterest, aportadas por Ann; **origen sin confirmar** (riesgo anotado en `docs/LICENCIAS.md`).
+- Polillas candidatas (`moth-brahmaea.webp`, `moth-saturnia.webp`): origen **sin confirmar** hasta elegir una (ver `docs/LICENCIAS.md`).
 - Orange County Archives, fotos promocionales de Elvira para Knott's Berry Farm (CC BY 2.0), Wikimedia Commons: retratos de la portada y del gabinete (IDs de Flickr 35859341932, 36030656275, 35641035160). Recortadas y pasadas a alto contraste.
   Aviso: Elvira es un personaje registrado y la imagen de Cassandra Peterson tiene derechos de imagen; se usa como homenaje, no como respaldo.
 - Didier Descouens, Wikimedia Commons (CC BY-SA 4.0): esfinge de la calavera (*Acherontia atropos*) y polilla moteada (*Biston betularia*).

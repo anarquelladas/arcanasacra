@@ -10,6 +10,8 @@ Pie de la web (`Base.astro`) y README llevan los créditos agrupados por autor; 
 | --- | --- | --- |
 | Fuente **Billa Mount**: archivo = demo "just for personal use" de Kana Widana / Alit Design (© 2020) | Alto, **aceptado por Ann (decisión 2026-11-26; no volver a preguntar)** | Nada ahora. Reabrir solo si Ann compra la licencia (~17 $, Fontspring) o pasa a Ballet. |
 | **`frame.webp`** (marco ovalado de forja): imagen aportada por Ann, origen sin confirmar. Es el marco en uso de todos los retratos | Alto | Ann: de dónde salió; o sustituir por uno libre (tarea 2.5). |
+| **`ball-3.webp` y `ball-4.webp`** (bola de cristal de prueba; `ball-4` roja es la de la portada por defecto, `?ball=3` la otra): de Pinterest, aportadas por Ann; autor y licencia desconocidos | Alto | Ann: enlace original de cada una; si no hay licencia libre, sustituir por una libre (Met `ball.webp` CC0 ya está en el repo) o retirar antes de publicar en `main` (P.2). Nota: el montaje usa textura de ball-3. |
+| **`moth-brahmaea.webp` y `moth-saturnia.webp`** (candidatas de polilla, activas con `?moth=b` / `?moth=s`): origen y licencia no constan en el repo | Medio | Image-alchemist/Ann: indicar archivo de Commons y autor de cada una antes de elegirla (P.1). Si no se confirman, no dejarlas fijas. |
 | Elvira: personaje registrado y derechos de imagen de Cassandra Peterson | Medio | Presentado como homenaje, solo fotos CC BY 2.0 con crédito; nunca dibujada ni como marca. |
 
 ## Imágenes (`public/objetos/` y `public/objetos/ink/`)
@@ -29,6 +31,8 @@ Pie de la web (`Base.astro`) y README llevan los créditos agrupados por autor; 
 | moth, moth-pepper, deathshead | Didier Descouens (MHNT), Wikimedia Commons | CC BY-SA 4.0 | por confirmar (archivos: *Acherontia atropos MHNT dos / Tête de mort*, *Biston betularia male dorsal*) | sí (con aviso de misma licencia) | ok |
 | tarot | Tarot World Project, *XVII L'Étoile*, Nicolas Conver 1760 | CC BY-SA 4.0 | por confirmar | sí | ok |
 | tarot-priestess, tarot-empress | Tarot World Project, *La Papesse* y *L'Imperatrice*, Nicolas Conver 1760 (Commons: File:II_LA_PAPESSE_Nicolas_Conver_Tarot_1760.jpg y File:II_L%27IMP%C3%89RATRICE_Nicolas_Conver_Tarot_1760.jpg) | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:II_LA_PAPESSE_Nicolas_Conver_Tarot_1760.jpg | si (mismo credito que L'Etoile) | ok |
+| **ball-3, ball-4** (bola de cristal; ball-4 es la predeterminada en la portada) | Pinterest, aportadas por Ann; autor desconocido | **Sin confirmar** | por confirmar | no | **sin confirmar** (riesgo; no pasar a `main` sin origen) |
+| **moth-brahmaea, moth-saturnia** (candidatas, solo con `?moth=b`/`?moth=s`) | Desconocido (no consta en el repo; *Brahmaea* y *Saturnia pyri*) | **Sin confirmar** | por confirmar | no | **sin confirmar** (no fijar ni publicar hasta documentar) |
 | blood-drip, blood-drop, elvira-iris-l/r | Generadas por código (propias) | Propias | n/a | n/a | ok |
 | elvira-a (y `elvira-a-eyes`) | Orange County Archives, *Elvira promoting Knott's Berry Farm's Halloween Haunt* (35859341932) | CC BY 2.0 | por confirmar (solo consta el ID de Flickr) | sí | ok |
 | elvira-c | Orange County Archives, misma foto (36030656275) | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Elvira_promoting_Knott%27s_Berry_Farm%27s_Halloween_Haunt_(36030656275).jpg | sí | ok |
@@ -53,4 +57,5 @@ No se han comprobado una a una las licencias de las dependencias transitivas. La
 
 ## Cambios de créditos hechos en esta auditoría
 - Pie (`src/layouts/Base.astro`): Elvira con "via Wikimedia Commons, tribute, no endorsement" y nueva línea del marco de Cuvilliés (dominio público).
+- Revisión 2026-11-27 (develop): grimorio (W.539 CC0), llaves (Rijksmuseum CC0), daga (Walters 5177 PD) y murciélagos (Haeckel, Specht PD) coinciden con pie y README; no hacía falta tocar el pie. Nota: el pie ya no lleva la línea de Cuvilliés (marco retirado, no hace falta). Pendientes: ball-3/4 y polillas Brahmaea/Saturnia sin origen.
 - README: Billa Mount en tipografías, IDs de Flickr de las fotos de Elvira, marco `frame.webp` como origen sin confirmar y marco Cuvilliés; quitada la mención a "la figura de About" (ya no existe).
