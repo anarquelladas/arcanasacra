@@ -49,9 +49,13 @@ export default function Blood() {
 
     const populate = () => {
       // pocas gotas en total (una cada ~130 px); de ellas solo 5 (2 en movil) caen, repartidas a lo ancho del borde
-      const gap = W < 700 ? 120 : 130, falling = W < 700 ? 2 : 5;
+      // reparto irregular: unas gotas casi juntas (racimos de 2-3) y otras muy separadas
+      const falling = W < 700 ? 2 : 5, k = W < 700 ? 0.9 : 1;
       const xs: number[] = [];
-      for (let x = rand(30, gap); x < W - 20; x += rand(gap * 0.75, gap * 1.4)) xs.push(x);
+      for (let x = rand(24, 120); x < W - 20; ) {
+        xs.push(x);
+        x += Math.random() < 0.4 ? rand(20, 52) * k : rand(110, 270) * k;
+      }
       const fallers = new Set(Array.from({ length: Math.min(falling, xs.length) }, (_, k) => Math.round((k * (xs.length - 1)) / Math.max(1, falling - 1))));
       drips = xs.map((x, i) => makeDrip(x, rand(0, 6), fallers.has(i)));
     };
