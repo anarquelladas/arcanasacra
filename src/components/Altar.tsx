@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { playSound } from '../lib/sound';
-import { CandelabrumStamp, DaggerHStamp, DeckStamp, Dual, KeysStamp, MothStamp, Stamp } from './Stamp';
+import Blood from './Blood';
+import { CandelabrumStamp, DaggerHStamp, DeckStamp, Dual, GrimoireStamp, KeysStamp, MothStamp, Stamp } from './Stamp';
 import './altar.css';
 
 // La portada es una mesa de curiosidades: cada objeto se puede arrastrar,
@@ -28,43 +29,16 @@ const GAZES: readonly Gaze[] = [
 
 // Recorrido del iris (% de su ancho).
 const TRAVEL = 34;
-// Gotas de la tira blood-drip.webp (1600x260) que se reutilizan sueltas: [x de origen, ancho, alto], de más fina a más ancha; todas con su bulbo.
-const DRIPS: ReadonlyArray<readonly [number, number, number]> = [
-  [445, 20, 69], [1102, 24, 69], [795, 28, 86], [368, 29, 77], [875, 28, 65],
-];
-interface Drip { x: number; y: number; w: number; h: number; bx: number }
-
-/** Huecos entre letras/palabras del título y la nav (coordenadas de página) donde cuelga una gota. */
-function measureGaps(): { cx: number; cy: number; gw: number }[] {
-  const gaps: { cx: number; cy: number; gw: number }[] = [];
-  const mark = document.querySelector('nav.top .mark');
-  const text = mark?.firstChild;
-  if (text && text.nodeType === Node.TEXT_NODE) {
-    const i = (text.textContent ?? '').indexOf(' ');
-    if (i > 0) {
-      const range = document.createRange();
-      range.setStart(text, i); range.setEnd(text, i + 1);
-      const r = range.getBoundingClientRect();
-      gaps.push({ cx: r.left + r.width / 2, cy: r.top + r.height / 2, gw: Math.max(r.width, 14) });
-    }
-  }
-  const items = [...document.querySelectorAll('nav.top ul > li')].map((li) => li.getBoundingClientRect());
-  for (let i = 0; i < items.length - 1; i++) {
-    const a = items[i], b = items[i + 1];
-    if (Math.abs(a.top - b.top) > a.height / 2) continue; // otra fila (móvil)
-    gaps.push({ cx: (a.right + b.left) / 2, cy: a.top + a.height / 2, gw: b.left - a.right });
-  }
-  return gaps;
-}
 
 const THINGS: Thing[] = [
   { id: 'moth', href: '/art/', label: 'Art', hint: 'tattoos & drawings', depth: 8, rot: -6, node: <MothStamp /> },
   { id: 'deck', href: '/code/', label: 'Code', hint: 'projects & agents', depth: 6, rot: 5, node: <DeckStamp /> },
-  { id: 'mirror', href: '/about/', label: 'About', hint: 'who is behind it', depth: 5, rot: -8, node: <Stamp name="mirror" /> },
-  { id: 'ball', href: '/contact/', label: 'Contact', hint: 'ask the crystal ball', depth: 7, rot: 2, node: <Stamp name="ball" /> },
+  // Guardado sin usar: { id: 'mirror', href: '/about/', label: 'About', hint: 'who is behind it', depth: 5, rot: -8, node: <Stamp name="mirror" /> },
+  // Guardado sin usar (Ann: se sustituira por otro objeto): { id: 'ball', href: '/contact/', label: 'Contact', hint: 'ask the crystal ball', depth: 7, rot: 2, node: <Stamp name="ball" /> },
   { id: 'candle', depth: 3, rot: 0, node: null }, // el candelabro se pinta aparte: depende del estado de la luz
+  { id: 'book', href: '/about/', label: 'About', hint: 'who is behind it', depth: 5, rot: -4, node: <GrimoireStamp /> },
   { id: 'dagger', depth: 12, rot: -5, node: <DaggerHStamp /> },
-  { id: 'key', depth: 9, rot: -8, node: <KeysStamp /> },
+  { id: 'key', href: '/contact/', label: 'Contact', hint: 'send me a letter', depth: 9, rot: -8, node: <KeysStamp /> }, // provisional: el reparto de objetos y enlaces se decidira despues
 ];
 
 /** Un retrato con sus iris que siguen al cursor. El nuevo entra fundiendose sobre el anterior (ghost). */
@@ -101,7 +75,6 @@ export default function Altar() {
   const [gaze, setGaze] = useState(0);
   // en cada carga aparece uno de los retratos al azar (se elige en el cliente para no romper la hidratacion)
   useEffect(() => { setGaze(Math.floor(Math.random() * GAZES.length)); }, []);
-  const [drips, setDrips] = useState<Drip[]>([]);
   // intro: la mesa empieza a oscuras hasta que se enciende el candelabro (el atributo data-intro lo pone el script del <head>)
   const [intro, setIntro] = useState(false);
   const [hint, setHint] = useState(false);
@@ -177,34 +150,6 @@ export default function Altar() {
     return () => removeEventListener('pointermove', onMove);
   }, []);
 
-  // gotas extra que cuelgan de los huecos entre letras, calculadas con el layout real (y al redimensionar)
-  useEffect(() => {
-    const place = () => {
-      const blood = document.querySelector('.blood') as HTMLElement | null;
-      if (!blood) return;
-      const s = blood.offsetHeight / 260; // escala de la tira (1 en escritorio, menos en móvil)
-      // tramo horizontal de los enlaces: la tira no cuelga delante de ellos (ver .blood::before)
-      const lis = [...document.querySelectorAll('nav.top ul > li')].map((li) => li.getBoundingClientRect());
-      if (lis.length && lis[0].top < 170 * s) { // las gotas largas llegan a ~170 px de la tira; en móvil los enlaces quedan más abajo
-        blood.style.setProperty('--hl', `${Math.min(...lis.map((r) => r.left)) - 6}px`);
-        blood.style.setProperty('--hr', `${Math.max(...lis.map((r) => r.right)) + 6}px`);
-      } else { blood.style.removeProperty('--hl'); blood.style.removeProperty('--hr'); }
-      const out: Drip[] = [];
-      let n = 0;
-      for (const g of measureGaps()) {
-        if (g.cy > blood.offsetHeight * 0.5) continue; // la gota no llegaría a esa fila
-        const pool = DRIPS.filter(([, w]) => w * s <= g.gw);
-        if (!pool.length) continue;
-        const [bx, w, h] = pool[n++ % pool.length];
-        out.push({ x: g.cx - (w * s) / 2, y: 0, w: w * s, h: h * s, bx });
-      }
-      setDrips(out);
-    };
-    place();
-    document.fonts?.ready.then(place);
-    addEventListener('resize', place);
-    return () => removeEventListener('resize', place);
-  }, []);
 
   const down = (id: string) => (e: React.PointerEvent) => {
     if (e.pointerType !== 'mouse' || e.button !== 0) return;
@@ -237,7 +182,7 @@ export default function Altar() {
   const click = (t: Thing) => (e: React.MouseEvent) => {
     if (wasDrag.current) { e.preventDefault(); wasDrag.current = false; return; }
     // en tactil no hay hover: el primer toque abre el abanico de la carta, el segundo entra en Code
-    if (t.id === 'deck' && matchMedia('(hover: none)').matches && !e.currentTarget.classList.contains('fanned')) {
+    if ((t.id === 'deck' || t.id === 'book') && matchMedia('(hover: none)').matches && !e.currentTarget.classList.contains('fanned')) {
       e.preventDefault();
       const el = e.currentTarget;
       el.classList.add('fanned');
@@ -251,12 +196,7 @@ export default function Altar() {
 
   return (
     <>
-      {/* la sangre va fuera del altar para anclarse al borde superior de la pagina */}
-      <div className="blood" aria-hidden="true">
-        {drips.map((d, i) => (
-          <span key={i} className="drip" style={{ left: d.x, width: d.w, height: d.h, ['--bx' as string]: d.bx }} />
-        ))}
-      </div>
+      <Blood />
       <div ref={stage} className="altar">
       <div className="light" aria-hidden="true" />
       <span className="bat-flight" aria-hidden="true"><Dual file="bat.webp" className="bat-img" lazy={false} /></span>
@@ -264,7 +204,7 @@ export default function Altar() {
       <header className="crest">
         <button
           className="eye-btn"
-          onClick={() => { playSound('eye'); setPrev(gaze); setGaze((gaze + 1) % GAZES.length); clearTimeout(fuse.current); fuse.current = setTimeout(() => setPrev(null), 900); }}
+          onClick={() => { playSound('eye'); setPrev(gaze); setGaze((gaze + 1) % GAZES.length); clearTimeout(fuse.current); fuse.current = setTimeout(() => setPrev(null), 1900); }}
           aria-label="Elvira, Mistress of the Dark: click to change her gaze"
         >
           <span className="tracking-eye eye">

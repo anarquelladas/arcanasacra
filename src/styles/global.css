@@ -247,8 +247,8 @@ a:hover .moth-fly .wing-img.r, .cubby:hover .moth-fly .wing-img.r { animation: f
 .dagger { position: relative; display: block; }
 .dagger .drop { position: absolute; left: 50%; bottom: -2%; width: 14%; transform: translate(-50%, 0); opacity: 0; pointer-events: none; }
 a:hover .dagger .drop, button:hover .dagger .drop, .cubby:hover .dagger .drop { animation: drip 1.6s ease-in 1; }
-/* daga horizontal: la gota nace en la punta (borde izquierdo, a ~71 % de la altura) y cae hacia abajo, en bucle */
-.dagger-h .drop { left: .8%; top: 70%; bottom: auto; width: 4.2%; animation: drip 4.6s ease-in 1.2s infinite; }
+/* daga horizontal: la gota nace en la punta (borde izquierdo, a ~71 % de la altura) y cae hacia abajo al pasar el cursor */
+.dagger-h .drop { left: .8%; top: 70%; bottom: auto; width: 4.2%; }
 @keyframes drip {
   0% { opacity: 0; transform: translate(-50%, -10%) scale(.3); }
   25% { opacity: 1; transform: translate(-50%, 0) scale(1, .8); }

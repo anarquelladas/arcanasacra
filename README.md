@@ -67,6 +67,7 @@ Si algún día la API de GitHub te limita, crea un token de solo lectura y ponlo
 Convertidas a alto contraste con `scripts/contrast.py` a partir de:
 
 - Walters Art Museum (dominio público): espejo etrusco, palmatoria de Sèvres, llave, daga, tintero, y la daga horizontal (Turkish, *Dagger and Scabbard*, Walters 5177; Commons: Turkish_-_Dagger_and_Scabbard_-_Walters_5177.jpg).
+- Walters Art Museum (CC0), *T'oros Roslin Gospels, Binding* (Walters W.539): grimorio de la portada (puerta a About).
 - Rijksmuseum (CC0), vía Wikimedia Commons: llaves del llavero de la portada (*Sleutel* BK-KOG-2301 y BK-16959) y argolla recortada de BK-KOG-2001.
 - The Met (CC0): *Lover's Eyes* (el ojo), esfera de cristal, candelabro de Augustus Pugin.
 - Ernst Haeckel, *Kunstformen der Natur* (dominio público): murciélagos.
