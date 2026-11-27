@@ -75,7 +75,8 @@
 .tracking-eye { position: relative; display: block; aspect-ratio: 946 / 1383; /* caja fija: el marco apaisado no mueve el titulo */ }
 .tracking-eye .frame-img { position: relative; display: block; width: 100%; height: auto; pointer-events: none; }
 .tracking-eye .portrait { position: absolute; left: 11.2%; top: 17.6%; width: 77.6%; height: 68.4%; }
-.tracking-eye .portrait .face { display: block; width: 100%; height: 100%; animation: gaze-in .8s ease both; }
+.tracking-eye .portrait .face { display: block; width: 100%; height: 100%; }
+.tracking-eye .portrait:not(.ghost) { animation: gaze-in 1.8s ease-in-out both; }
 .tracking-eye .portrait.ghost { pointer-events: none; }
 /* al pasar solo recorre el retrato un reflejo de cristal, como en el resto de objetos */
 .tracking-eye .shine {
@@ -148,8 +149,8 @@
 .obj-mirror { left: 15%; bottom: 4%; width: clamp(120px, 10.5vw, 175px); animation-delay: 1s; }
 .obj-ball { right: 9%; bottom: 4%; width: clamp(160px, 13.5vw, 225px); animation-delay: 1.2s; }
 .obj-candle { left: 3%; top: 48%; width: clamp(120px, 10vw, 165px); animation-delay: 1.4s; }
-.obj-dagger { right: 25%; bottom: 7%; width: clamp(190px, 16vw, 270px); animation-delay: 1.6s; }
-.obj-key { left: 36%; bottom: 2%; width: clamp(110px, 8.6vw, 150px); animation-delay: 1.8s; }
+.obj-dagger { left: 42%; top: 11%; width: clamp(190px, 16vw, 270px); animation-delay: 1.6s; }
+.obj-key { left: 59.5%; top: 17%; width: clamp(120px, 9.6vw, 165px); animation-delay: 1.8s; }
 
 /* sangre que gotea desde el borde superior: se ancla al documento (body), no a main, para pegarse al borde sin hueco */
 body:has(.blood) { position: relative; }
