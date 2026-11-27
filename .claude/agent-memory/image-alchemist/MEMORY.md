@@ -58,3 +58,7 @@ Posiciones de ojos e iris en `GAZES` de `Altar.tsx`. El retrato va en left 21.7 
 - Ann prefiere a, c, f; rechaza b, d, e. elvira-f ahora cerrado (w1898, ey .37). Nuevos: elvira-g (35641035160, vertical), elvira-h/i (sombrero 35641028170, vertical y apaisado), CC BY 2.0 Orange County Archives. portrait.mjs admite aspect/ow/oval/bgcut (fondo blanco -> negro + filete rim).
 - frame-wide2: Cuvillies CH 18238247 PD, lineas sobre transparente, hueco eliptico left12.27 top29.15 w76.84 h53.44. Scripts leen big/*.jpg del cwd (scratchpad); descargar con dl.mjs (Special:FilePath).
 - Commons ya no tiene mas fotos de Elvira (ni Cassandra caracterizada). En bash, NO usar backticks dentro de node -e con comillas dobles.
+
+## Sesion 2026-11-27 (sello de lacre + bola 4)
+- Sello: "Wax seal on menu" (Lou Stejskal, CC BY 2.0, Commons 15248088320) y "Our wax seal" R (Brendan Riley, CC BY 2.0, 5077120580). Mascara por rojo (r-max(g,b)>50) + relleno + erosion; scripts en scratchpad seal.mjs/lib.mjs. Quedan en docs/img/candidatas-bola4/seal-*.webp (no copiados a public).
+- Bola: A Dresde sirena (Daderot, PD, DSC07969), B Fairbanks marfil+peana (Daderot, PD, DSC04369), C Zodiac stand Museum of Witchcraft (Ethan Doyle White, CC BY-SA 4.0). Mascaras a mano (elipses/poligonos) + saturacion.
