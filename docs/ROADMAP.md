@@ -81,6 +81,13 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 - [x] 2.8.8 `frontend-artisan`: integrar la ronda 2 de retratos (datos en `docs/elvira-gazes.md`): `elvira-f` con encuadre cerrado (nuevos ojos), nuevos `elvira-g`, `elvira-h` (verticales, marco `frame.webp`) y `elvira-i` (apaisado), y marco `frame-wide2` (hueco eliptico, clip-path) en lugar de `frame-wide`. Ann descarta b, d, e. Montaje: `docs/img/comp-elvira-noche.jpg`.
 - [x] 2.8.9 `license-auditor`: creditos de `frame-wide2` (Cuvilliés CH 18238247, PD) y de las fotos g/h/i (Orange County Archives, CC BY 2.0: manos en la cintura 35641035160 y sombrero 1991 35641028170).
 
+## Pendiente de la sesión 2026-11-27 (siguiente sesión)
+- [ ] P.1 Polilla de la portada: a Ann le gusta que la actual (esfinge) "luce más polilla" pero prefiere el estilo grabado de Brahmaea/Saturnia (parecen mariposa). Buscar MÁS opciones de polilla (cuerpo grueso, alas estrechas, oscura) con estilo grabado de alto contraste; candidatas en `docs/img/candidatas-polilla/`; `?moth=b` y `?moth=s` para comparar en develop. Al elegir: dejarla fija y acreditar. · *Dueño*: `image-alchemist` + Ann.
+- [ ] P.2 Bola de cristal: roja (4) es la predeterminada, `?ball=3` la otra; origen Pinterest sin confirmar (anotar en LICENCIAS.md). Decidir si pulir el montaje, usar 1/2 sin montar o buscar una real. · *Dueño*: Ann + `image-alchemist`.
+- [ ] P.3 Reparto de puertas: Contact = bola, About = grimorio; llaves y daga decorativas. Decidir el reparto definitivo. · *Dueño*: Ann.
+- [ ] P.4 Decoración para las otras páginas (Art, Code, About, Contact) con equivalentes libres a las imágenes de Pinterest de Ann (encaje, cruz, rosario, tijeras, corazones). · *Dueño*: `image-alchemist` + `frontend-artisan`.
+- [ ] P.5 Probar en móvil táctil: grimorio, abanico de la carta de Code, murciélago, llavero. · *Dueño*: `qa-tester`.
+
 ## Fase 3 — Contenido real
 - [ ] 3.1 Revisar y ajustar textos de About y títulos del gabinete (Ana aprueba). · *Dueño*: `scribe`.
 - [ ] 3.2 Instagram y LinkedIn en `src/data/site.ts` (Ana da los enlaces). · *Dueño*: `scribe`.
@@ -135,3 +142,4 @@ Objetivo: ver `develop` en una URL de vista previa y `main` en `arcanasacra.net`
 | 2026-11-27 | cartas | Claude | Lacre nuevo: imagen `seal.webp` (cera granate con relieve y una A, generada por codigo con iluminacion SVG; `scripts/wax-seal.mjs`) en las cartas de About y Contact. Borrados `lib/ornament.ts` y el lacre dibujado. Sin licencia externa (propio). |
 | 2026-11-27 | portada | Claude | Grimorio: cubierta abre mas lenta (2,3 s), 8 hojas pasan en cascada que frena, hojas enteras sin tiras (antes salian dobladas raras); grimorio y bola 4 con alto contraste a dos tonos (umbral local, `scripts/high-contrast.mjs`); bola roja con textura del cuarzo de la bola 3; sangre con gotas irregulares. Bola 3/4 de prueba (?ball=4) con origen Pinterest sin confirmar. |
 | 2026-11-27 | portada | Claude + image-alchemist | Murcielago nuevo: posado en el marco de Elvira (Specht, Brehms Tierleben 1911, PD), al pulsarlo vuela (Haeckel, Kunstformen der Natur, Chiroptera, PD) fuera de pantalla y vuelve a posarse a los 20-40 s. Retirado el murcielago que cruzaba. Falta anadir creditos de Haeckel/Specht al pie y LICENCIAS.md. |
+| 2026-11-27 | portada | Claude | Bola roja (4) fija por defecto (`?ball=3` para la 3); apuntados pendientes P.1-P.5 para la siguiente sesion. |
