@@ -61,10 +61,10 @@ const THINGS: Thing[] = [
   { id: 'moth', href: '/art/', label: 'Art', hint: 'tattoos & drawings', depth: 8, rot: -6, node: <MothStamp /> },
   { id: 'deck', href: '/code/', label: 'Code', hint: 'projects & agents', depth: 6, rot: 5, node: <DeckStamp /> },
   // Guardado sin usar: { id: 'mirror', href: '/about/', label: 'About', hint: 'who is behind it', depth: 5, rot: -8, node: <Stamp name="mirror" /> },
-  { id: 'ball', href: '/contact/', label: 'Contact', hint: 'ask the crystal ball', depth: 7, rot: 2, node: <Stamp name="ball" /> },
+  // Guardado sin usar (Ann: se sustituira por otro objeto): { id: 'ball', href: '/contact/', label: 'Contact', hint: 'ask the crystal ball', depth: 7, rot: 2, node: <Stamp name="ball" /> },
   { id: 'candle', depth: 3, rot: 0, node: null }, // el candelabro se pinta aparte: depende del estado de la luz
   { id: 'dagger', depth: 12, rot: -5, node: <DaggerHStamp /> },
-  { id: 'key', depth: 9, rot: -8, node: <KeysStamp /> },
+  { id: 'key', href: '/contact/', label: 'Contact', hint: 'send me a letter', depth: 9, rot: -8, node: <KeysStamp /> }, // provisional: el reparto de objetos y enlaces se decidira despues
 ];
 
 /** Un retrato con sus iris que siguen al cursor. El nuevo entra fundiendose sobre el anterior (ghost). */

@@ -277,7 +277,7 @@ body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6
   .obj .tag::before { display: none; }
   .obj .lift { opacity: 1; }
   .obj { display: flex; flex-direction: column; align-items: center; }
-  .altar .obj-key, .altar .obj-dagger, .altar .obj-poison { display: none; }
+  .altar .obj-dagger, .altar .obj-poison { display: none; }
   /* el candelabro se queda en movil: es la intro y el interruptor de tema */
   .obj-candle { grid-column: 1 / -1; max-width: 150px; margin-top: 2.6rem; }
   .intro-hint { position: fixed; bottom: 1.2rem; font-size: .7rem; padding: 0 1rem; }
