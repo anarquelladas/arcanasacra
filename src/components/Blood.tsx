@@ -15,6 +15,7 @@ interface Drip {
   mass: number; v: number;
   maxLen: number; breakLen: number; creep: number;
   hang: number;                             // segundos que cuelga antes de soltarse
+  canFall: boolean;                         // solo unas pocas gotas caen; el resto cuelga sin llegar a soltarse
   w: number;                                // grosor del hilo
 }
 interface Bead { x: number; y: number; v: number; r: number }
@@ -22,12 +23,13 @@ interface Bead { x: number; y: number; v: number; r: number }
 const BAND = (x: number, t: number) => 5 + 2.6 * Math.sin(x * 0.011 + t * 0.15) + 1.8 * Math.sin(x * 0.037 + 1.3 - t * 0.1);
 const rand = (a: number, b: number) => a + Math.random() * (b - a);
 
-function makeDrip(x: number, delay: number): Drip {
-  const runner = Math.random() < 0.45;
+const lenFor = (canFall: boolean) => (canFall ? (Math.random() < 0.45 ? rand(60, 200) : rand(16, 46)) : rand(12, 58));
+
+function makeDrip(x: number, delay: number, canFall: boolean): Drip {
   return {
     x, phase: 'wait', t: -delay, len: 0, r: 2, rMax: rand(4.2, 6.6), mass: 0, v: 0,
-    maxLen: runner ? rand(60, 230) : rand(16, 46),
-    breakLen: rand(150, 260), creep: rand(4, 11), hang: runner ? rand(5, 13) : rand(0.5, 3), w: 4.2,
+    maxLen: lenFor(canFall),
+    breakLen: rand(150, 260), creep: rand(4, 11), hang: canFall ? rand(2, 10) : 0, w: 4.2, canFall,
   };
 }
 
@@ -46,9 +48,12 @@ export default function Blood() {
     let tabVisible = !document.hidden, visible = true;
 
     const populate = () => {
-      const step = W < 700 ? 92 : 78;
-      drips = [];
-      for (let x = rand(20, step); x < W - 10; x += rand(step * 0.7, step * 1.5)) drips.push(makeDrip(x, rand(0, 5)));
+      // pocas gotas en total (una cada ~130 px); de ellas solo 5 (2 en movil) caen, repartidas a lo ancho del borde
+      const gap = W < 700 ? 120 : 130, falling = W < 700 ? 2 : 5;
+      const xs: number[] = [];
+      for (let x = rand(30, gap); x < W - 20; x += rand(gap * 0.75, gap * 1.4)) xs.push(x);
+      const fallers = new Set(Array.from({ length: Math.min(falling, xs.length) }, (_, k) => Math.round((k * (xs.length - 1)) / Math.max(1, falling - 1))));
+      drips = xs.map((x, i) => makeDrip(x, rand(0, 6), fallers.has(i)));
     };
     const size = () => {
       dpr = Math.min(devicePixelRatio || 1, 2);
@@ -71,6 +76,7 @@ export default function Blood() {
             // se arrastra hacia abajo cada vez mas despacio (viscosidad) hasta su largo maximo
             const room = Math.max(0, 1 - d.len / d.maxLen);
             d.len += d.creep * room * dt;
+            if (!d.canFall) { d.mass = Math.min(d.mass, 0.9); break; } // cuelga sin llegar a soltarse
             if (d.len >= d.maxLen * 0.98 && d.t > d.hang + 1.5 && d.mass > 0.65) { d.phase = 'fall'; d.v = 22; d.t = 0; }
             else if (d.mass > 1.25) { d.phase = 'fall'; d.v = 22; d.t = 0; }
             d.w = Math.max(3.2, d.r * 0.85);
@@ -91,7 +97,7 @@ export default function Blood() {
             d.len -= 300 * dt; d.r = Math.max(2, d.r - dt * 3);
             d.w = Math.max(3.1, d.w);
             if (d.len <= 3) { d.len = 2; d.phase = 'wait'; d.t = -rand(1.2, 7); d.mass = rand(0.15, 0.4); d.r = 2.4; d.rMax = rand(4.2, 6.6);
-              d.maxLen = Math.random() < 0.45 ? rand(60, 230) : rand(16, 46); d.breakLen = rand(150, 260); d.hang = rand(0.5, 9); d.x += rand(-6, 6); d.x = Math.max(8, Math.min(W - 8, d.x)); }
+              d.maxLen = lenFor(d.canFall); d.breakLen = rand(150, 260); d.hang = rand(0.5, 9); d.x += rand(-6, 6); d.x = Math.max(8, Math.min(W - 8, d.x)); }
             break;
         }
       }
