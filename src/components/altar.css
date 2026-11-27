@@ -156,33 +156,11 @@
 body:has(.blood) { position: relative; }
 main:has(.blood) { position: static; }
 .blood {
-  --s: 1; /* escala de la tira respecto a su tamaño original (1600x260) */
-  position: absolute; left: 0; right: 0; top: 0; height: 260px; z-index: 1; pointer-events: none;
-  animation: bleed 9s cubic-bezier(.3, .1, .2, 1) both .2s;
+  position: absolute; left: 0; right: 0; top: 0; height: 520px; z-index: 1; pointer-events: none; overflow: hidden;
 }
-/* la tira de goteo va en un pseudoelemento para recortarla sobre los enlaces de la cabecera: bajo ellos solo queda la banda superior
-   (--hl / --hr = inicio y fin horizontal de los enlaces, los pone Altar.tsx); las gotas sueltas entre enlaces siguen visibles */
-.blood::before {
-  content: ''; position: absolute; inset: 0;
-  background: url('/objetos/blood-drip.webp') repeat-x -220px 0 / 1600px 260px;
-  -webkit-mask-image: linear-gradient(#000, #000), linear-gradient(#000, #000), linear-gradient(#000 55%, transparent);
-  mask-image: linear-gradient(#000, #000), linear-gradient(#000, #000), linear-gradient(#000 55%, transparent);
-  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-  -webkit-mask-position: 0 0, 100% 0, 0 0; mask-position: 0 0, 100% 0, 0 0;
-  -webkit-mask-size: var(--hl, 100%) 100%, calc(100% - var(--hr, 100%)) 100%, 100% calc(30px * var(--s));
-  mask-size: var(--hl, 100%) 100%, calc(100% - var(--hr, 100%)) 100%, 100% calc(30px * var(--s));
-}
-/* gotas sueltas entre las letras: un trozo de la misma tira (mismo granate, mismo brillo) */
-.blood .drip {
-  position: absolute; top: 0;
-  background: url('/objetos/blood-drip.webp') no-repeat calc(var(--bx) * var(--s) * -1px) 0 / calc(1600px * var(--s)) calc(260px * var(--s));
-  /* se funde con la tira: sin la banda de arriba ni cantos verticales visibles */
-  --fade: linear-gradient(180deg, transparent calc(14px * var(--s)), #000 calc(32px * var(--s)));
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent), var(--fade);
-  mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent), var(--fade);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
-}
+.blood canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* el fluido se funde con un filtro SVG (goo) definido dentro del componente */
+.blood .blood-body { filter: url(#blood-goo); }
 /* letras de la cabecera siempre legibles sobre la sangre */
 body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6px var(--bg), 0 0 2px var(--bg); }
 /* de dia la sangre es mas oscura que la tinta dim: enlaces en tinta plena con halo de papel para que se lean siempre */
@@ -190,7 +168,6 @@ body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6
   color: var(--ink);
   text-shadow: 0 0 2px var(--bg), 0 0 4px var(--bg), 0 0 7px var(--bg), 0 0 10px var(--bg), 0 0 14px var(--bg);
 }
-@keyframes bleed { from { clip-path: inset(0 0 88% 0); } to { clip-path: inset(0 0 0 0); } }
 
 /* murciélago que cruza la noche */
 .bat-flight {
@@ -281,8 +258,7 @@ body:has(.blood) nav.top a, body:has(.blood) nav.top button { text-shadow: 0 0 6
   /* el candelabro se queda en movil: es la intro y el interruptor de tema */
   .obj-candle { grid-column: 1 / -1; max-width: 150px; margin-top: 2.6rem; }
   .intro-hint { position: fixed; bottom: 1.2rem; font-size: .7rem; padding: 0 1rem; }
-  .blood { --s: .375; height: 90px; }
-  .blood::before { background-size: 600px 90px; }
+  .blood { height: 360px; }
   .bat-flight { display: none; }
 }
 

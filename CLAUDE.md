@@ -65,7 +65,7 @@ Lo que **no le gusta** (ya lo rechazó):
 - Diseños genéricos "que se nota que son de IA".
 
 Paleta: fondo `#0e0d0b` + textura pizarra; hueso `#e9dfc8`; tinta `#1a1611`; único acento: rojo sangre/lacre.
-Sangre: `public/objetos/blood-drip.webp` y `blood-drop.webp`, generadas por código; **oscura** (granate casi negro) y saliendo de un límite (borde superior de la página), nunca a media página.
+Sangre: `src/components/Blood.tsx`, simulada en canvas (banda fina en el borde superior de la portada de la que cuelgan gotas que crecen, se estiran y caen; filtro SVG "goo"). **Oscura** (granate casi negro) y saliendo siempre del borde superior de la página. `blood-drip.webp` ya no se usa (guardada); `blood-drop.webp` sigue en la daga.
 
 ## Imágenes y licencias
 
