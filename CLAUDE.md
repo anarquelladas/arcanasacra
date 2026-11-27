@@ -40,7 +40,8 @@ python3 scripts/blood.py       # goteo y gota de sangre
 | `public/objetos/*.webp` | Imágenes en tinta hueso (modo noche) · `public/objetos/ink/*.webp` en tinta negra (modo día) |
 | `scripts/contrast.py` | Recorta (GrabCut) y pasa fotos a alto contraste tipo sello |
 | `scripts/lineart.py` | Igual para grabados de línea o fondos difíciles (modos ink / white / sat) |
-| `scripts/blood.py` | Genera el goteo y la gota de sangre |
+| `scripts/blood.py` | (en desuso) goteo de sangre; ahora `src/components/Blood.tsx` |
+| `scripts/wax-seal.mjs` | Genera `public/objetos/seal.webp` (lacre granate con relieve y una A; necesita playwright) |
 | `.claude/agents/` | Subagentes del proyecto (ver abajo) |
 
 ## Dirección de arte (lo aprendido con Ana — respetarlo siempre)
