@@ -28,11 +28,11 @@ export function Stamp({ name, className = '', alt = '', style }: { name: StampNa
 }
 
 /** Polilla en dos mitades para que aletee en 3D. */
-export function MothStamp({ className = '' }: { className?: string }) {
+export function MothStamp({ className = '', file = 'moth.webp' }: { className?: string; file?: string }) {
   return (
-    <span className={`stamp moth-fly ${className}`} style={{ ['--src' as string]: 'url(/objetos/moth.webp)' }}>
-      <Dual file="moth.webp" className="wing-img l" />
-      <Dual file="moth.webp" className="wing-img r" />
+    <span className={`stamp moth-fly ${className}`} style={{ ['--src' as string]: `url(/objetos/${file})` }}>
+      <Dual file={file} className="wing-img l" />
+      <Dual file={file} className="wing-img r" />
       <span className="shine" aria-hidden="true" />
     </span>
   );
@@ -148,6 +148,18 @@ export function BallChoice({ className = '' }: { className?: string }) {
     try { if (new URLSearchParams(location.search).get('ball') === '4') setV('ball-4'); } catch { /* sin URL */ }
   }, []);
   return <Stamp name={v} className={className} />;
+}
+
+/** PRUEBA: polilla candidata. Por defecto la actual; ?moth=b (Brahmaea) o ?moth=s (Saturnia pyri) en la URL para compararlas. */
+export function MothChoice({ className = '' }: { className?: string }) {
+  const [f, setF] = useState('moth.webp');
+  useEffect(() => {
+    try {
+      const v = new URLSearchParams(location.search).get('moth');
+      if (v === 'b') setF('moth-brahmaea.webp'); else if (v === 's') setF('moth-saturnia.webp');
+    } catch { /* sin URL */ }
+  }, []);
+  return <MothStamp className={className} file={f} />;
 }
 
 /** La carta de la portada: al pasar, detras salen en abanico La Sacerdotisa y La Emperatriz. */

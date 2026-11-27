@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { playSound } from '../lib/sound';
 import Blood from './Blood';
 import BatPerch from './BatPerch';
-import { CandelabrumStamp, BallChoice, DaggerHStamp, DeckStamp, Dual, GrimoireStamp, KeysStamp, MothStamp, Stamp } from './Stamp';
+import { CandelabrumStamp, BallChoice, MothChoice, DaggerHStamp, DeckStamp, Dual, GrimoireStamp, KeysStamp, MothStamp, Stamp } from './Stamp';
 import './altar.css';
 
 // La portada es una mesa de curiosidades: cada objeto se puede arrastrar,
@@ -32,7 +32,7 @@ const GAZES: readonly Gaze[] = [
 const TRAVEL = 34;
 
 const THINGS: Thing[] = [
-  { id: 'moth', href: '/art/', label: 'Art', hint: 'tattoos & drawings', depth: 8, rot: -6, node: <MothStamp /> },
+  { id: 'moth', href: '/art/', label: 'Art', hint: 'tattoos & drawings', depth: 8, rot: -6, node: <MothChoice /> },
   { id: 'deck', href: '/code/', label: 'Code', hint: 'projects & agents', depth: 6, rot: 5, node: <DeckStamp /> },
   // Guardado sin usar: { id: 'mirror', href: '/about/', label: 'About', hint: 'who is behind it', depth: 5, rot: -8, node: <Stamp name="mirror" /> },
   // PRUEBA: bolas candidatas 3 y 4 (la 4 con ?ball=4). La bola original (Stamp name="ball") queda guardada sin usar.
